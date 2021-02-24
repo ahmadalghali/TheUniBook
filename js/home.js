@@ -36,7 +36,7 @@ $(document).ready(function () {
             confirmButtonText: 'Logout'
         }).then(result => {
             if (result.isConfirmed) {
-                sessionStorage.removeItem("user")
+                sessionStorage.removeItem("session")
                 location.href = "/"
             }
         })

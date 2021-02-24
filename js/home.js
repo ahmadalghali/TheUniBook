@@ -16,7 +16,7 @@ $(document).ready(function () {
                 $("#role").html(`${user.role}`)
             }
 
-            $("#department").html(`${user.departmentId}`)
+            $("#department").html(`${user.department.name}`)
 
 
 

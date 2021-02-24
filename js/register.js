@@ -21,7 +21,7 @@ $(document).ready(function () {
 
     async function populateDepartmentDropdown(){
         departmentDropdown.empty();
-        departmentDropdown.append('<option selected="true" disabled>Choose Department</option>');
+        departmentDropdown.append('<option selected="selected" disabled>Choose Department</option>');
         departmentDropdown.prop('selectedIndex', 0);
 
 
@@ -53,7 +53,17 @@ $(document).ready(function () {
             return
         }
 
+
+        if (departmentDropdown[0].selectedIndex === 0) {
+            toastr.error("Please choose a department")
+            return;
+        }
+        
+        console.log("departmentDropdown.selectedIndex " + departmentDropdown.selectedIndex)
+
         let formData = new FormData(registerForm)
+
+        formData.append("departmentId", departmentDropdown[0].selectedIndex)
 
         for (let key of formData.keys()){
             console.log(key, formData.get(key))
@@ -96,10 +106,6 @@ $(document).ready(function () {
         } else if (registerResponse.message == "user exists") {
             console.log("user exists")
             toastr.warning("user exists")
-            showAlert("warning", `User exists, <a href="login.html" class"alert-link" > Sign in</a >`, 10000)
-            // alert.classList = "alert alert-warning alert-dismissible"
-            // alert.innerHTML = `<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            // <b>User exists, <a href="login.html" class"alert-link">Sign in</a><b>`
         } else {
             console.log("request failed")
         }
@@ -127,27 +133,6 @@ $(document).ready(function () {
 
         return response;
     }
-
-
-
-
-    // function validateForm() {
-    //     var departmentDropdown = document.getElementById("department_dropdown");
-
-    //     if (departmentDropdown.selectedIndex === 0) {
-    //         alert("Please choose a department")
-    //         return;
-    //     }
-    //     console.log("checkbox checked is ", form.agree.checked);
-    //     if (!form.agree.checked) {
-    //         document.getElementById('agree_chk_error').style.visibility = 'visible';
-    //         return false;
-    //     }
-    //     else {
-    //         document.getElementById('agree_chk_error').style.visibility = 'hidden';
-    //         return true;
-    //     }
-
 
 
 })

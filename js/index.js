@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    let url = "https://theunibook.heroku.com"
-    
+    let url = "https://theunibook.herokuapp.com"
+
     let loginButton = document.getElementById("btnLogin")
     let emailField = document.getElementById("emailField")
     let passwordField = document.getElementById("passwordField")
@@ -24,21 +24,21 @@ $(document).ready(function () {
 
 
 
-    loginButton.addEventListener("click", (e) => {
-        e.preventDefault()
+    // loginButton.addEventListener("click", (e) => {
+    //     e.preventDefault()
 
-        let formData = new FormData(loginForm)
+    //     let formData = new FormData(loginForm)
 
-        for (let key of formData.keys()) {
-            console.log(key, formData.get(key))
-        }
+    //     for (let key of formData.keys()) {
+    //         console.log(key, formData.get(key))
+    //     }
 
-        let email = emailField.value
-        let password = passwordField.value
+    //     let email = emailField.value
+    //     let password = passwordField.value
 
 
-        login(email, password)
-    })
+    //     login(email, password)
+    // })
 
 
     async function login() {

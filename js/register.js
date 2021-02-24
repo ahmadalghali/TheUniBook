@@ -2,7 +2,7 @@
 $(document).ready(function () {
 
     
-    let url = "https://theunibook.heroku.com"
+    let url = "https://theunibook.herokuapp.com"
 
 
     let passwordField = document.querySelector("#password_field")

@@ -31,7 +31,6 @@ $(document).ready(function () {
         Swal.fire({
             title: 'Logout',
             text: 'Are you sure?',
-            icon: 'error',
             showCancelButton: true,
             confirmButtonText: 'Logout'
         }).then(result => {

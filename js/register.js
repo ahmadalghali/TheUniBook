@@ -75,25 +75,11 @@ $(document).ready(function () {
 
         delete formDataObject.confirmPassword
 
-        // for (var pair of formDataArray.entries()) {
-        //     console.log(pair[0] + ', ' + pair[1]);
-        // }
-
-        console.log(formDataArray)
-
-        console.log(formDataObject)
-
-
         let registerResponse = await post("/register", JSON.stringify(formDataObject))
-
 
         console.log("registerResponse.message: " + registerResponse.message)
 
-
-
-
         if (registerResponse.message == "registered") {
-            console.log("registered")
 
             if (sessionStorage.getItem("successful registeration") !== null) {
                 sessionStorage.removeItem("successful registeration")
@@ -109,7 +95,6 @@ $(document).ready(function () {
         } else {
             console.log("request failed")
         }
-
     }
 
     function objectifyForm(formArray) {
@@ -134,7 +119,7 @@ $(document).ready(function () {
         return response;
     }
 
-
+    
 })
 
 

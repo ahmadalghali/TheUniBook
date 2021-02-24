@@ -29,6 +29,9 @@
     <link rel="stylesheet" type="text/css" href="./Styles/Login/css/util.css">
     <link rel="stylesheet" type="text/css" href="./Styles/Login/css/main.css">
 
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <!-- <link rel="stylesheet" type="text/css" href="css/other/main.css"> -->
 
     <!-- <link rel="stylesheet" href="css/index.css"> -->
@@ -40,7 +43,7 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <form method="post" class="login100-form validate-form" onsubmit="login()">
+                <form id="loginForm" class="login100-form validate-form">
 
                     <span class="login100-form-title p-b-26">
                         Welcome
@@ -49,9 +52,11 @@
                     <span class="login100-form-title p-b-48">
                         <i class="zmdi zmdi-font"></i>
                     </span>
+                    
+<!-- data-validate="Valid email is: a@b.c" -->
 
-                    <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
-                        <input id="email_field" class="input100" type="text" asp-for="User.Email">
+                    <div class="wrap-input100 validate-input" >
+                        <input id="email_field" name="email" class="input100" type="text" asp-for="User.Email" required>
                         <span class="focus-input100" data-placeholder="Email"></span>
                     </div>
 
@@ -59,7 +64,7 @@
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
                         </span>
-                        <input id="password_field" class="input100" type="password" asp-for="User.Password">
+                        <input id="password_field" name="password" class="input100" type="password" asp-for="User.Password" required>
                         <span class="focus-input100" data-placeholder="Password"></span>
                     </div>
 
@@ -110,6 +115,9 @@
     <!--===============================================================================================-->
     <script src="./Styles/Login/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script src="./Styles/Login/js/main.js"></script>
     <script src="js/index.js"></script>
 </body>

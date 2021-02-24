@@ -27,6 +27,7 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="./Styles/Login/css/util.css">
     <link rel="stylesheet" type="text/css" href="./Styles/Login/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <!-- <link rel="stylesheet" type="text/css" href="css/other/main.css"> -->
     <!--===============================================================================================-->
@@ -36,34 +37,31 @@
 
 <body>
 
-
-
-
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <form class="login100-form validate-form" onsubmit="return validateForm(this)" method="post">
+                <form id="registerForm" class="login100-form validate-form">
                     <span class="login100-form-title p-b-26">
                         Welcome
                     </span>
 
 
                     <div class="wrap-input100 validate-input" data-validate="Please enter your first name">
-                        <input id="email_field" class="input100" type="text" asp-for="User.Firstname">
+                        <input  id="email_field" name="firstname" class="input100" type="text" asp-for="User.Firstname" required>
                         <span class="focus-input100" data-placeholder="First Name"></span>
                     </div>
 
 
 
                     <div class="wrap-input100 validate-input" data-validate="Please enter your last name">
-                        <input id="email_field" class="input100" type="text" asp-for="User.Lastname">
+                        <input id="email_field" name="lastname"  class="input100" type="text" asp-for="User.Lastname" required>
                         <span class="focus-input100" data-placeholder="Last Name"></span>
                     </div>
 
 
 
                     <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
-                        <input id="email_field" class="input100" type="text" asp-for="User.Email">
+                        <input id="email_field"name="email"  class="input100" type="email" asp-for="User.Email" required>
                         <span class="focus-input100" data-placeholder="Email"></span>
                     </div>
 
@@ -71,7 +69,7 @@
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
                         </span>
-                        <input id="password_field" class="input100" type="password" asp-for="User.Password">
+                        <input id="password_field"  name="password" class="input100" type="password" asp-for="User.Password" required>
                         <span class="focus-input100" data-placeholder="Password"></span>
                     </div>
 
@@ -79,23 +77,23 @@
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
                         </span>
-                        <input id="confirm_password_field" class="input100" type="password" asp-for="User.Password">
+                        <input id="confirm_password_field" class="input100" type="password" asp-for="User.Password" required>
                         <span class="focus-input100" data-placeholder="Confirm Password"></span>
                     </div>
 
 
                     <div>
-                        <select class="wrap-input100 validate-input" id="department_dropdown" asp-items="@Model.Options"
+                        <select id="departmentDropdown" name="departmentId" class="wrap-input100 validate-input" asp-items="@Model.Options"
                             asp-for="User.DepartmentId">
-                            <option id="default_department" disabled="disabled" selected="selected">Choose Department
-                            </option>
+                            <!-- <option id="default_department" disabled="disabled" selected="selected">Choose Department
+                            </option> -->
                         </select>
                         <div class="select-dropdown"></div>
                     </div>
 
 
                     <div class="form-check">
-                        <input type="checkbox" name="agree" id="agree" class="agree-term" value="yes" />
+                        <input type="checkbox" name="agree" id="agree" class="agree-term" value="yes" required/>
                         <label for="agree">I agree to the <a href="#" class="term-service">Terms and
                                 Conditions</a></label>
                         <div style="visibility:hidden; color:red" id="agree_chk_error">
@@ -107,7 +105,7 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button id="login_btn" class="login100-form-btn" onclick="form">
+                            <button id="btnRegister" class="login100-form-btn" type="submit">
                                 Register
                             </button>
                         </div>
@@ -123,7 +121,7 @@
 
                         </span>
 
-                        <a id="sign_up" class="txt2" href="/">
+                        <a class="txt2" href="/">
                             Login Now
                         </a>
                     </div>
@@ -152,6 +150,8 @@
     <!--===============================================================================================-->
     <script src="./Styles/Login/js/main.js"></script>
     <script src="./Styles/Login/js/terms.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script src="js/register.js"></script>
 </body>
 

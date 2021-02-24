@@ -39,9 +39,10 @@
                     <img class="profile-image mb-3 rounded-circle mx-auto" src="./Styles/Home/assets/images/profile.png"
                         alt="image">
 
-                    <div class="bio mb-3">Name here!</div>
-                    <div class="bio mb-3">Role here!</div>
-                    <div class="bio mb-3">Departement here!</div>
+                    <div id="fullname" class="bio mb-3">Name here!</div>
+                    <div id="role" class="bio mb-3">Role here!</div>
+                    <div id="department" class="bio mb-3">Departement here!</div>
+
                     <ul class="social-list list-inline py-3 mx-auto">
                         <li class="list-inline-item"><a href="Add_Idea"> <i class="fas fa-envelope fa-lg"></i> </a>
                         </li>
@@ -56,7 +57,7 @@
 
 
                 <div class="my-2 my-md-3">
-                    <a class="btn btn-primary" target="_blank">Log Out</a>
+                    <a id="btnLogout" class="btn btn-primary" target="_blank">Log Out</a>
                 </div>
             </div>
         </nav>
@@ -158,6 +159,10 @@
     <script src="./Styles/Home/assets/plugins/popper.min.js"></script>
     <script src="./Styles/Home/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="./Styles/Home/assets/js/demo/style-switcher.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
     <script src="js/home.js"></script>
 
 </body>

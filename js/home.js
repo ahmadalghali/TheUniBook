@@ -1,16 +1,21 @@
 $(document).ready(function () {
 
-    let user = JSON.parse(localStorage.getItem("user"))
 
+    let user = JSON.parse(sessionStorage.getItem("user"))
 
-    console.log(user)
-    greetUser(user)
+    if (user !== null && user !== undefined){
+            console.log(user)
+        greetUser(user)
+    }else{
+        location.href = "/"
+    }
+
 
 
     
 
     function greetUser(user) {
-        $(document.body).append(`<h1>Welcome ${user.firstname}</h1>`)
+        $(document.body).append(`<h1>Welcome ${user.email}</h1>`)
     }
 
 })

@@ -1,4 +1,9 @@
 
+
+
+
+
+
 $(document).ready(function(){
 
 
@@ -106,4 +111,29 @@ function showAlert(type, message, duration = 5000){
     }, duration);
 }
 
+
+
+
+    function validateForm() {
+        var departmentDropdown = document.getElementById("department_dropdown");
+
+        if (departmentDropdown.selectedIndex === 0) {
+            alert("Please choose a department")
+            return;
+        }
+        console.log("checkbox checked is ", form.agree.checked);
+        if (!form.agree.checked) {
+            document.getElementById('agree_chk_error').style.visibility = 'visible';
+            return false;
+        }
+        else {
+            document.getElementById('agree_chk_error').style.visibility = 'hidden';
+            return true;
+        }
+
+
+
 })
+
+
+

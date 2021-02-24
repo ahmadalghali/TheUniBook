@@ -1,18 +1,117 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <title>Login</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="./Styles/Login/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./Styles/Login/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./Styles/Login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./Styles/Login/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./Styles/Login/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./Styles/Login/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./Styles/Login/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./Styles/Login/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./Styles/Login/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./Styles/Login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="./Styles/Login/css/main.css">
+
+    <!-- <link rel="stylesheet" type="text/css" href="css/other/main.css"> -->
+
+    <!-- <link rel="stylesheet" href="css/index.css"> -->
+
 </head>
+
 <body>
 
-    <h1>Home</h1>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <form method="post" class="login100-form validate-form" onsubmit="login()">
 
-    <a id="btnRegister" class="btn btn-secondary" href="register.html">Register</a>
-    <a id="btnSignIn" class="btn btn-primary" href="login.html">Sign in</a>
+                    <span class="login100-form-title p-b-26">
+                        Welcome
+                    </span>
 
+                    <span class="login100-form-title p-b-48">
+                        <i class="zmdi zmdi-font"></i>
+                    </span>
+
+                    <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
+                        <input id="email_field" class="input100" type="text" asp-for="User.Email">
+                        <span class="focus-input100" data-placeholder="Email"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <span class="btn-show-pass">
+                            <i class="zmdi zmdi-eye"></i>
+                        </span>
+                        <input id="password_field" class="input100" type="password" asp-for="User.Password">
+                        <span class="focus-input100" data-placeholder="Password"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button type="submit" id="login_btn" class="login100-form-btn">
+                                Login
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-center p-t-115">
+                        <a id="forgot_password" class="txt1" href="#">
+                            Forgot your password?
+                        </a>
+                        <br>
+                        <span class="txt1">
+                            Don’t have an account?
+
+                        </span>
+
+                        <a id="sign_up" class="txt2" href="register.html">
+                            Sign Up
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="./Styles/Login/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="./Styles/Login/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="./Styles/Login/vendor/bootstrap/js/popper.js"></script>
+    <script src="./Styles/Login/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="./Styles/Login/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="./Styles/Login/vendor/daterangepicker/moment.min.js"></script>
+    <script src="./Styles/Login/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="./Styles/Login/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="./Styles/Login/js/main.js"></script>
+    <script src="js/index.js"></script>
 </body>
+
 </html>

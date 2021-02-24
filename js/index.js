@@ -66,7 +66,7 @@ $(document).ready(function () {
         console.log(loginResponse)
         if (loginResponse.message == "logged in") {
 
-            sessionStorage.setItem("user", JSON.stringify(loginResponse.user))
+            sessionStorage.setItem("session", JSON.stringify(loginResponse))
             location.href = "home.html"
 
         } else {

@@ -2,13 +2,14 @@ $(document).ready(function () {
 
 
 
-    let user = JSON.parse(sessionStorage.getItem("user"))
+    let session = JSON.parse(sessionStorage.getItem("session"))
     setUserDetails()
 
     function setUserDetails() {
 
-        if (user !== null && user !== undefined) {
-            console.log(user)
+        if (session !== null && session !== undefined) {
+            console.log(session)
+            let user = session.user
             $("#fullname").html(`${user.firstname} ${user.lastname}`)
             if (user.role === null) {
                 $("#role").html(`Staff`)
@@ -16,7 +17,7 @@ $(document).ready(function () {
                 $("#role").html(`${user.role}`)
             }
 
-            $("#department").html(`${user.department.name}`)
+            $("#department").html(`${session.department.name}`)
 
 
 

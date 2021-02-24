@@ -119,7 +119,7 @@ $(document).ready(function () {
 
         console.log("Post request sent")
 
-        let response = await fetch(`http://localhost:8080${endpoint}`, {
+        let response = await fetch(`${url}${endpoint}`, {
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: data

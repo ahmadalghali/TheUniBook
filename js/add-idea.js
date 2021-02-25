@@ -2,14 +2,17 @@ $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
 
+    let session;
+
     validateUserSession()
 
 
     function validateUserSession() {
-        let session = JSON.parse(sessionStorage.getItem("session"))
+
+        session = JSON.parse(sessionStorage.getItem("session"))
 
         if (session !== null && session !== undefined) {
-            setUserDetails()
+
         } else {
             location.href = "/"
         }
@@ -35,8 +38,10 @@ $(document).ready(function () {
     async function submitIdea(e) {
         e.preventDefault()
 
+        console
+
         var addIdeaRequest = {
-            userId: 115,
+            userId: session.user.id,
             title: title.value,
             description: description.value,
             categoryId: categoryDropdown.value, 
@@ -47,7 +52,10 @@ $(document).ready(function () {
         var addIdeaResponse = await post("/ideas", JSON.stringify(addIdeaRequest))
 
         if (addIdeaResponse.message === "added") {
-            console.log(addIdeaResponse);
+            
+            sessionStorage.setItem("IDEA_ADDED_MESSAGE", true)
+            location.href = "home.html"
+            
         }
         else {
             console.log(addIdeaResponse);

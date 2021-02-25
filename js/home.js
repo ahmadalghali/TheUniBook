@@ -2,15 +2,22 @@ $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
 
-    let session = JSON.parse(sessionStorage.getItem("session"))
+    let session; 
 
     validateUserSession()
     populateCategoryDropdown()
+
+    if(sessionStorage.getItem("IDEA_ADDED_MESSAGE") !== null){
+        toastr.success("Idea added!")
+
+        sessionStorage.removeItem("IDEA_ADDED_MESSAGE")
+    }
 
     displayIdeas()
 
     function validateUserSession() {
         // let session = JSON.parse(sessionStorage.getItem("session"))
+        session = JSON.parse(sessionStorage.getItem("session"))
 
         if (session !== null && session !== undefined) {
             setUserDetails()

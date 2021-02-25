@@ -108,11 +108,11 @@ async function getIdeas(){
              <div class="item">
                     <div class="media">
                         <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
-                            src="assets/images/blog/blog-post-thumb-6.jpg" alt="image">
+                            src="./other/assets/images/default-user-photo.png" alt="image">
                         <div class="media-body">
                             <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.userId}</span></div>
-                            <div class="intro">${idea.description}</div>
+                            <div class="intro">${idea.description}</div><br>
                             <li class="list-inline-item"><a href="#"> <i class="fas fa-file-download fa-lg"></i> </a>
                             </li>
                             <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>

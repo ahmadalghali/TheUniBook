@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-
+    let url = "https://theunibook.herokuapp.com"
 
     let session = JSON.parse(sessionStorage.getItem("session"))
     setUserDetails()
@@ -31,7 +31,7 @@ $(document).ready(function () {
         var categoryDropdown = $("#category_dropdown");
         categoryDropdown.empty();
         categoryDropdown.append('<option selected="selected" disabled>Choose Category</option>');
-        await fetch(`http://localhost:8080/categories`).then(response => response.json()).then(categories => {
+        await fetch(`${url}/categories`).then(response => response.json()).then(categories => {
             let option;
 
             for (let i = 0; i < categories.length; i++) {

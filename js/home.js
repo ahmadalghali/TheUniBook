@@ -1,9 +1,10 @@
 $(document).ready(function () {
 
-
+    let url = "https://theunibook.herokuapp.com"
 
     let session = JSON.parse(sessionStorage.getItem("session"))
     setUserDetails()
+    populateCategoryDropdown()
 
     function setUserDetails() {
 
@@ -26,6 +27,33 @@ $(document).ready(function () {
         }
     }
 
+    async function populateCategoryDropdown(){
+        var categoryDropdown = $("#category_dropdown");
+        categoryDropdown.empty();
+        categoryDropdown.append('<option selected="selected" disabled>Choose Category</option>');
+        await fetch(`${url}/categories`).then(response => response.json()).then(categories => {
+            let option;
+
+            for (let i = 0; i < categories.length; i++) {
+            option = document.createElement('option');
+            option.value = categories[i].id;
+            option.text = categories[i].category;
+            categoryDropdown.append(option);
+        }  
+    })
+    }
+    async function post(endpoint, data) {
+
+        console.log("Post request sent")
+
+        let response = await fetch(`${url}${endpoint}`, {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: data
+        }).then(response => response.json());
+
+        return response;
+    }
 
     $("#btnLogout").click(() => {
 

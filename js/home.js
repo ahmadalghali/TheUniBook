@@ -97,6 +97,7 @@ async function getIdeas(){
 
         let ideasContainer = document.getElementById("ideasContainer")
 
+
         let htmlString = ''
 
 
@@ -130,7 +131,7 @@ async function getIdeas(){
                 </div>
             
             `
-            htmlString += '</div>'
+            htmlString += '</div> <br><br>'
 
             ideasContainer.innerHTML = htmlString
 

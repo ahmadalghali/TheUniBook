@@ -2,9 +2,9 @@ $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
 
-    let session; 
+    let session = JSON.parse(sessionStorage.getItem("session")); 
 
-    validateUserSession()
+    // validateUserSession()
     populateCategoryDropdown()
 
     if(sessionStorage.getItem("IDEA_ADDED_MESSAGE") !== null){
@@ -15,16 +15,16 @@ $(document).ready(function () {
 
     displayIdeas()
 
-    function validateUserSession() {
-        // let session = JSON.parse(sessionStorage.getItem("session"))
-        session = JSON.parse(sessionStorage.getItem("session"))
+    // function validateUserSession() {
+    //     // let session = JSON.parse(sessionStorage.getItem("session"))
+    //     session = JSON.parse(sessionStorage.getItem("session"))
 
-        if (session !== null && session !== undefined) {
+    //     if (session !== null && session !== undefined) {
             setUserDetails()
-        } else {
-            location.href = "/"
-        }
-    }
+    //     } else {
+    //         location.href = "/"
+    //     }
+    // }
 
     function setUserDetails() {
 

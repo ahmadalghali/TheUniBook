@@ -2,21 +2,7 @@ $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
 
-    let session;
-
-    validateUserSession()
-
-
-    function validateUserSession() {
-
-        session = JSON.parse(sessionStorage.getItem("session"))
-
-        if (session !== null && session !== undefined) {
-
-        } else {
-            location.href = "/"
-        }
-    }
+    let session = JSON.parse(sessionStorage.getItem("session"))
 
 
 
@@ -93,14 +79,5 @@ $(document).ready(function () {
         return response;
     }
 
-
-    function objectifyForm(formArray) {
-        //serialize data function
-        var returnArray = {};
-        for (var i = 0; i < formArray.length; i++) {
-            returnArray[formArray[i]['name']] = formArray[i]['value'];
-        }
-        return returnArray;
-    }
 
 })

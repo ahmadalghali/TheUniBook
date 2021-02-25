@@ -2,12 +2,12 @@ $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
 
-    let session = JSON.parse(sessionStorage.getItem("session")); 
+    let session = JSON.parse(sessionStorage.getItem("session"));
 
     // validateUserSession()
     populateCategoryDropdown()
 
-    if(sessionStorage.getItem("IDEA_ADDED_MESSAGE") !== null){
+    if (sessionStorage.getItem("IDEA_ADDED_MESSAGE") !== null) {
         toastr.success("Idea added!")
 
         sessionStorage.removeItem("IDEA_ADDED_MESSAGE")
@@ -20,7 +20,7 @@ $(document).ready(function () {
     //     session = JSON.parse(sessionStorage.getItem("session"))
 
     //     if (session !== null && session !== undefined) {
-            setUserDetails()
+    setUserDetails()
     //     } else {
     //         location.href = "/"
     //     }
@@ -85,13 +85,13 @@ $(document).ready(function () {
 
 
 
-async function getIdeas(){
-    let ideas = await fetch(`${url}/ideas`).then(response => response.json())
+    async function getIdeas() {
+        let ideas = await fetch(`${url}/ideas`).then(response => response.json())
 
-    return ideas
-}
+        return ideas
+    }
 
-    async function displayIdeas(){
+    async function displayIdeas() {
 
         let ideas = await getIdeas()
 
@@ -101,10 +101,12 @@ async function getIdeas(){
         let htmlString = ''
 
 
-        for(let idea of ideas){
+        for (let idea of ideas) {
 
             htmlString += `
             
+                 <br>
+
              <div class="item">
                     <div class="media">
                         <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
@@ -129,16 +131,23 @@ async function getIdeas(){
                     </div>
                     <!--//media-->
                 </div>
+                
+            <br><hr>
+                
             
             `
-            htmlString += '</div> <br><br>'
 
-            ideasContainer.innerHTML = htmlString
+            // if ((i + 1) != (ideas.length)) {
+            //     htmlString += '<br><hr>'
+            // }
+
 
         }
 
 
+        // htmlString += '</div> <br>'
 
+        ideasContainer.innerHTML = htmlString
 
     }
 

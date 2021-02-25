@@ -16,7 +16,7 @@ $(document).ready(function () {
 
 
 
-    registerForm.addEventListener("submit", register)
+    registerForm.addEventListener("submit", register())
 
 
     async function populateDepartmentDropdown(){

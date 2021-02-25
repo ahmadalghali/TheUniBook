@@ -3,31 +3,36 @@ $(document).ready(function () {
     let url = "https://theunibook.herokuapp.com"
 
     let session = JSON.parse(sessionStorage.getItem("session"))
-    setUserDetails()
+
+    validateUserSession()
     populateCategoryDropdown()
 
-    function setUserDetails() {
+    displayIdeas()
+
+    function validateUserSession() {
+        // let session = JSON.parse(sessionStorage.getItem("session"))
 
         if (session !== null && session !== undefined) {
-            console.log(session)
-            let user = session.user
-            $("#fullname").html(`${user.firstname} ${user.lastname}`)
-            if (user.role === null) {
-                $("#role").html(`Staff`)
-            } else {
-                $("#role").html(`${user.role}`)
-            }
-
-            $("#department").html(`${session.department.name}`)
-
-
-
+            setUserDetails()
         } else {
             location.href = "/"
         }
     }
 
-    async function populateCategoryDropdown(){
+    function setUserDetails() {
+
+        let user = session.user
+        $("#fullname").html(`${user.firstname} ${user.lastname}`)
+        if (user.role === null) {
+            $("#role").html(`Staff`)
+        } else {
+            $("#role").html(`${user.role}`)
+        }
+
+        $("#department").html(`${session.department.name}`)
+    }
+
+    async function populateCategoryDropdown() {
         var categoryDropdown = $("#category_dropdown");
         categoryDropdown.empty();
         categoryDropdown.append('<option selected="selected" disabled>Choose Category</option>');
@@ -36,12 +41,12 @@ $(document).ready(function () {
             let option;
 
             for (let i = 0; i < categories.length; i++) {
-            option = document.createElement('option');
-            option.value = categories[i].id;
-            option.text = categories[i].category;
-            categoryDropdown.append(option);
-        }  
-    })
+                option = document.createElement('option');
+                option.value = categories[i].id;
+                option.text = categories[i].category;
+                categoryDropdown.append(option);
+            }
+        })
     }
     async function post(endpoint, data) {
 
@@ -70,5 +75,64 @@ $(document).ready(function () {
             }
         })
     })
+
+
+
+async function getIdeas(){
+    let ideas = await fetch(`${url}/ideas`).then(response => response.json())
+
+    return ideas
+}
+
+    async function displayIdeas(){
+
+        let ideas = await getIdeas()
+
+        let ideasContainer = document.getElementById("ideasContainer")
+
+        let htmlString = ''
+
+
+        for(let idea of ideas){
+
+            htmlString += `
+            
+             <div class="item">
+                    <div class="media">
+                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
+                            src="assets/images/blog/blog-post-thumb-6.jpg" alt="image">
+                        <div class="media-body">
+                            <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
+                            <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.userId}</span></div>
+                            <div class="intro">${idea.description}</div>
+                            <li class="list-inline-item"><a href="#"> <i class="fas fa-file-download fa-lg"></i> </a>
+                            </li>
+                            <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
+                            <span class="bio mb-3">0</span>
+
+                            &nbsp;&nbsp;<li class="list-inline-item"><a href="#"> <i
+                                        class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">0</span>
+
+                            &nbsp;&nbsp;<a class="more-link" href="">Read comments &rarr;</a>
+
+                        </div>
+                        <!--//media-body-->
+
+                    </div>
+                    <!--//media-->
+                </div>
+            
+            `
+            htmlString += '</div>'
+
+            ideasContainer.innerHTML = htmlString
+
+        }
+
+
+
+
+    }
+
 
 })

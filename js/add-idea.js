@@ -1,59 +1,76 @@
 $(document).ready(function () {
 
-let url = "https://theunibook.herokuapp.com"
+    let url = "https://theunibook.herokuapp.com"
 
-var title = document.getElementById("title")
-var description = document.getElementById("description")
-var file = document.getElementById("document")
-var categoryDropdown = document.getElementById("categoryDropdown")
-var btnSubmit = document.getElementById("btnSubmit")
-
-populateCategoryDropdown();
+    validateUserSession()
 
 
-btnSubmit.addEventListener("click", submitIdea);
+    function validateUserSession() {
+        let session = JSON.parse(sessionStorage.getItem("session"))
 
-
-async function submitIdea(){
-    if(!$("#categoryDropdown").valid()){
-         return;
-    }
-    var addIdeaRequest = {
-        userId: 115,
-        title: title.value,
-        description: description.value,
-        categoryId: categoryDropdown.value,
-        documentPath: null
+        if (session !== null && session !== undefined) {
+            setUserDetails()
+        } else {
+            location.href = "/"
+        }
     }
 
 
-   var addIdeaResponse = await post("/ideas", JSON.stringify(addIdeaRequest))
 
-    if(addIdeaResponse.message === "added"){
-        console.log(addIdeaResponse);
+    var title = document.getElementById("title")
+    var description = document.getElementById("description")
+    var file = document.getElementById("document")
+    var categoryDropdown = document.getElementById("categoryDropdown")
+    var btnSubmit = document.getElementById("btnSubmit")
+
+    let addIdeaForm = document.getElementById("addIdeaForm")
+
+    populateCategoryDropdown();
+
+
+    addIdeaForm.addEventListener("submit", submitIdea)
+
+
+
+    async function submitIdea(e) {
+        e.preventDefault()
+
+        var addIdeaRequest = {
+            userId: 115,
+            title: title.value,
+            description: description.value,
+            categoryId: categoryDropdown.value, 
+            documentPath: null
+        }
+
+
+        var addIdeaResponse = await post("/ideas", JSON.stringify(addIdeaRequest))
+
+        if (addIdeaResponse.message === "added") {
+            console.log(addIdeaResponse);
+        }
+        else {
+            console.log(addIdeaResponse);
+        }
+
     }
-    else{
-        console.log(addIdeaResponse);
+
+    async function populateCategoryDropdown() {
+        var categoryDropdown = $("#categoryDropdown");
+        categoryDropdown.empty();
+        categoryDropdown.append('<option value="" >Choose Category</option>');
+
+        await fetch(`${url}/categories`).then(response => response.json()).then(categories => {
+            let option;
+
+            for (let i = 0; i < categories.length; i++) {
+                option = document.createElement('option');
+                option.value = categories[i].id;
+                option.text = categories[i].category;
+                categoryDropdown.append(option);
+            }
+        })
     }
-
-}
-
-async function populateCategoryDropdown(){
-    var categoryDropdown = $("#categoryDropdown");
-    categoryDropdown.empty();
-    categoryDropdown.append('<option selected="selected" disabled>Choose Category</option>');
-
-    await fetch(`${url}/categories`).then(response => response.json()).then(categories => {
-        let option;
-
-        for (let i = 0; i < categories.length; i++) {
-        option = document.createElement('option');
-        option.value = categories[i].id;
-        option.text = categories[i].category;
-        categoryDropdown.append(option);
-    }  
-})
-}
 
     async function post(endpoint, data) {
 
@@ -66,6 +83,16 @@ async function populateCategoryDropdown(){
         }).then(response => response.json());
 
         return response;
+    }
+
+
+    function objectifyForm(formArray) {
+        //serialize data function
+        var returnArray = {};
+        for (var i = 0; i < formArray.length; i++) {
+            returnArray[formArray[i]['name']] = formArray[i]['value'];
+        }
+        return returnArray;
     }
 
 })

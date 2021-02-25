@@ -133,7 +133,6 @@ $(document).ready(function () {
                 </div>
                 
             <br><hr>
-                
             
             `
 

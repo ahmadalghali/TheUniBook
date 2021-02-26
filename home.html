@@ -79,19 +79,35 @@
             <div class="container text-center">
                 <h2 class="heading">Welcome to Unibook</h2>
 
-
-                <div class="wrap-input100 input100-select">
-                    <div class="box">
+<br>
+                
+                    <span class="box">
                         <select class="selection-2 " name="service" id="category_dropdown" asp-items="@Model.Options"
                             asp-for="Idea.CategoryId">
                             <option id="default_option" disabled="disabled" selected="selected">Choose category</option>
                         </select>
-                    </div>
+                    </span>
                     <span class="focus-input100"></span>
-                </div>
-
+                
+                    <span class="box">
+                        <select class="selection-2 " name="service" id="category_dropdown" asp-items="@Model.Options"
+                            asp-for="Idea.CategoryId">
+                            <option id="default_option" disabled="disabled" selected="selected">Filter</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </span>
+                    <span class="focus-input100"></span>
 
             </div>
+
+
+
+
+
+            
             <!--//container-->
         </section>
         <section class="blog-list px-3 py-5 p-md-5">
@@ -109,7 +125,7 @@
                             <h3 class="title mb-1"><a href="">Title</a></h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">Name of
                                     the publisher here!</span></div>
-                            <div class="intro">Description</div>
+                            <div class="intro" >Description</div>
                             <li class="list-inline-item"><a href="#"> <i class="fas fa-file-download fa-lg"></i> </a>
                             </li>
                             <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
@@ -125,10 +141,9 @@
 
                     </div>
                 </div>
-              
+            </section>
                 <!--//item-->
-                <br>
-                <br>
+                
                 
                 <!--pagination field-->
                 <div class="pagination">
@@ -157,7 +172,7 @@
                 </div>
 
             </div>
-        </section>
+        
 
 
 
@@ -176,7 +191,7 @@
     <link rel="stylesheet" href="sweetalert2.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+    <script src="./Styles/Home/assets/js/pagination.js"></script>
 
     <script src="js/home.js"></script>
 

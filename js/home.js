@@ -86,7 +86,9 @@ $(document).ready(function () {
 
 
     async function getIdeasPaginated(page) {
-        let ideas = await fetch(`${url}/ideas/page=${page}`).then(response => response.json())
+        // let ideas = await fetch(`${url}/ideas/page=${page}`).then(response => response.json())
+
+        let ideas = await fetch(`${url}/ideas`).then(response => response.json())
 
         return ideas
     }

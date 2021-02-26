@@ -2,12 +2,12 @@ $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
 
-    let session; 
+    let session = JSON.parse(sessionStorage.getItem("session"));
 
-    validateUserSession()
+    // validateUserSession()
     populateCategoryDropdown()
 
-    if(sessionStorage.getItem("IDEA_ADDED_MESSAGE") !== null){
+    if (sessionStorage.getItem("IDEA_ADDED_MESSAGE") !== null) {
         toastr.success("Idea added!")
 
         sessionStorage.removeItem("IDEA_ADDED_MESSAGE")
@@ -15,16 +15,16 @@ $(document).ready(function () {
 
     displayIdeas()
 
-    function validateUserSession() {
-        // let session = JSON.parse(sessionStorage.getItem("session"))
-        session = JSON.parse(sessionStorage.getItem("session"))
+    // function validateUserSession() {
+    //     // let session = JSON.parse(sessionStorage.getItem("session"))
+    //     session = JSON.parse(sessionStorage.getItem("session"))
 
-        if (session !== null && session !== undefined) {
-            setUserDetails()
-        } else {
-            location.href = "/"
-        }
-    }
+    //     if (session !== null && session !== undefined) {
+    setUserDetails()
+    //     } else {
+    //         location.href = "/"
+    //     }
+    // }
 
     function setUserDetails() {
 
@@ -36,7 +36,7 @@ $(document).ready(function () {
             $("#role").html(`${user.role}`)
         }
 
-        $("#department").html(`${session.department.name}`)
+        $("#department").html(`${session.user.department.name}`)
     }
 
     async function populateCategoryDropdown() {
@@ -85,33 +85,39 @@ $(document).ready(function () {
 
 
 
-async function getIdeas(){
-    let ideas = await fetch(`${url}/ideas`).then(response => response.json())
+    async function getIdeasPaginated(page) {
+        // let ideas = await fetch(`${url}/ideas/page=${page}`).then(response => response.json())
 
-    return ideas
-}
+        let ideas = await fetch(`${url}/ideas`).then(response => response.json())
 
-    async function displayIdeas(){
+        return ideas
+    }
 
-        let ideas = await getIdeas()
+    async function displayIdeas() {
+
+        let ideas = await getIdeasPaginated(1)
 
         let ideasContainer = document.getElementById("ideasContainer")
+
+        
 
         let htmlString = ''
 
 
-        for(let idea of ideas){
+        for (let idea of ideas) {
 
             htmlString += `
             
+                 <br>
+
              <div class="item">
                     <div class="media">
                         <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
-                            src="assets/images/blog/blog-post-thumb-6.jpg" alt="image">
+                            src="./other/assets/images/default-user-photo.png" alt="image">
                         <div class="media-body">
                             <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
-                            <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.userId}</span></div>
-                            <div class="intro">${idea.description}</div>
+                            <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
+                            <div class="intro">${idea.description}</div><br>
                             <li class="list-inline-item"><a href="#"> <i class="fas fa-file-download fa-lg"></i> </a>
                             </li>
                             <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
@@ -128,16 +134,22 @@ async function getIdeas(){
                     </div>
                     <!--//media-->
                 </div>
+                
+            <br><hr>
             
             `
-            htmlString += '</div>'
 
-            ideasContainer.innerHTML = htmlString
+            // if ((i + 1) != (ideas.length)) {
+            //     htmlString += '<br><hr>'
+            // }
+
 
         }
 
 
+        // htmlString += '</div> <br>'
 
+        ideasContainer.innerHTML = htmlString
 
     }
 

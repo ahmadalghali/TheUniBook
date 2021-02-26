@@ -11,14 +11,15 @@ $(document).ready(function () {
 
     let session = JSON.parse(sessionStorage.getItem("session"));
 
-    // validateUserSession()
-    populateCategoryDropdown()
-
     if (sessionStorage.getItem("IDEA_ADDED_MESSAGE") !== null) {
         toastr.success("Idea added!")
 
         sessionStorage.removeItem("IDEA_ADDED_MESSAGE")
     }
+    // validateUserSession()
+    populateCategoryDropdown()
+
+
 
     displayIdeas(page)
 

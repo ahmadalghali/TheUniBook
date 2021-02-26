@@ -10,7 +10,6 @@ $(document).ready(function () {
     var description = document.getElementById("description")
     var file = document.getElementById("document")
     var categoryDropdown = document.getElementById("categoryDropdown")
-    var btnSubmit = document.getElementById("btnSubmit")
 
     let addIdeaForm = document.getElementById("addIdeaForm")
 

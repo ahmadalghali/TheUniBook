@@ -91,12 +91,19 @@ $(document).ready(function () {
         return ideas
     }
 
+    async function getIdeasPaginated(page) {
+        let ideas = await fetch(`${url}/ideas/page=${page}`).then(response => response.json())
+
+        return ideas
+    }
+
     async function displayIdeas() {
 
-        let ideas = await getIdeas()
+        let ideas = await getIdeasPaginated(2)
 
         let ideasContainer = document.getElementById("ideasContainer")
 
+        
 
         let htmlString = ''
 

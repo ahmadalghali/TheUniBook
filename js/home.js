@@ -2,6 +2,13 @@ $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
 
+    let page = 1
+
+
+    let pagesDiv = document.getElementById("pagesDiv")
+
+    let pageCount;
+
     let session = JSON.parse(sessionStorage.getItem("session"));
 
     // validateUserSession()
@@ -13,7 +20,7 @@ $(document).ready(function () {
         sessionStorage.removeItem("IDEA_ADDED_MESSAGE")
     }
 
-    displayIdeas()
+    displayIdeas(page)
 
     // function validateUserSession() {
     //     // let session = JSON.parse(sessionStorage.getItem("session"))
@@ -88,21 +95,83 @@ $(document).ready(function () {
     async function getIdeasPaginated(page) {
         // let ideas = await fetch(`${url}/ideas/page=${page}`).then(response => response.json())
 
-        let ideas = await fetch(`${url}/ideas`).then(response => response.json())
+        let getIdeasByDepartmentPaginatedResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}`).then(response => response.json())
+
+        pageCount = getIdeasByDepartmentPaginatedResponse.pageCount
+        let ideas = getIdeasByDepartmentPaginatedResponse.ideas
+
+        console.log(pageCount)
 
         return ideas
     }
 
-    async function displayIdeas() {
 
-        let ideas = await getIdeasPaginated(1)
+    function displayPageFooter() {
+
+
+        pagesDiv.innerHTML = ''
+
+        //     let htmlString = ' '
+
+        //     htmlString += `
+        //         <div class="pagination-hover-overlay"></div> `
+        //    for (let i = 0; i < pageCount; i++) {
+
+        //        htmlString += `
+
+        //        <a class="pagination-page-number" style=".pagination-page-number{cursor: pointer;}">${i+1}</a>
+        //        `
+        //    }
+
+        // let overlayDiv = document.createElement('div')
+        // overlayDiv.className = "pagination-hover-overlay"
+
+
+        // pagesDiv.append(overlayDiv)
+
+        for (let i = 0; i < pageCount; i++) {
+
+            let aPageElement = document.createElement('a')
+            aPageElement.className = "pagination-page-number"
+            aPageElement.text = i + 1
+
+            pagesDiv.append(aPageElement)
+        }
+
+        //     htmlString += `
+
+        //    <a onclick="displayIdeas(${i + 1})" class="pagination-page-number" style=".pagination-page-number{cursor: pointer;}">${i + 1}</a>
+
+        //    `
+
+        // pagesDiv.innerHTML = htmlString;
+
+        let pages = Array.from(document.querySelectorAll(".pagination-page-number"));
+
+        pages.forEach(page => {
+
+            page.addEventListener("click", () => {
+                let pageNumber = page.text
+                displayIdeas(pageNumber)
+            })
+
+        })
+
+        console.log(htmlString)
+
+    }
+
+    async function displayIdeas(page) {
+
+        let ideas = await getIdeasPaginated(page)
 
         let ideasContainer = document.getElementById("ideasContainer")
 
-        
+
 
         let htmlString = ''
 
+        console.log(ideas)
 
         for (let idea of ideas) {
 
@@ -150,6 +219,8 @@ $(document).ready(function () {
         // htmlString += '</div> <br>'
 
         ideasContainer.innerHTML = htmlString
+        displayPageFooter()
+
 
     }
 

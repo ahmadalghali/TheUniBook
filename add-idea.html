@@ -2,8 +2,11 @@
 
 <head>
 
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Add Idea</title>
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="./Styles/Add_Idea/images/icons/favicon.ico" />
     <!--===============================================================================================-->
@@ -27,6 +30,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
+
     <script>
         let session = JSON.parse(sessionStorage.getItem("session"))
 
@@ -41,7 +45,7 @@
 
     <div class="container-contact100">
         <div class="wrap-contact100">
-            <form id="addIdeaForm" class="contact100-form validate-form" >
+            <form id="addIdeaForm" class="contact100-form validate-form">
                 <span class="contact100-form-title">
                     Add your idea
                 </span>
@@ -55,7 +59,8 @@
 
                 <div class="wrap-input100 validate-input" data-validate="Description is required">
                     <span class="label-input100">Description</span>
-                    <textarea id="description" class="input100" name="description" required placeholder="Your description here..."></textarea>
+                    <textarea id="description" class="input100" name="description" required
+                        placeholder="Your description here..."></textarea>
                     <span class="focus-input100"></span>
                 </div>
 
@@ -138,7 +143,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    
+
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
     <script>

@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
 
 
     <!-- FontAwesome JS-->
@@ -23,11 +23,11 @@
 
     <script>
 
-            let session = JSON.parse(sessionStorage.getItem("session"))
+        let session = JSON.parse(sessionStorage.getItem("session"))
 
-            if (session == null && session == undefined) {
-                location.href = "/"
-            }
+        if (session == null && session == undefined) {
+            location.href = "/"
+        }
     </script>
 </head>
 
@@ -79,27 +79,27 @@
             <div class="container text-center">
                 <h2 class="heading">Welcome to Unibook</h2>
 
-<br>
-                
-                    <span class="box">
-                        <select class="selection-2 " name="service" id="category_dropdown" asp-items="@Model.Options"
-                            asp-for="Idea.CategoryId">
-                            <option id="default_option" disabled="disabled" selected="selected">Choose category</option>
-                        </select>
-                    </span>
-                    <span class="focus-input100"></span>
-                
-                    <span class="box">
-                        <select class="selection-2 " name="service" id="category_dropdown" asp-items="@Model.Options"
-                            asp-for="Idea.CategoryId">
-                            <option id="default_option" disabled="disabled" selected="selected">Filter</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </span>
-                    <span class="focus-input100"></span>
+                <br>
+
+                <span class="box">
+                    <select class="selection-2 " name="service" id="category_dropdown" asp-items="@Model.Options"
+                        asp-for="Idea.CategoryId">
+                        <option id="default_option" disabled="disabled" selected="selected">Choose category</option>
+                    </select>
+                </span>
+                <span class="focus-input100"></span>
+
+                <span class="box">
+                    <select class="selection-2 " name="service" id="category_dropdown" asp-items="@Model.Options"
+                        asp-for="Idea.CategoryId">
+                        <option id="default_option" disabled="disabled" selected="selected">Filter</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </span>
+                <span class="focus-input100"></span>
 
             </div>
 
@@ -107,7 +107,7 @@
 
 
 
-            
+
             <!--//container-->
         </section>
         <section class="blog-list px-3 py-5 p-md-5">
@@ -120,12 +120,13 @@
                     <div class="media">
                         <!-- <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
                             src="assets/images/blog/blog-post-thumb-6.jpg" alt="image"> -->
-                            <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="./other/assets/images/default-user-photo.png" alt="image">
+                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
+                            src="./other/assets/images/default-user-photo.png" alt="image">
                         <div class="media-body">
                             <h3 class="title mb-1"><a href="">Title</a></h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">Name of
                                     the publisher here!</span></div>
-                            <div class="intro" >Description</div>
+                            <div class="intro">Description</div>
                             <li class="list-inline-item"><a href="#"> <i class="fas fa-file-download fa-lg"></i> </a>
                             </li>
                             <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
@@ -141,45 +142,50 @@
 
                     </div>
                 </div>
-            </section>
-                <!--//item-->
-                
-                
-                <!--pagination field-->
-                <div class="pagination">
-                    <div class="pagination-container">
-                        <div class="pagination-hover-overlay"></div>
-                        <a href="#0" class="pagination-prev">
-                            <span class="icon-pagination icon-pagination-prev">
-                                <i class="fas fa-arrow-left fa-lg"></i>
-                            </span>
-                        </a>
-        
-                        <a href="#0" class="pagination-page-number">1</a>
-                        <a href="#0" class="pagination-page-number">2</a>
-                        <a href="#0" class="pagination-page-number">3</a>
-                        <a href="#0" class="pagination-page-number">4</a>
-                        <a href="#0" class="pagination-page-number">5</a>
-                        <a href="#0" class="pagination-page-number">6</a>
-                        <a href="#0" class="pagination-page-number">7</a>
-        
-                        <a href="#0" class="pagination-next">
-                            <span class="icon-pagination icon-pagination-next">
-                                <i class="fas fa-arrow-right fa-lg"></i>
-                            </span>
-                        </a>
-                    </div>
-                </div>
+        </section>
+        <!--//item-->
 
+
+
+        <!--pagination field-->
+        <div class="pagination">
+
+            <div id="pagesDiv" class="pagination-container">
+                <div class="pagination-hover-overlay"></div>
+                <!-- 
+                <a href="#0" class="pagination-prev">
+                    <span class="icon-pagination icon-pagination-prev">
+                        <i class="fas fa-arrow-left fa-lg"></i>
+                    </span>
+                </a>
+
+                <a class="pagination-page-number">1</a>
+                <a class="pagination-page-number">2</a>
+                <a class="pagination-page-number">3</a>
+                <a class="pagination-page-number">4</a>
+                <a class="pagination-page-number">5</a>
+                <a class="pagination-page-number">6</a>
+                <a class="pagination-page-number">7</a>
+
+                <a href="#0" class="pagination-next">
+                    <span class="icon-pagination icon-pagination-next">
+                        <i class="fas fa-arrow-right fa-lg"></i>
+                    </span>
+                </a> -->
             </div>
-        
+
+        </div>
+
+        <br>
+    </div>
+
 
 
 
     </div>
     <!--//main-wrapper-->
 
-    
+
 
     <!-- Javascript -->
     <script src="./Styles/Home/assets/plugins/jquery-3.3.1.min.js"></script>
@@ -192,6 +198,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="./Styles/Home/assets/js/pagination.js"></script>
+
+
 
     <script src="js/home.js"></script>
 

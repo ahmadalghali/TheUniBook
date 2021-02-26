@@ -93,7 +93,7 @@ $(document).ready(function () {
 
     async function displayIdeas() {
 
-        let ideas = await getIdeasPaginated(2)
+        let ideas = await getIdeasPaginated(1)
 
         let ideasContainer = document.getElementById("ideasContainer")
 

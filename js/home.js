@@ -36,7 +36,7 @@ $(document).ready(function () {
             $("#role").html(`${user.role}`)
         }
 
-        $("#department").html(`${session.department.name}`)
+        $("#department").html(`${session.user.department.name}`)
     }
 
     async function populateCategoryDropdown() {

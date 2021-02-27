@@ -5,6 +5,14 @@ $(document).ready(function () {
     let session = JSON.parse(sessionStorage.getItem("session"))
 
 
+    function startLoading() {
+        document.querySelector("#mainDiv").classList.add("spinner-1");
+    }
+
+    function stopLoading() {
+        document.querySelector("#mainDiv").classList.remove("spinner-1");
+    }
+
 
     var title = document.getElementById("title")
     var description = document.getElementById("description")
@@ -22,6 +30,7 @@ $(document).ready(function () {
 
     async function submitIdea(e) {
         e.preventDefault()
+
 
 
         // var addIdeaRequest = {
@@ -53,11 +62,16 @@ $(document).ready(function () {
 
         // var addIdeaResponse = await post("/ideas", JSON.stringify(addIdeaRequest))
 
+        startLoading();
+
         let addIdeaResponse = await fetch(`${url}/ideas`, {
             method: "post",
             body: formData
 
-        }).then(response => response.json())
+        }).then(response => {
+            stopLoading()
+            return response.json()
+        })
 
         if (addIdeaResponse.message === "added") {
 

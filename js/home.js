@@ -17,22 +17,21 @@ $(document).ready(function () {
         sessionStorage.removeItem("IDEA_ADDED_MESSAGE")
     }
     // validateUserSession()
-    populateCategoryDropdown()
+
+
+    initHomePage()
 
 
 
-    displayIdeas(page)
+    function initHomePage() {
+        populateCategoryDropdown()
+        setUserDetails()
+        displayIdeas(page)
+    }
 
-    // function validateUserSession() {
-    //     // let session = JSON.parse(sessionStorage.getItem("session"))
-    //     session = JSON.parse(sessionStorage.getItem("session"))
 
-    //     if (session !== null && session !== undefined) {
-    setUserDetails()
-    //     } else {
-    //         location.href = "/"
-    //     }
-    // }
+
+
 
     function setUserDetails() {
 
@@ -105,6 +104,7 @@ $(document).ready(function () {
 
         return ideas
     }
+
 
 
     function displayPageFooter() {

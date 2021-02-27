@@ -23,24 +23,47 @@ $(document).ready(function () {
     async function submitIdea(e) {
         e.preventDefault()
 
-        console
 
-        var addIdeaRequest = {
-            userId: session.user.id,
-            title: title.value,
-            description: description.value,
-            categoryId: categoryDropdown.value, 
-            documentPath: null
+        // var addIdeaRequest = {
+        //     userId: session.user.id,
+        //     title: title.value,
+        //     description: description.value,
+        //     categoryId: categoryDropdown.value
+        // }
+
+        let formData = new FormData();
+
+        formData.append("userId", session.user.id)
+        formData.append("title", title.value)
+        formData.append("description", description.value)
+        formData.append("categoryId", categoryDropdown.value)
+
+        if (file.value != "") {
+            formData.append("document", file.files[0])
+            console.log(file.files[0])
         }
 
 
-        var addIdeaResponse = await post("/ideas", JSON.stringify(addIdeaRequest))
+        // Display the key/value pairs
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+
+
+
+        // var addIdeaResponse = await post("/ideas", JSON.stringify(addIdeaRequest))
+
+        let addIdeaResponse = await fetch(`${url}/ideas`, {
+            method: "post",
+            body: formData
+
+        }).then(response => response.json())
 
         if (addIdeaResponse.message === "added") {
-            
+
             sessionStorage.setItem("IDEA_ADDED_MESSAGE", true)
             location.href = "home.html"
-            
+
         }
         else {
             console.log(addIdeaResponse);

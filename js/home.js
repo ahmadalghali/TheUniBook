@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
 
-    let page = 1
+    let currentPage = 1;
 
 
     let pagesDiv = document.getElementById("pagesDiv")
@@ -26,7 +26,7 @@ $(document).ready(function () {
     function initHomePage() {
         populateCategoryDropdown()
         setUserDetails()
-        displayIdeas(page)
+        displayIdeas(currentPage)
     }
 
 
@@ -109,23 +109,14 @@ $(document).ready(function () {
 
     function displayPageFooter() {
 
-
         pagesDiv.innerHTML = ''
-
-        //     let htmlString = ' '
-
-        //     htmlString += `
-        //         <div class="pagination-hover-overlay"></div> `
-        //    for (let i = 0; i < pageCount; i++) {
-
-        //        htmlString += `
-
-        //        <a class="pagination-page-number" style=".pagination-page-number{cursor: pointer;}">${i+1}</a>
-        //        `
-        //    }
 
         // let overlayDiv = document.createElement('div')
         // overlayDiv.className = "pagination-hover-overlay"
+
+        if (currentPage > 1) { // && currentPage <= pageCount
+            showPrevArrow()
+        }
 
 
         // pagesDiv.append(overlayDiv)
@@ -139,36 +130,39 @@ $(document).ready(function () {
             pagesDiv.append(aPageElement)
         }
 
-        //     htmlString += `
 
-        //    <a onclick="displayIdeas(${i + 1})" class="pagination-page-number" style=".pagination-page-number{cursor: pointer;}">${i + 1}</a>
-
-        //    `
-
-        // pagesDiv.innerHTML = htmlString;
 
         let pages = Array.from(document.querySelectorAll(".pagination-page-number"));
 
         pages.forEach(page => {
 
+
             page.addEventListener("click", () => {
                 let pageNumber = page.text
-                displayIdeas(pageNumber)
-                $(window).scrollTop(0)
+                currentPage = pageNumber
+                displayIdeas(currentPage)
             })
 
         })
 
-        console.log(htmlString)
+        if (currentPage !== pageCount) {
+            showNextArrow()
+        }
 
     }
 
     async function displayIdeas(page) {
 
-        let ideas = await getIdeasPaginated(page)
+        if (page < 1 || page > pageCount) {
+            console.log(page + " doesnt exist")
+            page = 1
+        }
+
+        currentPage = page
+
+        let ideas = await getIdeasPaginated(currentPage)
 
         let ideasContainer = document.getElementById("ideasContainer")
-
 
 
         let htmlString = ''
@@ -218,13 +212,58 @@ $(document).ready(function () {
         }
 
 
-        // htmlString += '</div> <br>'
-
         ideasContainer.innerHTML = htmlString
+        $(window).scrollTop(0)
+
+
         displayPageFooter()
 
 
     }
 
 
+    const showPrevArrow = () => {
+
+        let prevArrow = document.createElement('a')
+        prevArrow.className = "pagination-prev"
+
+        let span = document.createElement('span')
+        span.className = "icon-pagination icon-pagination-prev"
+
+        let icon = document.createElement('i')
+        icon.className = "fas fa-arrow-left fa-lg"
+
+        span.append(icon)
+
+        prevArrow.append(span)
+
+        pagesDiv.append(prevArrow)
+
+
+        prevArrow.addEventListener("click", () => {
+            displayIdeas(currentPage - 1)
+        })
+    }
+
+    const showNextArrow = () => {
+        let nextArrow = document.createElement('a')
+        nextArrow.className = "pagination-next"
+
+        let nextSpan = document.createElement('span')
+        nextSpan.className = "icon-pagination icon-pagination-next"
+
+        let nexticon = document.createElement('i')
+        nexticon.className = "fas fa-arrow-right fa-lg"
+
+        nextSpan.append(nexticon)
+
+        nextArrow.append(nextSpan)
+
+        pagesDiv.append(nextArrow)
+
+        nextArrow.addEventListener("click", () => {
+            displayIdeas(currentPage + 1)
+        })
+    }
 })
+

@@ -143,6 +143,9 @@ $(document).ready(function () {
 
         pages.forEach(page => {
 
+            if (parseInt(page.text) == currentPage) {
+                page.className = "pagination-page-number-selected"
+            }
 
             page.addEventListener("click", () => {
                 let pageNumber = page.text
@@ -274,5 +277,14 @@ $(document).ready(function () {
             displayIdeas(currentPage + 1)
         })
     }
+
+
+    // const applyCSStoPages = () => {
+
+    //     $(document).on('hover', '.pagination-page-number', () => {
+
+    //     })
+
+    // }
 })
 

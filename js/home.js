@@ -111,10 +111,17 @@ $(document).ready(function () {
 
         pagesDiv.innerHTML = ''
 
-        // let overlayDiv = document.createElement('div')
-        // overlayDiv.className = "pagination-hover-overlay"
+        let overlayDiv = document.createElement('div')
+        overlayDiv.className = "pagination-hover-overlay"
 
-        if (currentPage > 1) { // && currentPage <= pageCount
+
+        pagesDiv.append(overlayDiv)
+
+        // < div class="pagination-hover-overlay" ></div >
+
+        console.log(parseInt(currentPage) > 1)
+
+        if (parseInt(currentPage) > 1) { // && currentPage <= pageCount
             showPrevArrow()
         }
 
@@ -152,6 +159,8 @@ $(document).ready(function () {
     }
 
     async function displayIdeas(page) {
+
+        page = parseInt(page)
 
         if (page < 1 || page > pageCount) {
             console.log(page + " doesnt exist")

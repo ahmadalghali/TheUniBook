@@ -154,6 +154,7 @@ $(document).ready(function () {
             page.addEventListener("click", () => {
                 let pageNumber = page.text
                 displayIdeas(pageNumber)
+                $(window).scrollTop(0)
             })
 
         })

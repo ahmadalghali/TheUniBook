@@ -22,28 +22,25 @@ $(document).ready(function () {
     initHomePage()
 
 
-
     function initHomePage() {
         populateCategoryDropdown()
         setUserDetails()
         displayIdeas(currentPage)
     }
 
-
-
-
+    
 
     function setUserDetails() {
 
         let user = session.user
-        $("#fullname").html(`${user.firstname} ${user.lastname}`)
+        $("#fullname").html(`<h5 style="color: white">${user.firstname} ${user.lastname}</h5>`)
         if (user.role === null) {
             $("#role").html(`Staff`)
         } else {
-            $("#role").html(`${user.role}`)
+            $("#role").html(`<h6 style="color: white">${user.role}</h6>`)
         }
 
-        $("#department").html(`${session.user.department.name}`)
+        $("#department").html(`<h6 style="color: white">${session.user.department.name}</h6>`)
     }
 
     async function populateCategoryDropdown() {
@@ -95,7 +92,7 @@ $(document).ready(function () {
     async function getIdeasPaginated(page) {
         // let ideas = await fetch(`${url}/ideas/page=${page}`).then(response => response.json())
 
-        let getIdeasByDepartmentPaginatedResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}`).then(response => response.json())
+        let getIdeasByDepartmentPaginatedResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&categoryId=1`).then(response => response.json())
 
         pageCount = getIdeasByDepartmentPaginatedResponse.pageCount
         let ideas = getIdeasByDepartmentPaginatedResponse.ideas
@@ -104,8 +101,6 @@ $(document).ready(function () {
 
         return ideas
     }
-
-
 
     function displayPageFooter() {
 

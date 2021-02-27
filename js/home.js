@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
+    // let url = "http://localhost:8081"
     let url = "https://theunibook.herokuapp.com"
+
 
     let currentPage = 1;
 
@@ -190,7 +192,7 @@ $(document).ready(function () {
                             <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
                             <div class="intro">${idea.description}</div><br>
-                            <li class="list-inline-item"><a href="#"> <i class="fas fa-file-download fa-lg"></i> </a>
+                            <li class="list-inline-item"><a href="${url}/ideas/downloadFile?documentPath=${idea.documentPath}" download> <i class="fas fa-file-download fa-lg"></i> </a>
                             </li>
                             <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
                             <span class="bio mb-3">0</span>
@@ -210,6 +212,8 @@ $(document).ready(function () {
             <br><hr>
             
             `
+
+            console.log(idea.documentPath)
 
             // if ((i + 1) != (ideas.length)) {
             //     htmlString += '<br><hr>'
@@ -273,6 +277,9 @@ $(document).ready(function () {
         })
     }
 
+    function downloadFile() {
+        // let downoloadIcon = 
+    }
 
     // const applyCSStoPages = () => {
 

@@ -30,7 +30,7 @@ $(document).ready(function () {
         displayIdeas(currentPage)
     }
 
-    
+
 
     function setUserDetails() {
 
@@ -48,7 +48,7 @@ $(document).ready(function () {
     async function populateCategoryDropdown() {
         var categoryDropdown = $("#category_dropdown");
         categoryDropdown.empty();
-        categoryDropdown.append('<option selected="selected" disabled>Choose Category</option>');
+        categoryDropdown.append('<option selected="selected">All Categories</option>');
 
         await fetch(`${url}/categories`).then(response => response.json()).then(categories => {
             let option;
@@ -94,7 +94,7 @@ $(document).ready(function () {
     async function getIdeasPaginated(page) {
         // let ideas = await fetch(`${url}/ideas/page=${page}`).then(response => response.json())
 
-        let getIdeasByDepartmentPaginatedResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&categoryId=1`).then(response => response.json())
+        let getIdeasByDepartmentPaginatedResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}`).then(response => response.json())
 
         pageCount = getIdeasByDepartmentPaginatedResponse.pageCount
         let ideas = getIdeasByDepartmentPaginatedResponse.ideas
@@ -175,12 +175,20 @@ $(document).ready(function () {
 
 
         let htmlString = ''
-
         console.log(ideas)
 
-        for (let idea of ideas) {
+        if (ideas.length == 0) {
+            htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
 
-            htmlString += `
+        } else {
+
+
+            for (let idea of ideas) {
+
+
+                if (idea.documentPath != null) {
+
+                    htmlString += `
             
                  <br>
 
@@ -192,7 +200,7 @@ $(document).ready(function () {
                             <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
                             <div class="intro">${idea.description}</div><br>
-                            <li class="list-inline-item"><a href="${url}/ideas/downloadFile?documentPath=${idea.documentPath}" download> <i class="fas fa-file-download fa-lg"></i> </a>
+                            <li class="list-inline-item"><a href="${url}/ideas/downloadFile?documentPath=${idea.documentPath}" > <i class="fas fa-file-download fa-lg"></i> </a>
                             </li>
                             <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
                             <span class="bio mb-3">0</span>
@@ -212,22 +220,58 @@ $(document).ready(function () {
             <br><hr>
             
             `
+                } else {
+                    htmlString += `
+            
+                 <br>
 
-            console.log(idea.documentPath)
+             <div class="item">
+                    <div class="media">
+                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
+                            src="./other/assets/images/default-user-photo.png" alt="image">
+                        <div class="media-body">
+                            <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
+                            <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
+                            <div class="intro">${idea.description}</div><br>
+                            <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
+                            <span class="bio mb-3">0</span>
 
-            // if ((i + 1) != (ideas.length)) {
-            //     htmlString += '<br><hr>'
-            // }
+                            &nbsp;&nbsp;<li class="list-inline-item"><a href="#"> <i
+                                        class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">0</span>
+
+                            &nbsp;&nbsp;<a class="more-link" href="">Read comments &rarr;</a>
+
+                        </div>
+                        <!--//media-body-->
+
+                    </div>
+                    <!--//media-->
+                </div>
+                
+            <br><hr>
+            
+            `
+                }
 
 
+
+                console.log(idea.documentPath)
+
+                // if ((i + 1) != (ideas.length)) {
+                //     htmlString += '<br><hr>'
+                // }
+
+
+            }
+
+            ideasContainer.innerHTML = htmlString
+            $(window).scrollTop(0)
+            displayPageFooter()
         }
 
-
         ideasContainer.innerHTML = htmlString
-        $(window).scrollTop(0)
-
-
-        displayPageFooter()
+        // $(window).scrollTop(0)
+        // displayPageFooter()
 
 
     }

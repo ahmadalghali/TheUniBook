@@ -86,7 +86,7 @@
                 <span class="box">
                     <select class="selection-2 " name="service" id="category_dropdown" asp-items="@Model.Options"
                         asp-for="Idea.CategoryId">
-                        <option id="default_option" disabled="disabled" selected="selected">Choose category</option>
+                        <option id="default_option" selected="selected">All categories</option>
                     </select>
                 </span>
                 <span class="focus-input100"></span>
@@ -108,6 +108,8 @@
 
 
 
+            <a
+                href="https://theunibook.herokuapp.com/ideas/downloadFile?documentPath=./uploads/165bd8cb-3d61-40fa-a3d6-7fd9fc192836-Screenshot%202021-02-24%20at%2002.54.27.png"></a>
 
 
             <!--//container-->
@@ -201,8 +203,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="./Styles/Home/assets/js/pagination.js"></script>
-
-
 
     <script src="js/home.js"></script>
     <link rel="stylesheet" href="/Styles/Home/assets/css/pagination.css">

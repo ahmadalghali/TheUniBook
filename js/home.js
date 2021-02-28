@@ -48,7 +48,7 @@ $(document).ready(function () {
     async function populateCategoryDropdown() {
         var categoryDropdown = $("#category_dropdown");
         categoryDropdown.empty();
-        categoryDropdown.append('<option selected="selected" disabled>Choose Category</option>');
+        categoryDropdown.append('<option selected="selected">All Categories</option>');
 
         await fetch(`${url}/categories`).then(response => response.json()).then(categories => {
             let option;

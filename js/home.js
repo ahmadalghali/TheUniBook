@@ -185,7 +185,10 @@ $(document).ready(function () {
 
             for (let idea of ideas) {
 
-                htmlString += `
+
+                if (idea.documentPath != null) {
+
+                    htmlString += `
             
                  <br>
 
@@ -217,6 +220,40 @@ $(document).ready(function () {
             <br><hr>
             
             `
+                } else {
+                    htmlString += `
+            
+                 <br>
+
+             <div class="item">
+                    <div class="media">
+                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
+                            src="./other/assets/images/default-user-photo.png" alt="image">
+                        <div class="media-body">
+                            <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
+                            <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
+                            <div class="intro">${idea.description}</div><br>
+                            <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
+                            <span class="bio mb-3">0</span>
+
+                            &nbsp;&nbsp;<li class="list-inline-item"><a href="#"> <i
+                                        class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">0</span>
+
+                            &nbsp;&nbsp;<a class="more-link" href="">Read comments &rarr;</a>
+
+                        </div>
+                        <!--//media-body-->
+
+                    </div>
+                    <!--//media-->
+                </div>
+                
+            <br><hr>
+            
+            `
+                }
+
+
 
                 console.log(idea.documentPath)
 

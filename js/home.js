@@ -178,7 +178,7 @@ $(document).ready(function () {
         console.log(ideas)
 
         if (ideas.length == 0) {
-            htmlString = "<h1 style='color: grey;'>No Ideas, yet.</h6>"
+            htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
 
         } else {
 

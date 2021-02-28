@@ -197,7 +197,7 @@ $(document).ready(function () {
                             <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
                             <div class="intro">${idea.description}</div><br>
-                            <li class="list-inline-item"><a href="${url}/ideas/downloadFile?documentPath=${idea.documentPath}" download=> <i class="fas fa-file-download fa-lg"></i> </a>
+                            <li class="list-inline-item"><a href="${url}/ideas/downloadFile?documentPath=${idea.documentPath}" download="${idea.title}"> <i class="fas fa-file-download fa-lg"></i> </a>
                             </li>
                             <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
                             <span class="bio mb-3">0</span>

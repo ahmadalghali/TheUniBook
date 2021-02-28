@@ -94,7 +94,7 @@ $(document).ready(function () {
     async function getIdeasPaginated(page) {
         // let ideas = await fetch(`${url}/ideas/page=${page}`).then(response => response.json())
 
-        let getIdeasByDepartmentPaginatedResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&categoryId=1`).then(response => response.json())
+        let getIdeasByDepartmentPaginatedResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}`).then(response => response.json())
 
         pageCount = getIdeasByDepartmentPaginatedResponse.pageCount
         let ideas = getIdeasByDepartmentPaginatedResponse.ideas

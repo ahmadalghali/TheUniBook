@@ -79,9 +79,13 @@
 
                 <div class="form-group">
                     <div class="custom-file">
-                        <input id="document" type="file" accept="image/*,.pdf,.doc,.docx">
+                        <input id="document" type="file" max-size="10000" accept="image/*,.pdf,.doc,.docx">
                         <!-- <input asp-for="IdeaFile" class="custom-file-input" type="file" id="customFile" /> -->
                         <!-- <label class="custom-file-label" for="customFile">Choose file</label> -->
+                        <!-- <br>
+                        
+                        <input type="checkbox" id="anonymousCheckBox" name="anonymousCheckBox" >
+                            <label for="anonymousCheckBox">Upload Anonymously</label><br>  -->
                     </div>
                 </div>
 
@@ -153,6 +157,18 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-23581568-13');
+    </script>
+
+    <script>
+var uploadField = document.getElementById("document");
+
+uploadField.onchange = function() {
+    if(this.files[0].size > 10000){
+        toastr.warning("File size over 10MB.");
+       this.value = "";
+    };
+};
+
     </script>
 
     <script src="js/add-idea.js"></script>

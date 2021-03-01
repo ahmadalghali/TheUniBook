@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    // let url = "http://localhost:8081"
-    let url = "https://theunibook.herokuapp.com"
+    let url = "http://localhost:8080"
+    // let url = "https://theunibook.herokuapp.com"
 
 
     let currentPage = 1;
@@ -184,8 +184,8 @@ $(document).ready(function () {
 
 
             for (let idea of ideas) {
-
-
+                console.log(idea)
+                
                 if (idea.documentPath != null) {
 
                     htmlString += `
@@ -221,6 +221,7 @@ $(document).ready(function () {
             
             `
                 } else {
+
                     htmlString += `
             
                  <br>

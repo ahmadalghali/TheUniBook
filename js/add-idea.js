@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
-    let url = "https://theunibook.herokuapp.com"
+    // let url = "https://theunibook.herokuapp.com"
+    let url = "http://localhost:8080"
+
 
     let session = JSON.parse(sessionStorage.getItem("session"))
 
@@ -19,7 +21,14 @@ $(document).ready(function () {
     var file = document.getElementById("document")
     var categoryDropdown = document.getElementById("categoryDropdown")
 
+    let isAnonymous = document.getElementById("anonymousCheckBox");
+
     let addIdeaForm = document.getElementById("addIdeaForm")
+
+   
+
+
+
 
     populateCategoryDropdown();
 
@@ -46,6 +55,8 @@ $(document).ready(function () {
         formData.append("title", title.value)
         formData.append("description", description.value)
         formData.append("categoryId", categoryDropdown.value)
+        console.log(isAnonymous.checked)
+        formData.append("anonymous", isAnonymous.checked)
 
         if (file.value != "") {
             formData.append("document", file.files[0])

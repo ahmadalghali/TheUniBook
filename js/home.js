@@ -55,6 +55,7 @@ $(document).ready(function () {
 
             for (let i = 0; i < categories.length; i++) {
                 option = document.createElement('option');
+
                 option.value = categories[i].id;
                 option.text = categories[i].category;
                 categoryDropdown.append(option);

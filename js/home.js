@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    // applyPaginationStyling()
     // let url = "http://localhost:8080"
     let url = "https://theunibook.herokuapp.com"
 
@@ -161,6 +162,8 @@ $(document).ready(function () {
             showNextArrow()
         }
 
+        applyPaginationStyling()
+
     }
 
     async function displayIdeas(page) {
@@ -201,7 +204,7 @@ $(document).ready(function () {
                             <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
                                 src="./other/assets/images/default-user-photo.png" alt="image">
                             <div class="media-body">
-                                <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
+                                <h3 class="title mb-1"><a>${idea.title}</a></h3>
                                 <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
                                 <div class="intro">${idea.description}</div><br>
                                 <li class="list-inline-item"><a href="#"> <i class="fas fa-file-download fa-lg"></i> </a>
@@ -339,12 +342,12 @@ $(document).ready(function () {
 
                 ideasContainer.innerHTML = htmlString
                 $(window).scrollTop(0)
-                displayPageFooter()
+                // displayPageFooter()
             }
 
             ideasContainer.innerHTML = htmlString
             // $(window).scrollTop(0)
-            // displayPageFooter()
+            displayPageFooter()
 
         }
     }
@@ -417,5 +420,81 @@ $(document).ready(function () {
     //     })
 
     // }
+
+
+
+    function applyPaginationStyling() {
+
+        let paginationLeftPos = "20px";
+        let paginationOpacity = 0;
+        let checkPaginationClick = 0;
+
+        $(".pagination-page-number").click(function () {
+            $(".pagination-page-number").removeClass("active");
+            $(this).addClass("active");
+            paginationLeftPos = $(this).prop("offsetLeft") + "px";
+            paginationOpacity = 1;
+            checkPaginationClick = 1;
+
+            $(".pagination-hover-overlay").css({
+                left: paginationLeftPos,
+                backgroundColor: "#00178a",
+                opacity: paginationOpacity
+            });
+
+            $(this).css({
+                color: "#fff"
+            });
+
+        });
+
+        $(".pagination-page-number").hover(
+            function () {
+                paginationOpacity = 1;
+                $(".pagination-hover-overlay").css({
+                    backgroundColor: "#4e93e0",
+                    left: $(this).prop("offsetLeft") + "px",
+                    opacity: paginationOpacity
+                });
+
+
+                $(".pagination-page-number.active").css({
+                    color: "#333d45"
+                });
+
+
+                $(this).css({
+                    color: "#fff"
+                });
+
+            },
+            function () {
+                if (checkPaginationClick) {
+                    paginationOpacity = 1;
+                } else {
+                    paginationOpacity = 0;
+                }
+
+                $(".pagination-hover-overlay").css({
+                    backgroundColor: "#2c3dc3",
+                    opacity: paginationOpacity,
+                    left: paginationLeftPos
+                });
+
+
+                $(this).css({
+                    color: "#333d45"
+                });
+
+
+                $(".pagination-page-number.active").css({
+                    color: "#fff"
+                });
+
+            });
+    }
 })
+
+
+
 

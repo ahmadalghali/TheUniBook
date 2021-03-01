@@ -1,13 +1,14 @@
 $(document).ready(function () {
 
-    let url = "http://localhost:8080"
-    // let url = "https://theunibook.herokuapp.com"
+    // let url = "http://localhost:8080"
+    let url = "https://theunibook.herokuapp.com"
 
 
     let currentPage = 1;
 
-    document.getElementById('category_dropdown').onchange=function() { 
-        displayIdeas(currentPage);}
+    document.getElementById('category_dropdown').onchange = function () {
+        displayIdeas(currentPage);
+    }
 
     let pagesDiv = document.getElementById("pagesDiv")
     let selected = document.getElementById("category_dropdown");
@@ -95,7 +96,7 @@ $(document).ready(function () {
         return ideas
     }
 
-    async function sortIdeas(page){
+    async function sortIdeas(page) {
         let selectedValue = selected.options[selected.selectedIndex].value;
 
         let getIdeasByDepartmentPaginatedResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&categoryId=${selectedValue}`).then(response => response.json())
@@ -175,9 +176,8 @@ $(document).ready(function () {
         }
 
         currentPage = page
-        
-        if(selectedValue != "0")
-        {
+
+        if (selectedValue != "0") {
             ideas = await sortIdeas(currentPage)
 
 
@@ -187,11 +187,11 @@ $(document).ready(function () {
 
             if (ideas.length == 0) {
                 htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
-            } 
+            }
             console.log(ideas)
-    
+
             for (let idea of ideas) {
-    
+
                 htmlString += `
                 
                      <br>
@@ -224,43 +224,42 @@ $(document).ready(function () {
                 <br><hr>
                 
                 `
-    
+
                 // if ((i + 1) != (ideas.length)) {
                 //     htmlString += '<br><hr>'
                 // }
-    
-    
+
+
             }
-    
+
             ideasContainer.innerHTML = htmlString
             $(window).scrollTop(0)
-    
-    
+
+
             displayPageFooter()
         }
 
-        else
-        {
-            ideas = await getIdeasPaginated(currentPage)
-        
-        let ideasContainer = document.getElementById("ideasContainer")
-
-        let htmlString = ''
-        console.log(ideas)
-
-        if (ideas.length == 0) {
-            htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
-
-        } 
-
         else {
+            ideas = await getIdeasPaginated(currentPage)
 
-            for (let idea of ideas) {
-                console.log(idea)
-                
-                if (idea.documentPath != null) {
+            let ideasContainer = document.getElementById("ideasContainer")
 
-                    htmlString += `
+            let htmlString = ''
+            console.log(ideas)
+
+            if (ideas.length == 0) {
+                htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
+
+            }
+
+            else {
+
+                for (let idea of ideas) {
+                    console.log(idea)
+
+                    if (idea.documentPath != null) {
+
+                        htmlString += `
             
                  <br>
 
@@ -292,9 +291,9 @@ $(document).ready(function () {
             <br><hr>
             
             `
-                } else {
+                    } else {
 
-                    htmlString += `
+                        htmlString += `
             
                  <br>
 
@@ -324,30 +323,30 @@ $(document).ready(function () {
             <br><hr>
             
             `
+                    }
+
+                    ideasContainer.innerHTML = htmlString
+                    $(window).scrollTop(0)
+
+                    console.log(idea.documentPath)
+
+                    // if ((i + 1) != (ideas.length)) {
+                    //     htmlString += '<br><hr>'
+                    // }
+
+
                 }
 
-        ideasContainer.innerHTML = htmlString
-        $(window).scrollTop(0)
-
-                console.log(idea.documentPath)
-
-                // if ((i + 1) != (ideas.length)) {
-                //     htmlString += '<br><hr>'
-                // }
-
-
+                ideasContainer.innerHTML = htmlString
+                $(window).scrollTop(0)
+                displayPageFooter()
             }
 
             ideasContainer.innerHTML = htmlString
-            $(window).scrollTop(0)
-            displayPageFooter()
+            // $(window).scrollTop(0)
+            // displayPageFooter()
+
         }
-
-        ideasContainer.innerHTML = htmlString
-        // $(window).scrollTop(0)
-        // displayPageFooter()
-
-    }
     }
 
     const showPrevArrow = () => {

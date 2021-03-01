@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    // let url = "https://theunibook.herokuapp.com"
-    let url = "http://localhost:8080"
+    let url = "https://theunibook.herokuapp.com"
+    // let url = "http://localhost:8080"
 
 
     let session = JSON.parse(sessionStorage.getItem("session"))
@@ -25,7 +25,7 @@ $(document).ready(function () {
 
     let addIdeaForm = document.getElementById("addIdeaForm")
 
-   
+
 
 
 

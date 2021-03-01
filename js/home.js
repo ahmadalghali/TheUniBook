@@ -6,8 +6,12 @@ $(document).ready(function () {
 
     let currentPage = 1;
 
+    document.getElementById('category_dropdown').onchange=function() { 
+        displayIdeas(currentPage);}
 
     let pagesDiv = document.getElementById("pagesDiv")
+    let selected = document.getElementById("category_dropdown");
+
 
     let pageCount;
 
@@ -47,31 +51,20 @@ $(document).ready(function () {
 
     async function populateCategoryDropdown() {
         var categoryDropdown = $("#category_dropdown");
-        categoryDropdown.empty();
-        categoryDropdown.append('<option selected="selected">All Categories</option>');
+        //categoryDropdown.empty();
+        categoryDropdown.append('<option value="0" selected="selected" >All ideas</option>');
 
         await fetch(`${url}/categories`).then(response => response.json()).then(categories => {
             let option;
 
             for (let i = 0; i < categories.length; i++) {
                 option = document.createElement('option');
+
                 option.value = categories[i].id;
                 option.text = categories[i].category;
                 categoryDropdown.append(option);
             }
         })
-    }
-    async function post(endpoint, data) {
-
-        console.log("Post request sent")
-
-        let response = await fetch(`${url}${endpoint}`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: data
-        }).then(response => response.json());
-
-        return response;
     }
 
     $("#btnLogout").click(() => {
@@ -89,8 +82,6 @@ $(document).ready(function () {
         })
     })
 
-
-
     async function getIdeasPaginated(page) {
         // let ideas = await fetch(`${url}/ideas/page=${page}`).then(response => response.json())
 
@@ -100,6 +91,19 @@ $(document).ready(function () {
         let ideas = getIdeasByDepartmentPaginatedResponse.ideas
 
         console.log(pageCount)
+
+        return ideas
+    }
+
+    async function sortIdeas(page){
+        let selectedValue = selected.options[selected.selectedIndex].value;
+
+        let getIdeasByDepartmentPaginatedResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&categoryId=${selectedValue}`).then(response => response.json())
+
+        pageCount = getIdeasByDepartmentPaginatedResponse.pageCount
+        let ideas = getIdeasByDepartmentPaginatedResponse.ideas
+        console.log(selected)
+        console.log(ideas)
 
         return ideas
     }
@@ -159,6 +163,9 @@ $(document).ready(function () {
     }
 
     async function displayIdeas(page) {
+        let ideas;
+        let selected = document.getElementById("category_dropdown");
+        let selectedValue = selected.options[selected.selectedIndex].value;
 
         page = parseInt(page)
 
@@ -168,11 +175,75 @@ $(document).ready(function () {
         }
 
         currentPage = page
+        
+        if(selectedValue != "0")
+        {
+            ideas = await sortIdeas(currentPage)
 
-        let ideas = await getIdeasPaginated(currentPage)
 
+            let ideasContainer = document.getElementById("ideasContainer")
+
+            let htmlString = ''
+
+            if (ideas.length == 0) {
+                htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
+            } 
+            console.log(ideas)
+    
+            for (let idea of ideas) {
+    
+                htmlString += `
+                
+                     <br>
+    
+                 <div class="item">
+                        <div class="media">
+                            <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
+                                src="./other/assets/images/default-user-photo.png" alt="image">
+                            <div class="media-body">
+                                <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
+                                <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
+                                <div class="intro">${idea.description}</div><br>
+                                <li class="list-inline-item"><a href="#"> <i class="fas fa-file-download fa-lg"></i> </a>
+                                </li>
+                                <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
+                                <span class="bio mb-3">0</span>
+    
+                                &nbsp;&nbsp;<li class="list-inline-item"><a href="#"> <i
+                                            class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">0</span>
+    
+                                &nbsp;&nbsp;<a class="more-link" href="">Read comments &rarr;</a>
+    
+                            </div>
+                            <!--//media-body-->
+    
+                        </div>
+                        <!--//media-->
+                    </div>
+                    
+                <br><hr>
+                
+                `
+    
+                // if ((i + 1) != (ideas.length)) {
+                //     htmlString += '<br><hr>'
+                // }
+    
+    
+            }
+    
+            ideasContainer.innerHTML = htmlString
+            $(window).scrollTop(0)
+    
+    
+            displayPageFooter()
+        }
+
+        else
+        {
+            ideas = await getIdeasPaginated(currentPage)
+        
         let ideasContainer = document.getElementById("ideasContainer")
-
 
         let htmlString = ''
         console.log(ideas)
@@ -180,8 +251,9 @@ $(document).ready(function () {
         if (ideas.length == 0) {
             htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
 
-        } else {
+        } 
 
+        else {
 
             for (let idea of ideas) {
                 console.log(idea)
@@ -254,7 +326,8 @@ $(document).ready(function () {
             `
                 }
 
-
+        ideasContainer.innerHTML = htmlString
+        $(window).scrollTop(0)
 
                 console.log(idea.documentPath)
 
@@ -274,9 +347,8 @@ $(document).ready(function () {
         // $(window).scrollTop(0)
         // displayPageFooter()
 
-
     }
-
+    }
 
     const showPrevArrow = () => {
 
@@ -324,6 +396,19 @@ $(document).ready(function () {
 
     function downloadFile() {
         // let downoloadIcon = 
+    }
+
+    async function post(endpoint, data) {
+
+        console.log("Post request sent")
+
+        let response = await fetch(`${url}${endpoint}`, {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: data
+        }).then(response => response.json());
+
+        return response;
     }
 
     // const applyCSStoPages = () => {

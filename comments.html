@@ -1,12 +1,15 @@
 <html lang="en">
 
 <head>
-
+<!-- FontAwesome JS-->
+<script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js"
+integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7"
+crossorigin="anonymous"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Add Idea</title>
+    <title>Comments</title>
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="./Styles/Add_Idea/images/icons/favicon.ico" />
     <!--===============================================================================================-->
@@ -27,6 +30,7 @@
     <link rel="stylesheet" type="text/css" href="./Styles/Add_Idea/css/util.css">
     <link rel="stylesheet" type="text/css" href="./Styles/Add_Idea/css/main.css">
     <!--===============================================================================================-->
+    <link id="theme-style" rel="stylesheet" href="./Styles/Home/assets/css/theme-6.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
@@ -42,74 +46,61 @@
 </head>
 
 <body>
-
-
     <div class="container-contact100">
         <div id="mainDiv" class="wrap-contact100">
             <form id="addIdeaForm" class="contact100-form validate-form">
                 <span class="contact100-form-title">
-                    Add your idea
+                    Comments
                 </span>
 
-                <div class="wrap-input100 validate-input" data-validate="Title is required">
-                    <span class="label-input100">Title</span>
-                    <input id="title" name="title" class="input100" type="text" placeholder="Enter a Title" required>
-                    <span class="focus-input100"></span>
-                </div>
+                <!--//original idea-->
+                <section>
+                    <div id="ideasContainer" class="wrap-input100 validate-input">
+                     <div class="item mb-5">
+                        </div>
+        
+                        <div class="item">
+                            <div class="media">    
+                                <div class="media-body">
+                                    <span class="title mb-1">Title</span>
+                                    <div class="meta mb-1"><span class="date">Published by</span><span class="comment">Name of
+                                            the publisher here!</span></div>
+                                    <div class="intro">Description</div>
+                                    </div>
+                            </div>
+                        </div>        
+                </section>
 
-
+                <!--new comments textarea-->
                 <div class="wrap-input100 validate-input" data-validate="Description is required">
-                    <span class="label-input100">Description</span>
+                    <span class="label-input100">Write comments</span>
                     <textarea id="description" class="input100" name="description" required
-                        placeholder="Your description here..."></textarea>
+                        placeholder="Your comments here..."></textarea>      
                     <span class="focus-input100"></span>
                 </div>
+                    <!--icon to add new comments-->
+                    <li class="position"><a href=""> <i class="fas fa-comment-medical fa-2x"></i></a>
+                    </li>
 
+                    <!--//comment history-->
+                    <div id="ideasContainer" class="wrap-input100 validate-input">
+                        <div class="item mb-5">
+                           </div>
+                           <div class="item">
+                               <div class="media">
+                                   
+                                   <div class="media-body">
+                                       <div class="meta mb-1"><span class="date">Commented by</span><span class="comment">Name of
+                                               the publisher here!</span></div>
+                                       <div class="intro">Comment</div>
+                                   </div>
+                               </div>
+                           </div>
+                    </div>
 
-
-                <div class="wrap-input100 input100-select">
-                    <span class="label-input100">Choose Category</span>
+                <!--back home link-->
+                <div class="container-contact100-form-btn">  
                     <div>
-                        <select class="selection-2" name="categoryId" id="categoryDropdown" required>
-                            <option id="default_category" disabled="disabled" selected="selected"></option>
-                        </select>
-                    </div>
-                    <span class="focus-input100"></span>
-                </div>
-
-                <div class="form-group">
-                    <div class="custom-file">
-                        <input id="document" type="file" max-size="10000" accept="image/*,.pdf,.doc,.docx">
-                        <!-- <input asp-for="IdeaFile" class="custom-file-input" type="file" id="customFile" /> -->
-                        <!-- <label class="custom-file-label" for="customFile">Choose file</label> -->
-                        <!-- <br>
-                        
-                        <input type="checkbox" id="anonymousCheckBox" name="anonymousCheckBox" >
-                            <label for="anonymousCheckBox">Upload Anonymously</label><br>  -->
-                    </div>
-                </div>
-
-                <!--CHECK BOX anonymous-->
-                <div>
-                    <input type="checkbox" name="agree" id="anonymous" value="yes"/>
-                    <label>Click here to post anonymously</label>
-                </div>
-
-
-                <div class="container-contact100-form-btn">
-                    <div class="wrap-contact100-form-btn">
-                        <div class="contact100-form-bgbtn"></div>
-                        <button id="btnSubmit" type="submit" class="contact100-form-btn">
-                            <span>
-                                Submit
-                                <!-- <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i> -->
-                            </span>
-                        </button>
-
-                    </div>
-                    <div>
-                        <br>
-
                         <a href="home.html" style="font-size:20px">Back to Home</a>
                     </div>
                 </div>
@@ -164,18 +155,6 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-23581568-13');
-    </script>
-
-    <script>
-var uploadField = document.getElementById("document");
-
-uploadField.onchange = function() {
-    if(this.files[0].size > 10000){
-        toastr.warning("File size over 10MB.");
-       this.value = "";
-    };
-};
-
     </script>
 
     <script src="js/add-idea.js"></script>

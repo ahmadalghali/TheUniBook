@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    let url = "https://theunibook.herokuapp.com"
-    // let url = "http://localhost:8080"
+    // let url = "https://theunibook.herokuapp.com"
+    let url = "http://localhost:8080"
 
 
     let ideaTitle = document.getElementById("ideaTitle")
@@ -49,9 +49,11 @@ $(document).ready(function () {
         let postCommentResponse = await post(`/comments`, JSON.stringify(comment))
 
         if (postCommentResponse.message == "comment saved") {
-            toastr.info("Thanks for commenting")
             displayComments()
+            toastr.info("Thanks for commenting")
             commentsTextArea.value = ''
+
+            post(`/comments/email`, JSON.stringify(comment))
 
         } else {
             toastr.error("We apologise, Something went wrong, comment could not be posted.")
@@ -96,11 +98,6 @@ $(document).ready(function () {
             <br>
                 <hr><br>
             `
-
-
-
-
-
         }
 
         commentsContainer.innerHTML = htmlString
@@ -118,8 +115,6 @@ $(document).ready(function () {
 
 
     async function post(endpoint, data) {
-
-        console.log("Post request sent")
 
         let response = await fetch(`${url}${endpoint}`, {
             method: "POST",

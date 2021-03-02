@@ -77,16 +77,22 @@
                     <span class="focus-input100"></span>
                 </div>
 
-                <div class="form-group">
+                 <!-- <div class="form-group">
                     <div class="custom-file">
                         <input id="document" type="file" max-size="10000" accept="image/*,.pdf,.doc,.docx">
-                        <!-- <input asp-for="IdeaFile" class="custom-file-input" type="file" id="customFile" /> -->
-                        <!-- <label class="custom-file-label" for="customFile">Choose file</label> -->
+                        <input asp-for="IdeaFile" class="custom-file-input" type="file" id="customFile" /> -->
+                        <!-- <label class="custom-file-label" for="customFile">Choose file</label> 
                    
                     </div>
-                </div>
-
+                </div> -->
+                <div class="upload-btn-wrapper">
+                    <button class="btn">Upload a file</button>
+                    <input type="file" name="myfile" />
+                  </div>
+                
                 <!--CHECK BOX anonymous-->
+                <br>
+                <br>
                 <div>
                     <input type="checkbox" name="anonymousCheckBox" id="anonymousCheckBox" />
                     <label>Post Anonymously</label>

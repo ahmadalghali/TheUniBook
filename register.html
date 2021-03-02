@@ -31,6 +31,15 @@
     <!-- <link rel="stylesheet" type="text/css" href="css/other/main.css"> -->
     <!--===============================================================================================-->
     <!-- <link rel="stylesheet" type="text/css" href="css/register.css"> -->
+    <!--===============================================================================================-->
+
+
+   
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./Styles/Add_Idea/css/main.css">
+
+    <!--===============================================================================================-->
 
 </head>
 
@@ -85,16 +94,28 @@
                         <span class="focus-input100" data-placeholder="Confirm Password"></span>
                     </div>
 
-
-                    <div>
+              <!--     <div class="box">
                         <select id="departmentDropdown" name="departmentId" class="wrap-input100 validate-input"
-                            asp-items="@Model.Options" asp-for="User.DepartmentId" required>
-                            <!-- <option id="default_department" disabled="disabled" selected="selected">Choose Department
-                            </option> -->
-                        </select>
-                        <div class="select-dropdown"></div>
-                    </div>
+                        asp-items="@Model.Options" asp-for="User.DepartmentId" required></select>
+                        <!-- <option id="default_department" disabled="disabled" selected="selected">Choose Department
+                        </option>
+                    </select>
+                    <div class="select-dropdown"></div>
+                    </div> --> 
 
+                
+                    <br>
+                    <div class="wrap-input100 input100-select">
+                        <span class="label-input100">Choose Department</span>
+                        <div>
+                            <select class="selection-2" name="departmentId" id="departmentDropdown"
+                                asp-items="@Model.Options" asp-for="User.DepartmentId" required></select>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                        <span class="focus-input100"></span>
+                    </div>
+                    <br>
 
                     <div class="form-check">
                         <input type="checkbox" name="agree" id="agree" class="agree-term" value="yes" required />
@@ -156,6 +177,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script src="js/register.js"></script>
+
+    <!--===============================================================================================-->
+
+    <script>
+        $(".selection-2").select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $('#dropDownSelect1')
+        });
+
+        // var categoryDropdown = document.getElementById("category_dropdown");
+
+        // function validateForm() {
+        //     if (categoryDropdown.selectedIndex === 0) {
+        //         alert("Please choose a category")
+        //         return;
+        //     }
+        // }
+    </script>
+    <!--===============================================================================================-->
 </body>
 
 </html>

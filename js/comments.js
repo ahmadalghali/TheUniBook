@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    // let url = "https://theunibook.herokuapp.com"
-    let url = "http://localhost:8080"
+    let url = "https://theunibook.herokuapp.com"
+    // let url = "http://localhost:8080"
 
 
     let ideaTitle = document.getElementById("ideaTitle")
@@ -39,6 +39,10 @@ $(document).ready(function () {
             toastr.warning("Comment has exceeded character limit of 500.")
             return
         }
+        if (commentMessage.length < 1) {
+
+            return
+        }
 
         let comment = {
             description: commentMessage,
@@ -58,6 +62,8 @@ $(document).ready(function () {
         } else {
             toastr.error("We apologise, Something went wrong, comment could not be posted.")
         }
+        commentsTextArea.value = ''
+
     }
 
     async function displayComments() {

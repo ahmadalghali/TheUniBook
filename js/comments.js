@@ -40,7 +40,7 @@ $(document).ready(function () {
             return
         }
         if (commentMessage.length < 1) {
-            toastr.warning("Comment field is empty")
+            
             return
         }
 

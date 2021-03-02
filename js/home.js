@@ -1,18 +1,15 @@
 $(document).ready(function () {
 
-    // applyPaginationStyling()
     // let url = "http://localhost:8080"
     let url = "https://theunibook.herokuapp.com"
 
 
     let currentPage = 1;
 
-    document.getElementById('category_dropdown').onchange = function () {
-        displayIdeas(currentPage);
-    }
+
 
     let pagesDiv = document.getElementById("pagesDiv")
-    let selected = document.getElementById("category_dropdown");
+    let categoryDropdown = document.getElementById("category_dropdown");
 
 
     let pageCount;
@@ -29,14 +26,27 @@ $(document).ready(function () {
 
     initHomePage()
 
+    document.getElementById('category_dropdown').onchange = function () {
+        displayIdeas(currentPage);
+    }
 
     function initHomePage() {
-        populateCategoryDropdown()
+        console.log
         setUserDetails()
+        populateCategoryDropdown()
         displayIdeas(currentPage)
     }
 
 
+
+    function setCurrentPage(page) {
+        if (page < 1 || page > pageCount) {
+            console.log(page + " doesnt exist");
+            page = 1;
+        }
+
+        currentPage = page;
+    }
 
     function setUserDetails() {
 
@@ -53,10 +63,12 @@ $(document).ready(function () {
 
     async function populateCategoryDropdown() {
         var categoryDropdown = $("#category_dropdown");
-        //categoryDropdown.empty();
+        categoryDropdown.empty();
         categoryDropdown.append('<option value="0" selected="selected" >All ideas</option>');
 
         await fetch(`${url}/categories`).then(response => response.json()).then(categories => {
+
+            console.log(categories)
             let option;
 
             for (let i = 0; i < categories.length; i++) {
@@ -84,31 +96,24 @@ $(document).ready(function () {
         })
     })
 
-    async function getIdeasPaginated(page) {
-        // let ideas = await fetch(`${url}/ideas/page=${page}`).then(response => response.json())
 
-        let getIdeasByDepartmentPaginatedResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}`).then(response => response.json())
 
-        pageCount = getIdeasByDepartmentPaginatedResponse.pageCount
-        let ideas = getIdeasByDepartmentPaginatedResponse.ideas
+    async function getIdeas(page, categoryId = null, sortBy = null) {
+        let ideas;
+        let getIdeasResponse;
 
-        console.log(pageCount)
-
-        return ideas
-    }
-
-    async function sortIdeas(page) {
-        let selectedValue = selected.options[selected.selectedIndex].value;
-
-        let getIdeasByDepartmentPaginatedResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&categoryId=${selectedValue}`).then(response => response.json())
-
-        pageCount = getIdeasByDepartmentPaginatedResponse.pageCount
-        let ideas = getIdeasByDepartmentPaginatedResponse.ideas
-        console.log(selected)
-        console.log(ideas)
+        if (categoryId != null) {
+            getIdeasResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&categoryId=${categoryId}`).then(response => response.json())
+        } else {
+            getIdeasResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}`).then(response => response.json())
+        }
+        pageCount = getIdeasResponse.pageCount
+        ideas = getIdeasResponse.ideas
 
         return ideas
     }
+
+
 
     function displayPageFooter() {
 
@@ -166,103 +171,23 @@ $(document).ready(function () {
 
     }
 
-    async function displayIdeas(page) {
-        let ideas;
-        let selected = document.getElementById("category_dropdown");
-        let selectedValue = selected.options[selected.selectedIndex].value;
 
-        page = parseInt(page)
+    function renderIdeasHTML(ideas) {
+        let ideasContainer = document.getElementById("ideasContainer")
 
-        if (page < 1 || page > pageCount) {
-            console.log(page + " doesnt exist")
-            page = 1
+
+        let htmlString = ''
+
+        if (ideas.length == 0) {
+            htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
         }
+        console.log(ideas)
 
-        currentPage = page
+        for (let idea of ideas) {
 
-        if (selectedValue != "0") {
-            ideas = await sortIdeas(currentPage)
-
-
-            let ideasContainer = document.getElementById("ideasContainer")
-
-            let htmlString = ''
-
-            if (ideas.length == 0) {
-                htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
-            }
-            console.log(ideas)
-
-            for (let idea of ideas) {
+            if (idea.documentPath != null) {
 
                 htmlString += `
-                
-                     <br>
-    
-                 <div class="item">
-                        <div class="media">
-                            <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
-                                src="./other/assets/images/default-user-photo.png" alt="image">
-                            <div class="media-body">
-                                <h3 class="title mb-1"><a>${idea.title}</a></h3>
-                                <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
-                                <div class="intro">${idea.description}</div><br>
-                                <li class="list-inline-item"><a href="#"> <i class="fas fa-file-download fa-lg"></i> </a>
-                                </li>
-                                <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
-                                <span class="bio mb-3">0</span>
-    
-                                &nbsp;&nbsp;<li class="list-inline-item"><a href="#"> <i
-                                            class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">0</span>
-    
-                                &nbsp;&nbsp;<a class="more-link" href="">Read comments &rarr;</a>
-    
-                            </div>
-                            <!--//media-body-->
-    
-                        </div>
-                        <!--//media-->
-                    </div>
-                    
-                <br><hr>
-                
-                `
-
-                // if ((i + 1) != (ideas.length)) {
-                //     htmlString += '<br><hr>'
-                // }
-
-
-            }
-
-            ideasContainer.innerHTML = htmlString
-            $(window).scrollTop(0)
-
-
-            displayPageFooter()
-        }
-
-        else {
-            ideas = await getIdeasPaginated(currentPage)
-
-            let ideasContainer = document.getElementById("ideasContainer")
-
-            let htmlString = ''
-            console.log(ideas)
-
-            if (ideas.length == 0) {
-                htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
-
-            }
-
-            else {
-
-                for (let idea of ideas) {
-                    console.log(idea)
-
-                    if (idea.documentPath != null) {
-
-                        htmlString += `
             
                  <br>
 
@@ -282,7 +207,7 @@ $(document).ready(function () {
                             &nbsp;&nbsp;<li class="list-inline-item"><a href="#"> <i
                                         class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">0</span>
 
-                            &nbsp;&nbsp;<a class="more-link" href="">Read comments &rarr;</a>
+                            &nbsp;&nbsp;<a style="cursor: pointer;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &rarr;</a>
 
                         </div>
                         <!--//media-body-->
@@ -294,9 +219,9 @@ $(document).ready(function () {
             <br><hr>
             
             `
-                    } else {
+            } else {
 
-                        htmlString += `
+                htmlString += `
             
                  <br>
 
@@ -314,7 +239,7 @@ $(document).ready(function () {
                             &nbsp;&nbsp;<li class="list-inline-item"><a href="#"> <i
                                         class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">0</span>
 
-                            &nbsp;&nbsp;<a class="more-link" href="">Read comments &rarr;</a>
+                            &nbsp;&nbsp;<a style="cursor: pointer;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &rarr;</a>
 
                         </div>
                         <!--//media-body-->
@@ -326,30 +251,59 @@ $(document).ready(function () {
             <br><hr>
             
             `
-                    }
-
-                    ideasContainer.innerHTML = htmlString
-                    $(window).scrollTop(0)
-
-                    console.log(idea.documentPath)
-
-                    // if ((i + 1) != (ideas.length)) {
-                    //     htmlString += '<br><hr>'
-                    // }
-
-
-                }
-
-                ideasContainer.innerHTML = htmlString
-                $(window).scrollTop(0)
-                // displayPageFooter()
             }
 
-            ideasContainer.innerHTML = htmlString
-            // $(window).scrollTop(0)
-            displayPageFooter()
 
         }
+
+        ideasContainer.innerHTML = htmlString
+        $(window).scrollTop(0)
+
+        initReadCommentLinks()
+
+        displayPageFooter()
+
+
+
+    }
+
+
+
+    async function displayIdeas(page) {
+        setCurrentPage(page)
+
+        let ideas;
+
+        let selectedCategory = categoryDropdown.options[categoryDropdown.selectedIndex].value;
+
+        console.log("category id = " + selectedCategory)
+
+        if (selectedCategory != 0) {
+            ideas = await getIdeas(currentPage, selectedCategory)
+        } else {
+            ideas = await getIdeas(currentPage)
+        }
+
+
+        renderIdeasHTML(ideas)
+    }
+
+
+
+    function initReadCommentLinks() {
+        let ideaReadCommentsLinks = Array.from(document.querySelectorAll(".idea-read-comments-link"));
+
+        ideaReadCommentsLinks.forEach(readCommentsLink => {
+
+            console.log("dataset for link " + readCommentsLink.dataset.ideaid)
+            readCommentsLink.addEventListener("click", () => {
+
+                sessionStorage.setItem("IDEA_ID_READ_COMMENTS", readCommentsLink.dataset.ideaid)
+                location.href = "comments-2.html"
+
+            })
+
+        })
     }
 
     const showPrevArrow = () => {
@@ -396,9 +350,6 @@ $(document).ready(function () {
         })
     }
 
-    function downloadFile() {
-        // let downoloadIcon = 
-    }
 
     async function post(endpoint, data) {
 
@@ -412,16 +363,6 @@ $(document).ready(function () {
 
         return response;
     }
-
-    // const applyCSStoPages = () => {
-
-    //     $(document).on('hover', '.pagination-page-number', () => {
-
-    //     })
-
-    // }
-
-
 
     function applyPaginationStyling() {
 
@@ -493,8 +434,194 @@ $(document).ready(function () {
 
             });
     }
+
+
+
+
+
+
 })
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+        // if (selectedCategory != "0") {
+        //     // ideas = await sortIdeas(currentPage)
+
+        //     ideas = await getIdeas(currentPage, selectedCategory)
+
+
+
+        //     let htmlString = ''
+
+        //     if (ideas.length == 0) {
+        //         htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
+        //     }
+        //     console.log(ideas)
+
+        //     for (let idea of ideas) {
+
+        //         htmlString += `
+
+        //              <br>
+
+        //          <div class="item idea">
+        //                 <div class="media">
+        //                     <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
+        //                         src="./other/assets/images/default-user-photo.png" alt="image">
+        //                     <div class="media-body">
+        //                         <h3 class="title mb-1"><a>${idea.title}</a></h3>
+        //                         <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
+        //                         <div class="intro">${idea.description}</div><br>
+        //                         <li class="list-inline-item"><a href="#"> <i class="fas fa-file-download fa-lg"></i> </a>
+        //                         </li>
+        //                         <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
+        //                         <span class="bio mb-3">0</span>
+
+        //                         &nbsp;&nbsp;<li class="list-inline-item"><a href="#"> <i
+        //                                     class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">0</span>
+
+        //                         &nbsp;&nbsp;<button class="more-link idea-read-comments-link" data-ideaId="${idea.id}">Read comments &rarr;</button>
+
+        //                     </div>
+        //                     <!--//media-body-->
+
+        //                 </div>
+        //                 <!--//media-->
+        //             </div>
+
+        //         <br><hr>
+
+        //         `
+
+
+
+
+        //     }
+
+        //     initReadCommentLinks()
+
+
+        //     ideasContainer.innerHTML = htmlString
+        //     $(window).scrollTop(0)
+
+
+        //     displayPageFooter()
+        // } else {
+        //     ideas = await getIdeasPaginated(currentPage)
+
+        //     let ideasContainer = document.getElementById("ideasContainer")
+
+        //     let htmlString = ''
+        //     console.log(ideas)
+
+        //     if (ideas.length == 0) {
+        //         htmlString = "<h1 style='color: grey; margin-left: 30%;'>No ideas, yet.</h6>"
+
+        //     }
+
+        //     else {
+
+        //         for (let idea of ideas) {
+        //             console.log(idea)
+
+        //             if (idea.documentPath != null) {
+
+        //                 htmlString += `
+
+        //          <br>
+
+        //      <div class="item">
+        //             <div class="media">
+        //                 <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
+        //                     src="./other/assets/images/default-user-photo.png" alt="image">
+        //                 <div class="media-body">
+        //                     <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
+        //                     <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
+        //                     <div class="intro">${idea.description}</div><br>
+        //                     <li class="list-inline-item"><a href="${url}/ideas/downloadFile?documentPath=${idea.documentPath}" > <i class="fas fa-file-download fa-lg"></i> </a>
+        //                     </li>
+        //                     <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
+        //                     <span class="bio mb-3">0</span>
+
+        //                     &nbsp;&nbsp;<li class="list-inline-item"><a href="#"> <i
+        //                                 class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">0</span>
+
+        //                     &nbsp;&nbsp;<a class="more-link" href="">Read comments &rarr;</a>
+
+        //                 </div>
+        //                 <!--//media-body-->
+
+        //             </div>
+        //             <!--//media-->
+        //         </div>
+
+        //     <br><hr>
+
+        //     `
+        //             } else {
+
+        //                 htmlString += `
+
+        //          <br>
+
+        //      <div class="item">
+        //             <div class="media">
+        //                 <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
+        //                     src="./other/assets/images/default-user-photo.png" alt="image">
+        //                 <div class="media-body">
+        //                     <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
+        //                     <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span></div>
+        //                     <div class="intro">${idea.description}</div><br>
+        //                     <li class="list-inline-item"><a href="#"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
+        //                     <span class="bio mb-3">0</span>
+
+        //                     &nbsp;&nbsp;<li class="list-inline-item"><a href="#"> <i
+        //                                 class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">0</span>
+
+        //                     &nbsp;&nbsp;<a class="more-link" href="">Read comments &rarr;</a>
+
+        //                 </div>
+        //                 <!--//media-body-->
+
+        //             </div>
+        //             <!--//media-->
+        //         </div>
+
+        //     <br><hr>
+
+        //     `
+        //             }
+
+        //             ideasContainer.innerHTML = htmlString
+        //             $(window).scrollTop(0)
+
+        //             console.log(idea.documentPath)
+
+        //             // if ((i + 1) != (ideas.length)) {
+        //             //     htmlString += '<br><hr>'
+        //             // }
+
+
+        //         }
+
+        //         ideasContainer.innerHTML = htmlString
+        //         $(window).scrollTop(0)
+        //         // displayPageFooter()
+        //     }
+
+        //     ideasContainer.innerHTML = htmlString
+        //     // $(window).scrollTop(0)
+        //     displayPageFooter()
+
+        // }

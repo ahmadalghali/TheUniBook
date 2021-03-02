@@ -50,14 +50,14 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <!-- <script>
+    <script>
 
         let session = JSON.parse(sessionStorage.getItem("session"))
 
         if (session == null && session == undefined) {
             location.href = "/"
         }
-    </script> -->
+    </script>
 </head>
 
 <body>
@@ -66,21 +66,18 @@
         <section class="cta-section theme-bg-light py-5">
             <!-- <h1>More computers</h1> -->
 
+
             <div class="item">
                 <div class="media">
-                    <div class="media-body">
+                    <div class="media-body" style="padding-left: 50px">
+
                         <span class="title mb-1">
-                            <h3>Demand for more computers</h3>
+                            <h3 id="ideaTitle"></h3>
                         </span>
-                        <div class="meta mb-1"><span class="date">Published by</span><span class="comment">John
-                                Doe</span></div>
+                        <div class="meta mb-1"><span class="date">Published by</span><span id="ideaAuthor"
+                                class="comment"></span></div>
                         <br>
-                        <div class="intro">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione maiores
-                            provident voluptatibus eos eveniet. Fugiat similique laborum amet veniam unde dolor enim
-                            eligendi dolorem sapiente labore exercitationem delectus ex omnis deserunt debitis,
-                            tempora
-                            pariatur blanditiis et quis vel. Amet mollitia illum odit ratione enim aperiam! Dolorum
-                            porro obcaecati laborum incidunt.</div>
+                        <div id="ideaDescription" class="intro"></div>
 
                     </div>
                 </div>
@@ -90,15 +87,15 @@
 
             <div class="wrap-input100 validate-input" data-validate="Description is required">
                 <span class="label-input100">Write comments</span>
-                <textarea id="description" class="input100" name="description" required
+                <textarea id="commentsTextArea" class="input100" name="description" required
                     placeholder="Your comments here..."></textarea>
                 <span class="focus-input100"></span>
             </div>
             <!--icon to add new comments-->
-            <li class="position"><a href=""> <i class="fas fa-comment-medical fa-2x"></i></a>
-            </li>
+            <li class="position"><a style="color: rgb(0, 153, 255); cursor: pointer;" id="btnPostComment"> <i
+                        class="fas fa-comment-medical fa-2x"></i></a></li>
 
-            <h4>Comments - 26</h4>
+            <h4>Comments - <span id="commentCount"></span></h4>
             <!-- <hr> -->
             <br>
             <div id="commentsContainer" class="container">
@@ -108,7 +105,7 @@
 
 
 
-                <div class="item">
+                <!-- <div class="item">
                     <div class="media">
 
 
@@ -158,7 +155,10 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
+            </div>
+
+            <a href="home.html" style="font-size:20px">Back to Home</a>
 
         </section>
         <!--//item-->
@@ -188,7 +188,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="./Styles/Home/assets/js/pagination.js"></script>
 
-    <script src="js/home.js"></script>
+    <script src="js/comments.js"></script>
     <link rel="stylesheet" href="/Styles/Home/assets/css/pagination.css">
 
 </body>

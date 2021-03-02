@@ -39,6 +39,10 @@ $(document).ready(function () {
             toastr.warning("Comment has exceeded character limit of 500.")
             return
         }
+        if (commentMessage.length < 1) {
+            toastr.warning("Comment field is empty")
+            return
+        }
 
         let comment = {
             description: commentMessage,

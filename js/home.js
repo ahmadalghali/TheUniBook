@@ -183,14 +183,14 @@ $(document).ready(function () {
             let thumbsUpColor = "grey"
             let thumbsDownColor = "grey"
 
-            if(userLikedIdeasList.includes(idea.id)){
+            if (userLikedIdeasList.includes(idea.id)) {
                 thumbsUpColor = "green"
             }
 
-            if(userDislikedIdeasList.includes(idea.id)){
+            if (userDislikedIdeasList.includes(idea.id)) {
                 thumbsDownColor = "red"
             }
-            
+
             if (idea.documentPath != null) {
 
                 htmlString += `
@@ -298,12 +298,12 @@ $(document).ready(function () {
         renderIdeasHTML(ideas)
     }
 
-    async function Like(ideaId){        
-        let likeResponse = await fetch(`${url}/ideas/like?ideaId=${ideaId}&userId=${session.user.id}`,{method: "POST"}).then(response => response.json())
+    async function Like(ideaId) {
+        let likeResponse = await fetch(`${url}/ideas/like?ideaId=${ideaId}&userId=${session.user.id}`, { method: "POST" }).then(response => response.json())
         displayIdeas(currentPage)
     }
-    async function Dislike(ideaId){        
-        await fetch(`${url}/ideas/dislike?ideaId=${ideaId}&userId=${session.user.id}`,{method: "POST"}).then(response => response.json())
+    async function Dislike(ideaId) {
+        await fetch(`${url}/ideas/dislike?ideaId=${ideaId}&userId=${session.user.id}`, { method: "POST" }).then(response => response.json())
         displayIdeas(currentPage)
     }
 
@@ -325,7 +325,7 @@ $(document).ready(function () {
 
             thumbsDownButton.addEventListener("click", () => {
                 let ideaId = thumbsDownButton.dataset.ideaid;
-                Dislike(ideaId);                
+                Dislike(ideaId);
             })
 
         })
@@ -340,9 +340,11 @@ $(document).ready(function () {
         ideaReadCommentsLinks.forEach(readCommentsLink => {
 
             readCommentsLink.addEventListener("click", () => {
-                
+
                 sessionStorage.setItem("IDEA_ID_READ_COMMENTS", readCommentsLink.dataset.ideaid)
-                location.href = "comments-2.html"
+                // location.href = "comments-2.html"
+                location.href = "comments.html"
+
 
             })
 

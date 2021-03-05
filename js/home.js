@@ -54,6 +54,18 @@ $(document).ready(function () {
     function setUserDetails() {
 
         let user = session.user
+
+        if(user.role == "MANAGER"){
+            let privilegesList = document.getElementById("privilegesList")
+            let modifyCategoriesPage = document.createElement("a")
+            modifyCategoriesPage.href = `modify-category.html`
+            modifyCategoriesPage.text = "Modify Categories"
+            modifyCategoriesPage.style = "color: white;"
+            privilegesList.append(modifyCategoriesPage)
+        }
+
+
+
         $("#fullname").html(`<h5 style="color: white">${user.firstname} ${user.lastname}</h5>`)
         if (user.role === null) {
             $("#role").html(`Staff`)

@@ -17,11 +17,24 @@
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="./Styles/Add_Idea/css/main.css">
 <!--===============================================================================================-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 <!--===============================================================================================-->
+<script>
 
+  let session = JSON.parse(sessionStorage.getItem("session"))
+
+  if (session == null && session == undefined) {
+      location.href = "/"
+  }
+
+  if(session.user.role != "MANAGER"){
+    location.href = "home.html"
+  }
+</script>
 
 </head>
+
 <body>
 <!-- partial:index.partial.html -->
 
@@ -40,20 +53,20 @@
       <div class="tab-content">
         <div id="signup">   
     
-          <h1>Add a catagory</h1>
+          <h1>Add a category</h1>
           <br>
           
-          <form action="/" method="post">
+          <form>
             <br>
             <br>
             <div class="wrap-input100 validate-input" data-validate="Title is required">
                 <span class="label-input100">Category</span>
-                <input id="title" name="title" class="input100" type="text" placeholder="Title of category" required>
+                <input id="category_title" name="title" class="input100" type="text" placeholder="Title of category" required>
                 <span class="focus-input100"></span>
             </div>
             <br><br><br><br>
         <div align="center">
-          <button type="submit" class="button button-block"/>Add</button>
+          <button id ="add_category_button" class="button button-block">Add</button>
         </div>
           <div>
             <div align="center">
@@ -66,17 +79,24 @@
         </div>
         
         <div id="login">   
-          <h1>Delete a catagory</h1>
+          <h1>Delete a category</h1>
           <br><br><br>
-          <form action="/" method="post">
+          <form>
 
           <!-- select category to delete -->
             <div class="wrap-input100 input100-select">
                 <span class="label-input100">Choose Category</span>
+
                 <div>
+                    <!-- <select class="selection-2" name="categoryId" id="categoryDropdown" required> -->
+                        <!-- <option  selected="selected"></option> -->
+                    <!-- </select> -->
+
+
                     <select class="selection-2" name="categoryId" id="categoryDropdown" required>
-                        <option  selected="selected"></option>
-                    </select>
+                      <!-- <option id="default_category" disabled="disabled" selected="selected"></option> -->
+                  </select>
+
                 </div>
                 <span class="focus-input100"></span>
             </div>
@@ -84,7 +104,7 @@
 
             <br><br><br><br>
             <div align="center">
-            <button type="submit" class="button button-block"/>Delete</button>
+            <button id = "delete_category_button" type="submit" class="button button-block"/>Delete</button>
           </div>
             <div>
                 <div align="center">
@@ -98,13 +118,20 @@
       </div><!-- tab-content -->
       
 </div> <!-- /form -->
+<div id="dropDownSelect1"></div>
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script  src="./Styles/modify_category/script.js"></script>
 <!--===============================================================================================-->
-
-<!--===============================================================================================-->
-<script src="./Styles/Add_Idea/vendor/select2/select2.min.js"></script>
+   <!--===============================================================================================-->
+   <script src="./Styles/Add_Idea/vendor/jquery/jquery-3.2.1.min.js"></script>
+   <!--===============================================================================================-->
+   <script src="./Styles/Add_Idea/vendor/animsition/js/animsition.min.js"></script>
+   <!--===============================================================================================-->
+   <script src="./Styles/Add_Idea/vendor/bootstrap/js/popper.js"></script>
+   <script src="./Styles/Add_Idea/vendor/bootstrap/js/bootstrap.min.js"></script>
+   <!--===============================================================================================-->
+   <script src="./Styles/Add_Idea/vendor/select2/select2.min.js"></script>
 <script>
     $(".selection-2").select2({
         minimumResultsForSearch: 20,
@@ -112,8 +139,10 @@
     });
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<script src="js/add-idea.js"></script>
+<script src="js/modify-category.js"></script>
+
 <!--===============================================================================================-->
 </body>
 </html>

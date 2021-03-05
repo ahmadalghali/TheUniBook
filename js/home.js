@@ -55,13 +55,18 @@ $(document).ready(function () {
 
         let user = session.user
 
-        if(user.role == "MANAGER"){
+        if (user.role == "MANAGER") {
             let privilegesList = document.getElementById("privilegesList")
-            let modifyCategoriesPage = document.createElement("a")
-            modifyCategoriesPage.href = `modify-category.html`
-            modifyCategoriesPage.text = "Modify Categories"
-            modifyCategoriesPage.style = "color: white;"
-            privilegesList.append(modifyCategoriesPage)
+            // let modifyCategoriesPage = document.createElement("a")
+            // modifyCategoriesPage.href = `modify-category.html`
+            // modifyCategoriesPage.text = "Modify Categories"
+            // modifyCategoriesPage.style = "color: white;"
+
+
+            // privilegesList.append(modifyCategoriesPage) 
+
+            privilegesList.innerHTML += `<a href="modify-category.html" style="color: white;"><b>Modify Categories</b></a>`
+
         }
 
 

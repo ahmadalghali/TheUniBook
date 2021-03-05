@@ -11,6 +11,8 @@ $(document).ready(function () {
 
     var categorydropdown = document.getElementById("categoryDropdown");
 
+    let session = sessionStorage.getItem("session")
+
     addcatbutton.addEventListener("click", (e) => {
         e.preventDefault();
 
@@ -43,15 +45,18 @@ $(document).ready(function () {
     populateCategoryDropdown();
 
 
+
     async function deleteCategory(categoryId) {
-        // url/categories?categoryId=...&userId=...
-        let deleteCategoryResponse = await fetch(`${url}/categories?categoryId=${categoryId}&userId=${118}`, { method: "DELETE" }).then(response => response.json())
+        let user = session.user
+        let deleteCategoryResponse = await fetch(`${url}/categories?categoryId=${categoryId}&userId=${user.id}`, { method: "DELETE" }).then(response => response.json())
         if (deleteCategoryResponse.message == "category deleted successfully") {
             toastr.success("Category deleted successfully")
         } else if (deleteCategoryResponse.message == "category cannot be deleted, ideas exist for this category") {
             toastr.warning("Category cannot be deleted, ideas exists for this category")
         } else if (deleteCategoryResponse.message == "user has no authorization for this action") {
             toastr.warning("You have no authorization for this action")
+        } else {
+            toastr.warning("We apologise something went wrong, please try again later")
         }
         populateCategoryDropdown()
     }

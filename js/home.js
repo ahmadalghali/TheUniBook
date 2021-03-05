@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     let pagesDiv = document.getElementById("pagesDiv")
     let categoryDropdown = document.getElementById("category_dropdown");
-
+    let filterDropdown = document.getElementById("filter_dropdown");
 
     let pageCount;
 
@@ -27,6 +27,9 @@ $(document).ready(function () {
     initHomePage()
 
     document.getElementById('category_dropdown').onchange = function () {
+        displayIdeas(currentPage);
+    }
+    document.getElementById('filter_dropdown').onchange = function () {
         displayIdeas(currentPage);
     }
 
@@ -64,7 +67,7 @@ $(document).ready(function () {
     async function populateCategoryDropdown() {
         var categoryDropdown = $("#category_dropdown");
         categoryDropdown.empty();
-        categoryDropdown.append('<option value="0" selected="selected" >All ideas</option>');
+        categoryDropdown.append('<option value="any" selected="selected" >All ideas</option>');
 
         await fetch(`${url}/categories`).then(response => response.json()).then(categories => {
             let option;
@@ -94,23 +97,18 @@ $(document).ready(function () {
         })
     })
 
-
-
-    async function getIdeas(page, categoryId = null, sortBy = null) {
+    async function getIdeas(page, categoryId, sortBy) {
         let ideas;
         let getIdeasResponse;
-        if (categoryId != null) {
-            getIdeasResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&categoryId=${categoryId}&loggedInUser=${session.user.id}`).then(response => response.json())
-        } else {
-            getIdeasResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&loggedInUser=${session.user.id}`).then(response => response.json())
-        }
+
+        getIdeasResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&loggedInUser=${session.user.id}&categoryId=${categoryId}&sortBy=${sortBy}`).then(response => response.json())
+
         pageCount = getIdeasResponse.pageCount
         ideas = getIdeasResponse.ideas
 
         return getIdeasResponse
-        //return ideas
-    }
 
+    }
 
 
     function displayPageFooter() {
@@ -283,13 +281,19 @@ $(document).ready(function () {
         let ideas;
 
         let selectedCategory = categoryDropdown.options[categoryDropdown.selectedIndex].value;
+        let selectedFilter = filterDropdown.options[filterDropdown.selectedIndex].value;
 
-        if (selectedCategory != 0) {
-            ideas = await getIdeas(currentPage, selectedCategory)
-        } else {
-            ideas = await getIdeas(currentPage)
-        }
+        // if (selectedCategory != 0) {
+        // } 
+        ideas = await getIdeas(currentPage, selectedCategory, selectedFilter)
 
+        // if(selectedFilter == ){
+        //     ideas = await getIdeas(currentPage, selectedFilter)
+        // }
+        // else {
+        //     ideas = await getIdeas(currentPage)
+        // }
+        // console.log(ideas)
 
         renderIdeasHTML(ideas)
     }

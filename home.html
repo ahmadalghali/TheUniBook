@@ -91,13 +91,10 @@
                 <span class="focus-input100"></span>
 
                 <span class="box">
-                    <select class="selection-2 " name="service" id="category_dropdown" asp-items="@Model.Options"
-                        asp-for="Idea.CategoryId">
-                        <option id="default_option" disabled="disabled" selected="selected">Filter</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                    <select class="selection-2 " name="service" id="filter_dropdown">
+                        <option value="latest" selected="selected">Latest</option>
+                        <option value="most_popular">Most popular</option>
+                        <option value="most_viewed">Most viewed</option>
                     </select>
                 </span>
                 <span class="focus-input100"></span>

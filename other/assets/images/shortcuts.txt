@@ -1,0 +1,8 @@
+Mac:
+
+duplicate line  = shift option down-arrow
+
+collapse methods = CMD + K + 0 
+
+move line around = option + up/down arrow
+

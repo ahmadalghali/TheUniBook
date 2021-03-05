@@ -11,7 +11,12 @@ $(document).ready(function () {
 
     var categorydropdown = document.getElementById("categoryDropdown");
 
-    let session = sessionStorage.getItem("session")
+    let session = JSON.parse(sessionStorage.getItem("session"));
+
+    let deleteCategoryTab = document.getElementById("deleteCategoryTab")
+
+    deleteCategoryTab.addEventListener("click", populateCategoryDropdown)
+
 
     addcatbutton.addEventListener("click", (e) => {
         e.preventDefault();
@@ -37,7 +42,6 @@ $(document).ready(function () {
         } else {
             toastr.warning("Please select a category")
         }
-        console.log(categoryId)
 
     })
 
@@ -48,6 +52,7 @@ $(document).ready(function () {
 
     async function deleteCategory(categoryId) {
         let user = session.user
+        console.log(user)
         let deleteCategoryResponse = await fetch(`${url}/categories?categoryId=${categoryId}&userId=${user.id}`, { method: "DELETE" }).then(response => response.json())
         if (deleteCategoryResponse.message == "category deleted successfully") {
             toastr.success("Category deleted successfully")

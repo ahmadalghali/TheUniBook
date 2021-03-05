@@ -27,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="./Styles/Login/css/util.css">
     <link rel="stylesheet" type="text/css" href="./Styles/Login/css/main.css">
 
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <!-- <link rel="stylesheet" type="text/css" href="css/other/main.css"> -->
@@ -52,10 +52,10 @@
                         <i class="zmdi zmdi-font"></i>
                     </span>
 
-<!-- data-validate="Valid email is: a@b.c" -->
+                    <!-- data-validate="Valid email is: a@b.c" -->
 
-                    <div class="wrap-input100 validate-input" >
-                        <input id="email_field" name="email" class="input100" type="text" asp-for="User.Email" required>
+                    <div class="wrap-input100">
+                        <input id="email_field" name="email" class="input100" type="text" required>
                         <span class="focus-input100" data-placeholder="Email"></span>
                     </div>
 
@@ -63,7 +63,8 @@
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
                         </span>
-                        <input id="password_field" name="password" class="input100" type="password" asp-for="User.Password" required>
+                        <input id="password_field" name="password" class="input100" type="password"
+                            asp-for="User.Password" required>
                         <span class="focus-input100" data-placeholder="Password"></span>
                     </div>
 
@@ -114,8 +115,8 @@
     <!--===============================================================================================-->
     <script src="./Styles/Login/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script src="./Styles/Login/js/main.js"></script>
     <script src="js/index.js"></script>

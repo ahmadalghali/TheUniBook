@@ -11,7 +11,7 @@
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="./Styles/Add_Idea/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="./Styles/Add_Idea/vendor/animsition/css/animsition.min.css">
+
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="./Styles/Add_Idea/vendor/select2/select2.min.css">
 <!--===============================================================================================-->
@@ -24,7 +24,9 @@
 </head>
 <body>
 <!-- partial:index.partial.html -->
+
 <div class="form">
+  <div>
       <div>
       <ul class="tab-groupr">
         <li class="tab active"><a href="#signup">Add Category</a></li>
@@ -32,8 +34,9 @@
       <ul class="tab-groupl">
         <li class="tab active"><a href="#login">Delete Category</a></li>
       </ul>
-    </div> 
-    <br>
+    </div>
+  </div> 
+  <br><br><br><br>
       <div class="tab-content">
         <div id="signup">   
     
@@ -48,8 +51,10 @@
                 <input id="title" name="title" class="input100" type="text" placeholder="Title of category" required>
                 <span class="focus-input100"></span>
             </div>
-          
+            <br><br><br><br>
+        <div align="center">
           <button type="submit" class="button button-block"/>Add</button>
+        </div>
           <div>
             <div align="center">
                 <a href="home.html" style="font-size:20px">Back to Home</a>
@@ -62,19 +67,25 @@
         
         <div id="login">   
           <h1>Delete a catagory</h1>
+          <br><br><br>
           <form action="/" method="post">
-          
+
+          <!-- select category to delete -->
             <div class="wrap-input100 input100-select">
                 <span class="label-input100">Choose Category</span>
                 <div>
                     <select class="selection-2" name="categoryId" id="categoryDropdown" required>
-                        <option id="default_category" disabled="disabled" selected="selected"></option>
+                        <option  selected="selected"></option>
                     </select>
                 </div>
                 <span class="focus-input100"></span>
             </div>
-        
+
+
+            <br><br><br><br>
+            <div align="center">
             <button type="submit" class="button button-block"/>Delete</button>
+          </div>
             <div>
                 <div align="center">
                 <a href="home.html" style="font-size:20px">Back to Home</a>
@@ -91,12 +102,7 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script  src="./Styles/modify_category/script.js"></script>
 <!--===============================================================================================-->
-<script src="./Styles/Add_Idea/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-<script src="./Styles/Add_Idea/vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-<script src="./Styles/Add_Idea/vendor/bootstrap/js/popper.js"></script>
-<script src="./Styles/Add_Idea/vendor/bootstrap/js/bootstrap.min.js"></script>
+
 <!--===============================================================================================-->
 <script src="./Styles/Add_Idea/vendor/select2/select2.min.js"></script>
 <script>
@@ -104,15 +110,6 @@
         minimumResultsForSearch: 20,
         dropdownParent: $('#dropDownSelect1')
     });
-
-    // var categoryDropdown = document.getElementById("category_dropdown");
-
-    // function validateForm() {
-    //     if (categoryDropdown.selectedIndex === 0) {
-    //         alert("Please choose a category")
-    //         return;
-    //     }
-    // }
 </script>
 
 

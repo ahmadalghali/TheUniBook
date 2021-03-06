@@ -20,6 +20,7 @@ $(document).ready(function () {
     btnPostComment.addEventListener("click", postComment)
 
 
+
     initPage()
 
     async function getIdea() {
@@ -30,6 +31,8 @@ $(document).ready(function () {
     function initPage() {
         displayIdea()
         displayComments()
+        incrementIdeaViews(ideaId)
+
     }
 
     async function postComment() {
@@ -66,6 +69,9 @@ $(document).ready(function () {
 
     }
 
+    async function incrementIdeaViews(ideaId) {
+        await fetch(`${url}/ideas/${ideaId}/incrementViews`, { method: "PUT" })
+    }
     async function displayComments() {
         let comments = await fetch(`${url}/comments?ideaId=${ideaId}`).then(response => response.json())
 

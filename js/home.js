@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    //let url = "http://localhost:8080"
+    // let url = "http://localhost:8080"
     let url = "https://theunibook.herokuapp.com"
 
 
@@ -184,11 +184,13 @@ $(document).ready(function () {
 
 
     function renderIdeasHTML(getIdeasResponse) {
+
+        console.log(getIdeasResponse)
         let ideasContainer = document.getElementById("ideasContainer")
 
         let ideas = getIdeasResponse.ideas
         let userLikedIdeasList = getIdeasResponse.likedIdeasByUser
-        let userDislikedIdeasList = getIdeasResponse.DislikedIdeasByUser
+        let userDislikedIdeasList = getIdeasResponse.dislikedIdeasByUser
         let htmlString = ''
 
         if (ideas.length == 0) {
@@ -208,6 +210,8 @@ $(document).ready(function () {
                 thumbsDownColor = "red"
             }
 
+            let since = moment(idea.date).fromNow()
+
             if (idea.documentPath != null) {
 
                 htmlString += `
@@ -220,7 +224,7 @@ $(document).ready(function () {
                             src="./other/assets/images/default-user-photo.png" alt="image">
                         <div class="media-body">
                             <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
-                            <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">50  <span >Views</span></span><span class="date">5  <span >Mins ago</span></span></div>
+                            <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">${idea.views} views</span></span><span class="date">${since}</span></div>
                             <div class="intro" align="justify">${idea.description}</div><br>
                             <li class="list-inline-item"><a href="${url}/ideas/downloadFile?documentPath=${idea.documentPath}" > <i class="fas fa-file-download fa-lg"></i> </a>
                             </li>
@@ -254,7 +258,7 @@ $(document).ready(function () {
                             src="./other/assets/images/default-user-photo.png" alt="image">
                         <div class="media-body">
                             <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
-                            <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">50  <span >Views</span></span><span class="date">5  <span >Mins ago</span></span></div>
+                            <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">${idea.views} views</span></span><span class="date">${since}</span></span></div>
                             <div class="intro" align="justify">${idea.description}</div><br>
                             <li class="list-inline-item"><a style="cursor: pointer; color: ${thumbsUpColor};" class="thumbs-up" data-ideaid="${idea.id}"> <i class="fas fa-thumbs-up fa-lg thumbs-up"></i> </a> </li>
                             <span class="bio mb-3" >${idea.likes}</span>

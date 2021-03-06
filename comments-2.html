@@ -50,21 +50,105 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <script>
+    <!-- <script>
 
         let session = JSON.parse(sessionStorage.getItem("session"))
 
         if (session == null && session == undefined) {
             location.href = "/"
         }
-    </script>
+    </script> -->
 </head>
 
 <body>
 
+
+    <div id="app">
+
+
+        <div class="container-contact100">
+            <div id="mainDiv" class="wrap-contact100">
+                <form id="addIdeaForm" class="contact100-form validate-form">
+                    <!--//original idea-->
+                    <section>
+                        <div id="ideasContainer" class="wrap-input100 validate-input">
+                            <div class="item mb-5">
+                            </div>
+
+                            <div class="item">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h3 id="ideaTitle" class="title mb-1">{{title}}</h3>
+                                        <div class="meta mb-1"><span class="date">Published by</span><span
+                                                id="ideaAuthor" class="comment">{{authorName}}</span></div>
+                                        <br>
+                                        <div id="ideaDescription" class="intro">{{description}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                    </section>
+
+                    <!--new comments textarea-->
+                    <div class="wrap-input100 validate-input" data-validate="Description is required">
+                        <h5>Add a comment</h5>
+                        <br>
+                        <textarea id="commentsTextArea" name="description" required placeholder="Start typing..."
+                            class="input100" style="font-family: Arial;"></textarea>
+
+                        <span class="focus-input100"></span>
+                    </div>
+                    <!--icon to add new comments-->
+
+                    <li class="position"><a v-on:click="postComment()"
+                            style="color: rgba(0, 153, 255, 0.835); cursor: pointer;" id="btnPostComment">
+                            <i class="fas fa-comment-medical fa-2x"></i></a>
+                    </li>
+                    <br>
+                    <h4>Comments - <span id="commentCount"></span></h4>
+                    <br>
+                    <!--//comment history-->
+
+                    <!-- class="wrap-input100 validate-input" -->
+
+                    <div id="commentsContainer">
+                        <!-- <div class="item mb-5">
+                    </div>
+                    <div class="item">
+                        <div class="media">
+
+
+                            <div class="media-body">
+                                <div class="meta mb-1"><span class="date">Commented by</span><span class="comment">Name
+                                        of
+                                        the publisher here!</span></div>
+                                <div class="intro">Comment</div>
+                            </div>
+                        </div>
+                    </div> -->
+                    </div>
+
+                    <!--back home link-->
+                    <div class="container-contact100-form-btn">
+                        <div>
+                            <a href="home.html" style="font-size:20px">Back to Home</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+        <div id="dropDownSelect1"></div>
+
+
+
+    </div>
+
+    <!-- 
     <div>
         <section class="cta-section theme-bg-light py-5">
-            <!-- <h1>More computers</h1> -->
 
 
             <div class="item">
@@ -91,77 +175,19 @@
                     placeholder="Your comments here..."></textarea>
                 <span class="focus-input100"></span>
             </div>
-            <!--icon to add new comments-->
+
             <li class="position"><a style="color: rgb(0, 153, 255); cursor: pointer;" id="btnPostComment"> <i
                         class="fas fa-comment-medical fa-2x"></i></a></li>
 
             <h4>Comments - <span id="commentCount"></span></h4>
-            <!-- <hr> -->
             <br>
             <div id="commentsContainer" class="container">
-                <!-- <div class="item mb-5">
-                </div> -->
-                <!--//item-->
-
-
-
-                <!-- <div class="item">
-                    <div class="media">
-
-
-                        <div class="media-body">
-                            <div class="meta mb-1"><span class="comment">Marie
-                                    Jones</span></div>
-                            <div class="intro">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-                                perferendis ut maiores odio voluptatum! Doloribus veniam impedit itaque saepe amet.
-                                Error magnam laborum quisquam, quis repudiandae dolore reprehenderit sed beatae saepe
-                                animi nesciunt quaerat quo non placeat voluptate laudantium illum, a tenetur dolores
-                                molestiae sequi totam maiores velit! Quas, et!</div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <br>
-                <hr><br>
-                <div class="item">
-                    <div class="media">
-
-
-                        <div class="media-body">
-                            <div class="meta mb-1"><span class="comment">Henry Williams</span></div>
-                            <div class="intro">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum,
-                                necessitatibus.</div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <br>
-                <hr><br>
-
-                <div class="item">
-                    <div class="media">
-
-
-                        <div class="media-body">
-                            <div class="meta mb-1"><span class="comment">Michael Smith</span></div>
-                            <div class="intro">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum,
-                                necessitatibus. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo libero
-                                distinctio aperiam numquam possimus neque dolore vel, maxime facere perspiciatis.
-                                Veritatis possimus asperiores eius quam enim quibusdam sequi corrupti nemo! Sequi ea
-                                dicta et vitae rem minima modi distinctio, est placeat, vero sint impedit accusamus
-                                pariatur voluptas omnis, illo commodi.</div>
-                        </div>
-
-                    </div>
-                </div> -->
+              
             </div>
 
             <a href="home.html" style="font-size:20px">Back to Home</a>
 
         </section>
-        <!--//item-->
 
 
 
@@ -171,8 +197,7 @@
 
 
 
-    </div>
-    <!--//main-wrapper-->
+    </div> -->
 
 
 
@@ -188,7 +213,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="./Styles/Home/assets/js/pagination.js"></script>
 
-    <script src="js/comments.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="js/comments-2.js"></script>
     <link rel="stylesheet" href="/Styles/Home/assets/css/pagination.css">
 
 </body>

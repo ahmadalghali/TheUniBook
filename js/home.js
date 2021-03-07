@@ -65,7 +65,30 @@ $(document).ready(function () {
 
             // privilegesList.append(modifyCategoriesPage) 
 
-            privilegesList.innerHTML += `<a href="modify-category.html" style="color: white;"><b>Modify Categories</b></a>`
+            // privilegesList.innerHTML += `<a href="modify-category.html" style="color: white;"><b>Modify Categories</b></a>`
+
+            privilegesList.innerHTML += `
+
+            <li class="list-inline-item"><a href=""> <i class="fas fa-file-download fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Download data</b></span>
+                            <br><br>
+
+
+            <li class="list-inline-item"><a href="modify-category.html"> <i
+                                        class="fas fa-pen-square fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Modify Categories</b></span>
+                            <br><br>
+
+
+                            <li class="list-inline-item"><a href="statistics.html"> <i
+                                        class="fas fa-chart-bar fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>View Statistics</b></span>
+                            <br><br>
+
+            `
 
         }
 

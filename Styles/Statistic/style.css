@@ -47,10 +47,11 @@ html {
   .wrap {
   
     width: 49%;
+
     display: inline-block;
     margin: 0 auto;
-       float:auto;
-    
+    float:auto;
+   
    
   }
   
@@ -115,4 +116,10 @@ html {
     font-size: .75em;
     font-weight: bold;
     font-family: "Montserrat", sans-serif;
+  }
+
+
+  /* ahmad addition can be deleted if you want :) */
+  .value{
+    color: rgb(218, 51, 0)
   }

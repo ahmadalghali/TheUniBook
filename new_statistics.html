@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+
+    <!-- FontAwesome JS-->
+    <script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js"
+        integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7"
+        crossorigin="anonymous"></script>
+
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="./Styles/Home/assets/css/theme-6.css">
+    <!-- <link rel="stylesheet" href="/Styles/Home/assets/css/pagination.css"> -->
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    
+</head>
+
+<body>
+
+    <header class="header text-center">
+        <h1 class="blog-name pt-lg-4 mb-0"></h1>
+
+        <nav class="navbar navbar-expand-lg navbar-dark">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+                aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!--field where the idea will go-->
+            <div id="navigation" class="collapse navbar-collapse flex-column">
+                <div class="profile-section pt-3 pt-lg-0">
+                    <img class="profile-image mb-3 rounded-circle mx-auto" src="./Styles/Home/assets/images/profile.png"
+                        alt="image">
+
+                    <div id="fullname" class="bio mb-3"></div>
+                    <div id="role" class="bio mb-3"></div>
+                    <div id="department" class="bio mb-3"></div>
+                    <div align="left">
+                        <ul id="privilegesList" class="social-list list-inline py-3 mx-auto">
+
+                            <li class="list-inline-item"><a href="add-idea.html"><i
+                                        class="fas fa-lightbulb fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Add an Idea</b></span>
+                            <br><br>
+
+
+                            <!-- <li class="list-inline-item"><a href="modify-category.html"> <i
+                                        class="fas fa-pen-square fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3">Modify categories</span>
+                            <br><br> -->
+
+
+                            <!-- <li class="list-inline-item"><a href=""> <i class="fas fa-file-download fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3">Download document</span>
+                            <br><br> -->
+
+
+                            <!-- <li class="list-inline-item"><a href="statistics.html"> <i
+                                        class="fas fa-chart-bar fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3">Statistic page</span>
+                            <br><br> -->
+
+                        </ul>
+
+                    </div>
+
+
+
+                    <!-- id="privilegesList" -->
+                    <div>
+
+
+                        <!-- <a href="" style="color: white;">Modify category</a> -->
+                    </div>
+                </div>
+                <!--//profile-section-->
+
+
+
+                <div class="my-2 my-md-3">
+                    <a id="btnLogout" class="btn btn-primary" target="_blank">Log Out</a>
+                </div>
+                <div class="my-2 my-md-3">
+                    <a id="btnLogout" class="btn btn-primary" target="_blank">Back</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="main-wrapper">
+        <section class="cta-section theme-bg-light py-5">
+            <div class="container text-center">
+                <h2 class="heading">Welcome to Unibook</h2>
+
+                
+
+            </div>
+
+
+
+
+            
+
+
+            <!--//container-->
+        </section>
+        <section class="blog-list px-3 py-5 p-md-5">
+            <div id="ideasContainer" >
+               
+                          
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+            
+                  // Load Charts and the corechart package.
+                  google.charts.load('current', {'packages':['corechart']});
+            
+                  // Draw the pie chart for Sarah's pizza when Charts is loaded.
+                  google.charts.setOnLoadCallback(drawSarahChart);
+            
+                  // Draw the pie chart for the Anthony's pizza when Charts is loaded.
+                  google.charts.setOnLoadCallback(drawAnthonyChart);
+            
+                  // Callback that draws the pie chart for Sarah's pizza.
+                  function drawSarahChart() {
+            
+                    // Create the data table for Sarah's pizza.
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Topping');
+                    data.addColumn('number', 'Ideas');
+                    data.addRows([
+                      ['Computing', 1],
+                      ['Mathematics', 1],
+                      ['Art & Science', 2],
+                      ['Education Health', 2],
+                      ['Engineering', 1],
+                      ['Administration', 4]
+                    ]);
+
+                    
+            
+                    // Set options for Sarah's pie chart.
+                    var options = {title:'IDEAS PER DEPARTMENT',
+                                   width:500,
+                                   height:400};
+            
+                    // Instantiate and draw the chart for Sarah's pizza.
+                    var chart = new google.visualization.BarChart(document.getElementById('Sarah_chart_div'));
+                    chart.draw(data, options);
+                  }
+            
+                  // Callback that draws the pie chart for Anthony's pizza.
+                  function drawAnthonyChart() {
+            
+                    // Create the data table for Anthony's pizza.
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Topping');
+                    data.addColumn('number', 'Slices');
+                    data.addRows([
+                    ['Computing', 1],
+                      ['Mathematics', 1],
+                      ['Art & Science', 2],
+                      ['Education Health', 2],
+                      ['Engineering', 1],
+                      ['Administration', 4]
+                    ]);
+
+
+
+            
+                    // Set options for Anthony's pie chart.
+                    var options = {title:'CONTRIBUTORS PER DEPARTMENT',
+                                   width:500,
+                                   height:400};
+            
+                    // Instantiate and draw the chart for Anthony's pizza.
+                    var chart = new google.visualization.PieChart(document.getElementById('Anthony_chart_div'));
+                    chart.draw(data, options);
+                    
+                    
+                  }
+                </script>
+              </head>
+              <body>
+                <!--Table and divs that hold the pie charts-->
+                <table class="columns">
+                  <tr>
+                    <td><div id="Sarah_chart_div" style="border: 1px solid #ccc"></div></td>
+                    <td><div id="Anthony_chart_div" style="border: 1px solid #ccc"></div></td>
+                  </tr>
+                </table> 
+                            
+                       
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                  // Load Charts and the corechart and barchart packages.
+                  google.charts.load('current', {'packages':['corechart']});
+            
+                  // Draw the pie chart and bar chart when Charts is loaded.
+                  google.charts.setOnLoadCallback(drawChart);
+            
+                  function drawChart() {
+            
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Topping');
+                    data.addColumn('number', 'Slices');
+                    data.addRows([
+                    ['Computing', 1],
+                      ['Mathematics', 1],
+                      ['Art & Science', 2],
+                      ['Education Health', 2],
+                      ['Engineering', 1],
+                      ['Administration', 4]
+                    ]);
+            
+                    var piechart_options = {title:'EXCEPTION REPORTS',
+                                   width:500,
+                                   height:400};
+                    var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
+                    piechart.draw(data, piechart_options);
+            
+                    var barchart_options = {title:'EXCEPTION REPORTS',
+                                   width:500,
+                                   height:400,
+                                   legend: 'none'};
+                    var barchart = new google.visualization.BarChart(document.getElementById('barchart_div'));
+                    barchart.draw(data, barchart_options);
+                  }
+                </script>
+              </head>
+            <body>
+                <!--Table and divs that hold the pie charts-->
+                <table class="columns">
+                  <tr>
+                    <td><div id="piechart_div" style="border: 1px solid #ccc"></div></td>
+                    <td><div id="barchart_div" style="border: 1px solid #ccc"></div></td>
+                  </tr>
+                </table>
+
+
+
+
+
+
+
+
+
+        </section>
+        <!--//item-->
+
+
+
+        <!--pagination field-->
+        <div class="pagination">
+
+            <div id="pagesDiv" class="pagination-container">
+                <!-- <div class="pagination-hover-overlay"></div>
+
+                <a href="#0" class="pagination-prev">
+                    <span class="icon-pagination icon-pagination-prev">
+                        <i class="fas fa-arrow-left fa-lg"></i>
+                    </span>
+                </a>
+
+                <a class="pagination-page-number">1</a>
+                <a class="pagination-page-number">2</a>
+                <a class="pagination-page-number">3</a>
+                <a class="pagination-page-number">4</a>
+                <a class="pagination-page-number">5</a>
+                <a class="pagination-page-number">6</a>
+                <a class="pagination-page-number">7</a>
+
+                <a href="#0" class="pagination-next">
+                    <span class="icon-pagination icon-pagination-next">
+                        <i class="fas fa-arrow-right fa-lg"></i>
+                    </span>
+                </a> -->
+            </div>
+
+        </div>
+
+        <br>
+    </div>
+
+
+
+
+    </div>
+    <!--//main-wrapper-->
+
+
+
+    <!-- Javascript -->
+    <script src="./Styles/Home/assets/plugins/jquery-3.3.1.min.js"></script>
+    <script src="./Styles/Home/assets/plugins/popper.min.js"></script>
+    <script src="./Styles/Home/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./Styles/Home/assets/js/demo/style-switcher.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- <script src="./Styles/Home/assets/js/pagination.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/Styles/Home/assets/css/pagination.css">
+
+
+    <script src="js/home.js"></script>
+
+</body>
+
+</html>

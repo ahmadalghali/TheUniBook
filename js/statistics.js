@@ -50,7 +50,10 @@ $(document).ready(function () {
             contributorsPerDepartmenthtmlString += `
             <h4>${department.name}: <span class="value">${department.contributors}</span></h4>
             `
-            let percentage = (department.ideaCount / totalIdeaCount) * 100
+            let percentage = 0;
+            if (totalIdeaCount != 0) {
+                percentage = (department.ideaCount / totalIdeaCount) * 100
+            }
 
             // percentageIdeasPerDepartmentContainerHtmlString += `
             // <div class="bar cf" data-percent="${percentage}%"><span class="label">${department.name}</span></div>

@@ -46,7 +46,7 @@ html {
   
   .wrap {
   
-    width: 49%;
+    width: 100%;
 
     display: inline-block;
     margin: 0 auto;
@@ -83,7 +83,7 @@ html {
   .bar {
     background: #e74c3c;
     width: 0;
-    margin: .25em 0;
+    /* margin: .25em 0; */
     color: #fff;
     position: relative;
     transition: width 2s, background .2s;

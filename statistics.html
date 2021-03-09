@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Statistics</title>
 
+
   <link rel="stylesheet" href="./Styles/Statistic/style.css">
 
   <script>
@@ -19,92 +20,72 @@
       location.href = "home.html"
     }
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+    integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
-  <!-- partial:index.partial.html -->
 
+  <div class="container">
+    <!-- <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <canvas id="numOfIdeasPerDepartmentChart"></canvas>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <canvas id="contributorsPerDepartmentChart"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <canvas id="percentageOfIdeasPerDepartmentChart"></canvas>
 
-  <!-- <div class="wrap">
-    <h1>Number of ideas per User</h1>
-    <div class="holder">
-      <div class="bar cf" data-percent="21%"><span class="label">User1</span></div>
-      <div class="bar cf" data-percent="1%"><span class="label light">User2</span></div>
-      <div class="bar cf" data-percent="65%"><span class="label">User3</span></div>
+        </div> -->
+    <br>
+    <div>
+      <h1>Statistics</h1>
+      <br>
     </div>
-  </div> -->
 
-
-
-
-
-  <h1>Statistics</h1>
-
-
-  <!-- <div class="wrap">
-    <h1>% Ideas per department</h1>
-    <div class="holder">
-      <div class="bar cf" data-percent="15%"><span class="label">Dept1</span></div>
-      <div class="bar cf" data-percent="200%"><span class="label light">Dept2</span></div>
-      <div class="bar cf" data-percent="65%"><span class="label">Dept3</span></div>
+    <div>
+      <canvas id="numOfIdeasPerDepartmentChart"></canvas>
+      <br>
+      <hr> <br>
     </div>
-  </div> -->
-
-  <div class="wrap">
-    <h1>% Ideas per department</h1>
-    <div class="holder" id="percentage-ideas-per-department-container">
 
 
+    <div>
+      <canvas id="percentageOfIdeasPerDepartmentChart"></canvas>
+      <br>
+      <hr> <br>
     </div>
-  </div>
 
-
-
-
-  <div class="wrap">
-    <div id="ideas-per-department-container">
-      <h1>Ideas per department</h1>
+    <div>
+      <canvas id="contributorsPerDepartmentChart"></canvas>
+      <br> <br>
     </div>
+
+    <div>
+      <h1>Exception reports</h1>
+      <br> <br> <br>
+      <div>
+        <h4>Ideas without a comment: <span id="ideas-without-comment-count"></span></h4>
+
+      </div>
+      <br>
+      <div>
+        <h4>Anonymous ideas: <span id="anonymousIdeas"></span></h4>
+      </div>
+      <br>
+      <div>
+        <h4>Total comments: <span id="totalComments"></span></h4>
+      </div>
+    </div>
+
   </div>
-
-
-
-  <br> <br>
-  <div class="wrap" id="contributors-per-department-container">
-    <h1>Contributors per department</h1>
-  </div>
-
-  <br> <br>
-  <h1>Exception reports</h1>
-  <div>
-    <h4>Ideas without a comment: <span id="ideas-without-comment-count"></span></h4>
-  </div>
-  <br>
-  <div>
-    <h4>Anonymous ideas: <span id="anonymousIdeas"></span></h4>
-  </div>
-  <br>
-  <div>
-    <h4>Total comments: <span id="totalComments"></span></h4>
-  </div>
-
-
-
-
-
-
-  <!-- <h1>Ideas per Department</h1>
-  <div id="ideas-per-department-container" class="wrap">
-
-    <ul>
-      <li>
-        <h3>Electronics</h3> - Cont
-      </li>
-
-    </ul>
-
-  </div> -->
-
 
   <div align="center" style="margin-top: 50px; margin-bottom: 50px;">
     <br>
@@ -129,6 +110,8 @@
   <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script src="./Styles/Statistic/script.js"></script>
+
+  <script src="js/statistics.js"></script>
 
 </body>
 

@@ -4,11 +4,21 @@ $(document).ready(function () {
     let url = "https://theunibook.herokuapp.com"
 
 
-    // let totalNumOfCommentsField = document.getElementById("totalNumOfCommentsField")
-    // let numOfAnonymousIdeasField = document.getElementById("numOfAnonymousIdeasField")
-    // let numOfIdeasWithNoCommentsField = document.getElementById("numOfIdeasWithNoCommentsField")
+    let numOfIdeasPerDepartmentChart = document.getElementById("numOfIdeasPerDepartmentChart").getContext('2d')
+
+    let percentageOfIdeasPerDepartmentChart = document.getElementById("percentageOfIdeasPerDepartmentChart").getContext('2d')
 
 
+    let contributorsPerDepartmentChart = document.getElementById("contributorsPerDepartmentChart").getContext('2d')
+
+    // Chart.defaults.global.plugins.labels = {
+    //     fontColor: 'white',
+    //     fontSize: 24
+    // };
+    // global styling for cahrts
+    // Chart.defaults.global.defaultFontFamily = 'Lato'
+    // Chart.defaults.global.defaultFontSize = 18
+    // Chart.defaults.global.defaultFontColor = '#777'
 
 
     getStatistics()
@@ -16,9 +26,279 @@ $(document).ready(function () {
     async function getStatistics() {
         await fetch(`${url}/ideas/statistics`)
             .then(res => res.json())
-            .then(statistics => renderHTML(statistics));
+            .then(statistics => renderCharts(statistics));
+
+        // .then(statistics => renderHTML(statistics));
 
     }
+
+
+    function renderCharts(statistics) {
+
+        drawIdeasPerDeptChart(statistics);
+        drawPercentageIdeasPerDeptChart(statistics);
+        drawContributorsPerDeptChart(statistics);
+        displayExceptionReports(statistics);
+
+    }
+
+    function displayExceptionReports(statistics) {
+        let numOfIdeasWithoutComment = document.getElementById("ideas-without-comment-count")
+        let anonymousIdeas = document.getElementById("anonymousIdeas")
+        let totalComments = document.getElementById("totalComments")
+
+        numOfIdeasWithoutComment.innerHTML = `<span class="value">${statistics.numOfIdeasWithNoComments}</span>`
+        anonymousIdeas.innerHTML = `<span class="value">${statistics.numOfAnonymousIdeas}</span>`
+        totalComments.innerHTML = `<span class="value">${statistics.totalNumOfComments}</span>`
+    }
+
+
+    function drawIdeasPerDeptChart(stats) {
+
+        let departmentNames = []
+        let numOfIdeas = []
+
+        for (let department of stats.departments) {
+            departmentNames.push(department.name)
+            numOfIdeas.push(department.ideaCount)
+        }
+        new Chart(numOfIdeasPerDepartmentChart, {
+            type: 'horizontalBar', // types of charts: bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: departmentNames,
+                datasets: [{
+                    label: 'Ideas',
+                    data: numOfIdeas,
+                    backgroundColor: [
+                        'green',
+                        'red',
+                        'pink',
+                        'yellow',
+                        'purple',
+                        'orange',
+                        'blue'
+
+                    ],
+                    hoverBorderWidth: 1,
+                    hoverBorderColor: 'black'
+                }]
+            },
+            options: {
+                title: {
+                    fontSize: 20,
+                    display: true,
+                    text: 'No. of Ideas Per Department'
+                },
+                legend: {
+                    display: false
+                },
+                scales: {
+                    // ticks: {
+                    //     beginAtZero: true,
+                    //     precision: 0
+                    // }
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            precision: 0
+                        },
+                        // gridLines: {
+                        //     display: false
+                        // }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            precision: 0
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+
+                }
+            }
+
+
+        })
+    }
+
+
+
+    function drawPercentageIdeasPerDeptChart(stats) {
+
+        let departmentNames = []
+        let percentages = []
+
+        // let percentage = 0;
+        // if (totalIdeaCount != 0) {
+        //     percentage = (department.ideaCount / totalIdeaCount) * 100
+        // }
+        let totalIdeaCount = 0;
+        for (let department of stats.departments) {
+            totalIdeaCount += department.ideaCount
+        }
+
+        for (let department of stats.departments) {
+            departmentNames.push(department.name)
+            let percentage = 0;
+            if (totalIdeaCount != 0) {
+                percentage = (department.ideaCount / totalIdeaCount) * 100
+
+            }
+            percentages.push(percentage)
+        }
+
+        new Chart(percentageOfIdeasPerDepartmentChart, {
+            type: 'pie', // types of charts: bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: departmentNames,
+                datasets: [{
+                    data: percentages,
+                    backgroundColor: [
+                        'green',
+                        'red',
+                        'pink',
+                        'yellow',
+                        'purple',
+                        'orange',
+                        'blue'
+
+                    ],
+                    hoverBorderWidth: 1,
+                    hoverBorderColor: 'black'
+                }]
+            },
+            options: {
+
+                title: {
+                    fontSize: 20,
+                    display: true,
+                    text: '% of Ideas Per Department'
+                },
+                legend: {
+                    position: 'right',
+                    // display: false
+                },
+                scales: {
+
+                    // ticks: {
+                    //     beginAtZero: true,
+                    //     precision: 0
+                    // }
+                    // xAxes: [{
+                    //     ticks: {
+                    //         beginAtZero: true,
+                    //         precision: 0
+                    //     }
+                    // }],
+                    // yAxes: [{
+                    //     ticks: {
+                    //         beginAtZero: true,
+                    //         precision: 0
+                    //     }
+                    // }]
+
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            return data['labels'][tooltipItem['index']] + ': ' + data['datasets'][0]['data'][tooltipItem['index']] + '%';
+                        }
+                    }
+                },
+                plugins: {
+                    labels: {
+                        fontColor: 'white',
+                        fontSize: 18
+                    }
+                }
+
+            }
+
+
+        })
+    }
+
+    function drawContributorsPerDeptChart(stats) {
+
+        let departmentNames = []
+        let numOfContributors = []
+
+        for (let department of stats.departments) {
+            departmentNames.push(department.name)
+            numOfContributors.push(department.contributors)
+        }
+        new Chart(contributorsPerDepartmentChart, {
+            type: 'horizontalBar', // types of charts: bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: departmentNames,
+                datasets: [{
+                    label: 'Contributors',
+                    data: numOfContributors,
+                    backgroundColor: [
+                        'green',
+                        'red',
+                        'pink',
+                        'yellow',
+                        'purple',
+                        'orange',
+                        'blue'
+
+                    ],
+                    hoverBorderWidth: 1,
+                    hoverBorderColor: 'black'
+                }]
+            },
+            options: {
+
+                title: {
+                    fontSize: 20,
+                    display: true,
+                    text: 'No. of Contributors Per Department'
+                },
+                legend: {
+                    display: false
+                },
+                scales: {
+                    // ticks: {
+                    //     beginAtZero: true,
+                    //     precision: 0
+                    // }
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            precision: 0
+                        },
+                        // gridLines: {
+                        //     display: false
+                        // }
+
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            precision: 0
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+
+                },
+                plugins: {
+                    labels: {
+                        precision: 0
+                    }
+                }
+
+            }
+
+
+        })
+    }
+
+
 
     function renderHTML(statistics) {
         console.log(statistics)

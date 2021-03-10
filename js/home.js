@@ -1,10 +1,10 @@
 $(document).ready(function () {
 
-    //let url = "http://localhost:8080"
+    // let url = "http://localhost:8080"
     let url = "https://theunibook.herokuapp.com"
 
 
-    
+
     let currentPage = 1;
     let pagesDiv = document.getElementById("pagesDiv")
     let categoryDropdown = document.getElementById("category_dropdown");
@@ -46,7 +46,6 @@ $(document).ready(function () {
     document.getElementById('filter_dropdown').onchange = function () {
         displayIdeas(currentPage);
     }
-    btnEmailStaff.addEventListener('click', emailInactiveStaff)
 
     function initHomePage() {
         console.log
@@ -56,8 +55,8 @@ $(document).ready(function () {
     }
 
 
-    function emailInactiveStaff(){
-        fetch(`${url}/encourageStaff?departmentId=${session.user.department.id}`,{method:"post"})
+    function emailInactiveStaff() {
+        fetch(`${url}/encourageStaff?departmentId=${session.user.department.id}`, { method: "post" })
         console.log("emails sent")
         toastr.success("Email sent successfully")
     }
@@ -112,17 +111,18 @@ $(document).ready(function () {
 
         }
         if (user.role == "COORDINATOR") {
-         
+
             privilegesList.innerHTML += `
 
-            <li class="list-inline-item"><a  id="btnEmailStaff"> <i style="color: #4e93e0; cursor: pointer;" class="fas fa-envelope fa-lg"></i></a>
+            <li class="list-inline-item"><a  title="Send an email to all staff with little to no engagement"  id="btnEmailStaff"> <i  style="color: #4e93e0; cursor: pointer;" class="fas fa-envelope fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Email inactive staff: <span id="inactiveStaffCount">61</span> &nbsp;</b><i style="color: white;" class="fas fa-user fa-lg"></i></span>
                             <br>
 
             `
 
-            document.getElementById("inactiveStaffCount").value = getInactiveStaffCount()
+            getInactiveStaffCount()
+
             document.getElementById("btnEmailStaff").addEventListener("click", emailInactiveStaff)
 
 
@@ -139,9 +139,14 @@ $(document).ready(function () {
         $("#department").html(`<h6 style="color: white">${session.user.department.name}</h6>`)
     }
 
-    // async function getInactiveStaffCount(){
-    //     await
-    // }
+    async function getInactiveStaffCount() {
+
+        let inactiveStaffCount = 0
+        inactiveStaffCount = await fetch(`${url}/inactiveStaffCount?departmentId=${session.user.department.id}`).then(res => res.json())
+
+        document.getElementById("inactiveStaffCount").innerHTML = inactiveStaffCount
+
+    }
 
     async function populateCategoryDropdown() {
         var categoryDropdown = $("#category_dropdown");

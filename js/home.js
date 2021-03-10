@@ -105,7 +105,7 @@ $(document).ready(function () {
                                         class="fas fa-chart-bar fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>View Statistics</b></span>
-                            <br><br>
+                            <br>
 
             `
 

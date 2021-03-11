@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="./Styles/Login/css/util.css">
     <link rel="stylesheet" type="text/css" href="./Styles/Login/css/main.css">
 
+    <link rel="stylesheet" href="css/home.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
@@ -45,8 +46,7 @@
                 <form id="loginForm" class="login100-form validate-form">
 
                     <span class>
-                        <img src="./Styles/Login/image/logo_small.png"
-                        width="200" height="40" class="center">
+                        <img src="./Styles/Login/image/logo_small.png" width="200" height="40" class="center">
                     </span>
                     <br>
                     <span class="login100-form-title p-b-26">
@@ -79,8 +79,11 @@
                         </div>
                     </div>
 
+                    <!-- href="forgot-password.html" -->
+
                     <div class="text-center p-t-115">
-                        <a id="forgot_password" class="txt1" href="forgot-password.html">
+                        <a id="forgot_password" class="txt1" style="cursor: pointer;" data-toggle="modal"
+                            data-target="#exampleModal">
                             Forgot your password?
                         </a>
                         <br>
@@ -98,6 +101,76 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+    <!-- MODAL FORGOT PASSWORD POPUP -->
+
+    <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+
+
+                        <form id="loginForm" class="login100-form validate-form">
+
+
+                            <br>
+                            <span class="login100-form-title p-b-26">
+                                Forgot Password
+                            </span>
+
+                            <span class="login100-form-title p-b-48">
+                            </span>
+
+                            <div class="wrap-input100">
+                                <input id="modalEmailField" name="email" class="input100" type="text" required>
+                                <span class="focus-input100" data-placeholder="Email"></span>
+                            </div>
+
+
+
+                            <div class="container-login100-form-btn">
+                                <div class="wrap-login100-form-btn">
+                                    <div class="login100-form-bgbtn"></div>
+                                    <button id="btnSendEmail" class="login100-form-btn">
+                                        Send Email
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <!-- <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL FORGOT PASSWORD POPUP -->
+
+
+
+
 
 
     <div id="dropDownSelect1"></div>

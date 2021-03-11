@@ -19,9 +19,31 @@
     <!-- Theme CSS -->
     <link id="theme-style" rel="stylesheet" href="./Styles/Home/assets/css/theme-6.css">
     <!-- <link rel="stylesheet" href="/Styles/Home/assets/css/pagination.css"> -->
-
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+
+    <link rel="stylesheet" href="./Styles/Statistic/style.css">
+
+    <script>
+  
+      let session = JSON.parse(sessionStorage.getItem("session"))
+  
+      if (session == null && session == undefined) {
+        location.href = "/"
+      }
+  
+      if (session.user.role != "MANAGER") {
+        location.href = "home.html"
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+      integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+      crossorigin="anonymous"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
 
 
 </head>
@@ -29,7 +51,6 @@
 <body>
 
     <header class="header text-center">
-        <h1 class="blog-name pt-lg-4 mb-0"></h1>
 
         <nav class="navbar navbar-expand-lg navbar-dark">
 
@@ -47,55 +68,14 @@
                     <div id="fullname" class="bio mb-3"></div>
                     <div id="role" class="bio mb-3"></div>
                     <div id="department" class="bio mb-3"></div>
-                    <div align="left">
-                        <ul id="privilegesList" class="social-list list-inline py-3 mx-auto">
+                    
 
-                            <li class="list-inline-item"><a href="add-idea.html"><i
-                                        class="fas fa-lightbulb fa-lg"></i></a>
-                            </li>
-                            <span class="bio mb-3"><b>Add an Idea</b></span>
-                            <br><br>
-
-
-                            <!-- <li class="list-inline-item"><a href="modify-category.html"> <i
-                                        class="fas fa-pen-square fa-lg"></i></a>
-                            </li>
-                            <span class="bio mb-3">Modify categories</span>
-                            <br><br> -->
-
-
-                            <!-- <li class="list-inline-item"><a href=""> <i class="fas fa-file-download fa-lg"></i></a>
-                            </li>
-                            <span class="bio mb-3">Download document</span>
-                            <br><br> -->
-
-
-                            <!-- <li class="list-inline-item"><a href="statistics.html"> <i
-                                        class="fas fa-chart-bar fa-lg"></i></a>
-                            </li>
-                            <span class="bio mb-3">Statistic page</span>
-                            <br><br> -->
-
-                        </ul>
-
-                    </div>
-
-
-
-                    <!-- id="privilegesList" -->
-                    <div>
-
-
-                        <!-- <a href="" style="color: white;">Modify category</a> -->
-                    </div>
                 </div>
                 <!--//profile-section-->
 
 
 
-                <div class="my-2 my-md-3">
-                    <a id="btnLogout" class="btn btn-primary" target="_blank">Log Out</a>
-                </div>
+                
                 <div class="my-2 my-md-3">
                     <a id="btnLogout" class="btn btn-primary" target="_blank">Back</a>
                 </div>
@@ -107,49 +87,64 @@
     <div class="main-wrapper">
         <section class="cta-section theme-bg-light py-5">
             <div class="container text-center">
-                <h2 class="heading">Welcome to Unibook</h2>
-
-
-
+                <h2 class="heading">Statistics</h2>
             </div>
-
-
-
-
-
-
-
             <!--//container-->
         </section>
+
         <section class="blog-list px-3 py-5 p-md-5">
-            <div id="ideasContainer">
-
-
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-                </head>
-
-                <body>
-                    <!--Table and divs that hold the pie charts-->
-                    <table class="columns">
-                        <tr>
-                            <td>
-                                <div id="ideasperdept_chart_div" style="border: 1px solid #ccc"></div>
-                            </td>
-                            <td>
-                                <div id="contpersept_chart_div" style="border: 1px solid #ccc"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div id="pie_chart_div" style="border: 1px solid #ccc"></div>
-                            </td>
-                            <td>
-                                <div id="bar_chart_div" style="border: 1px solid #ccc"></div>
-                            </td>
-                        </tr>
-                    </table>
-
+            
+            <div class="container">
+                <!-- <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <canvas id="numOfIdeasPerDepartmentChart"></canvas>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <canvas id="contributorsPerDepartmentChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <canvas id="percentageOfIdeasPerDepartmentChart"></canvas>
+            
+                    </div> -->
+ 
+            
+                <div>
+                  <canvas id="numOfIdeasPerDepartmentChart"></canvas>
+                  <br>
+                  <hr> <br>
+                </div>
+            
+            
+                <div>
+                  <canvas id="percentageOfIdeasPerDepartmentChart"></canvas>
+                  <br>
+                  <hr> <br>
+                </div>
+            
+                <div>
+                  <canvas id="contributorsPerDepartmentChart"></canvas>
+                  <br> <br>
+                </div>
+            
+                <div>
+                  <h1>Exception reports</h1>
+                  <br> <br> <br>
+                  <div>
+                    <h4>Ideas without a comment: <span id="ideas-without-comment-count"></span></h4>
+            
+                  </div>
+                  <br>
+                  <div>
+                    <h4>Anonymous ideas: <span id="anonymousIdeas"></span></h4>
+                  </div>
+                  <br>
+                  <div>
+                    <h4>Total comments: <span id="totalComments"></span></h4>
+                  </div>
+                </div>
+            
+              </div>
 
         </section>
         <!--//item-->
@@ -157,43 +152,22 @@
 
 
         <!--pagination field-->
-        <div class="pagination">
-
-            <div id="pagesDiv" class="pagination-container">
-                <!-- <div class="pagination-hover-overlay"></div>
-
-                <a href="#0" class="pagination-prev">
-                    <span class="icon-pagination icon-pagination-prev">
-                        <i class="fas fa-arrow-left fa-lg"></i>
-                    </span>
-                </a>
-
-                <a class="pagination-page-number">1</a>
-                <a class="pagination-page-number">2</a>
-                <a class="pagination-page-number">3</a>
-                <a class="pagination-page-number">4</a>
-                <a class="pagination-page-number">5</a>
-                <a class="pagination-page-number">6</a>
-                <a class="pagination-page-number">7</a>
-
-                <a href="#0" class="pagination-next">
-                    <span class="icon-pagination icon-pagination-next">
-                        <i class="fas fa-arrow-right fa-lg"></i>
-                    </span>
-                </a> -->
-            </div>
-
-        </div>
-
-        <br>
-    </div>
-
-
-
-
+           </div>
     </div>
     <!--//main-wrapper-->
 
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="./Styles/Statistic/script.js"></script>
+  
+    <script src="js/statistics.js"></script>
+  
+  
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="./Styles/Statistic/script.js"></script>
+  
+    <script src="js/statistics.js"></script>
+  
 
 
     <!-- Javascript -->

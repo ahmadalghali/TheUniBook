@@ -4,14 +4,14 @@ $(document).ready(function () {
 
     let loginButton = document.getElementById("btnLogin")
     let emailField = document.getElementById("emailField")
-    let passwordField = document.getElementById("passwordField")
+    document.getElementById("passwordField")
     let loginForm = document.getElementById("loginForm")
+    let btnSendEmail = document.getElementById("btnSendEmail")
 
-    
+    btnSendEmail.addEventListener("click", sendEmail)
+
     loginForm.addEventListener("submit", (e) => {
         e.preventDefault()
-        // let email = emailField.value
-        // let password = passwordField.value
 
         login()
     })
@@ -23,29 +23,25 @@ $(document).ready(function () {
     }
 
 
+    async function sendEmail(){
+        let modalEmail = document.getElementById("modalEmailField").value
+        console.log(modalEmail)
+        if (modalEmail.trim() == "") {
+            toastr.warning("Please fill in the email field")
+                return;
+            }
 
-    // loginButton.addEventListener("click", (e) => {
-    //     e.preventDefault()
-
-    //     let formData = new FormData(loginForm)
-
-    //     for (let key of formData.keys()) {
-    //         console.log(key, formData.get(key))
-    //     }
-
-    //     let email = emailField.value
-    //     let password = passwordField.value
-
-
-    //     login(email, password)
-    // })
-
+        let changePasswordResponse = await fetch(`${url}/forgottenPassword?email=${modalEmail}`, { method: "POST" }).then(response => response.json())
+        if(changePasswordResponse.message == "email sent"){
+            toastr.success("Email sent")
+        }
+        else{
+            toastr.error("Incorrect email")
+        }
+    }
 
     async function login() {
-        // if (isEmpty(email) || isEmpty(password)) {
-        //     // alert("Please fill in Both email and password fields.")
-        //     return;
-        // }
+       
 
 
         var formDataArray = $("#loginForm").serializeArray();

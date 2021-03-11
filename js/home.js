@@ -372,7 +372,7 @@ $(document).ready(function () {
     }
 
     async function Like(ideaId) {
-        let likeResponse = await fetch(`${url}/ideas/like?ideaId=${ideaId}&userId=${session.user.id}`, { method: "POST" }).then(response => response.json())
+        await fetch(`${url}/ideas/like?ideaId=${ideaId}&userId=${session.user.id}`, { method: "POST" }).then(response => response.json())
         displayIdeas(currentPage)
     }
     async function Dislike(ideaId) {

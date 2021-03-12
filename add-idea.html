@@ -38,6 +38,9 @@
         if (session == null && session == undefined) {
             location.href = "/"
         }
+        if (!session.user.enabled) {
+            location.href = "home.html"
+        }
     </script>
 </head>
 
@@ -81,13 +84,13 @@
 
                 <div class="wrap-contact100-form-btn">
                     <div class="contact100-form-bgbtn"></div>
-                        <input  id="document" type="file" accept="image/*,.pdf,.doc,.docx">
+                    <input id="document" type="file" accept="image/*,.pdf,.doc,.docx">
                 </div>
-                
 
-                
 
-                
+
+
+
 
                 <!--CHECK BOX anonymous-->
                 <br>

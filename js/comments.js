@@ -36,6 +36,14 @@ $(document).ready(function () {
     }
 
     async function postComment() {
+
+        console.log(session)
+
+        if (!session.user.enabled) {
+            toastr.error("You're currently suspended, you cannot submit any ideas or comments")
+            commentsTextArea.value = ''
+            return
+        }
         let commentMessage = commentsTextArea.value.trim()
 
         if (commentMessage.length > 500) {
@@ -62,6 +70,9 @@ $(document).ready(function () {
 
             post(`/comments/email`, JSON.stringify(comment))
 
+        } else if (postCommentResponse.message === "user account is disabled") {
+            toastr.error("You're currently suspended, you cannot submit any ideas or comments")
+            return
         } else {
             toastr.error("We apologise, Something went wrong, comment could not be posted.")
         }

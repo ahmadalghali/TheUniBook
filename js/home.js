@@ -75,6 +75,10 @@ $(document).ready(function () {
         let user = session.user
         let privilegesList = document.getElementById("privilegesList")
 
+        if (!user.enabled || user.hidden) {
+            document.getElementById("addIdeaDiv").innerHTML = `<p>You're currently suspended</p>`
+        }
+
         if (user.role == "MANAGER") {
             // let modifyCategoriesPage = document.createElement("a")
             // modifyCategoriesPage.href = `modify-category.html`
@@ -105,7 +109,13 @@ $(document).ready(function () {
                                         class="fas fa-chart-bar fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>View Statistics</b></span>
-                            <br>
+                            <br><br>
+
+                             <li class="list-inline-item"><a href="manage-users.html"> <i
+                                        class="fas fa-users fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Manage Users</b></span>
+                            <br><br>
 
             `
 

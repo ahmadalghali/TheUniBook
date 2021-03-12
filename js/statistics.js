@@ -251,8 +251,8 @@ $(document).ready(function () {
                 }]
             },
             options: {
-                responsive: false,
-            maintainAspectRatio: false,
+                //     responsive: false,
+                // maintainAspectRatio: false,
 
                 title: {
                     fontSize: 20,

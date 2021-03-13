@@ -70,7 +70,7 @@ $(document).ready(function () {
         currentPage = page;
     }
 
-    function setUserDetails() {
+    async function setUserDetails() {
 
         let user = session.user
         let privilegesList = document.getElementById("privilegesList")
@@ -144,6 +144,8 @@ $(document).ready(function () {
         }
 
 
+        $("#userPhoto").attr("src", await getRandomPhoto());
+
         $("#fullname").html(`<h5 style="color: white">${user.firstname} ${user.lastname}</h5>`)
         if (user.role === null) {
             $("#role").html(`Staff`)
@@ -161,6 +163,13 @@ $(document).ready(function () {
 
         document.getElementById("inactiveStaffCount").innerHTML = inactiveStaffCount
 
+    }
+
+
+    async function getRandomPhoto() {
+        const { results } = await fetch('https://randomuser.me/api/?gender=male').then(res => res.json())
+        let randomPhoto = results[0].picture.large
+        return randomPhoto
     }
 
     async function populateCategoryDropdown() {
@@ -280,8 +289,9 @@ $(document).ready(function () {
             let since = moment(idea.date).fromNow()
 
 
-            const { results } = await fetch('https://randomuser.me/api/?gender=male').then(res => res.json())
-            console.log(results)
+            // const { results } = await fetch('https://randomuser.me/api/?gender=male').then(res => res.json())
+            let randomPhoto = await getRandomPhoto()
+            // console.log(results)
 
             if (idea.documentPath != null) {
 
@@ -292,7 +302,7 @@ $(document).ready(function () {
              <div class="item">
                     <div class="media">
                         <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
-                            src="${results[0].picture.large}" alt="./other/assets/images/default-user-photo.png">
+                            src="${randomPhoto}" alt="./other/assets/images/default-user-photo.png">
                         <div class="media-body">
                             <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">${idea.views} views</span></span><span class="date">${since}</span></div>
@@ -326,7 +336,7 @@ $(document).ready(function () {
              <div class="item">
                     <div class="media">
                         <img style="border-radius: 50%;" class="mr-3 img-fluid post-thumb d-none d-md-flex"
-                            src="${results[0].picture.large}" alt="./other/assets/images/default-user-photo.png">
+                            src="${randomPhoto}" alt="./other/assets/images/default-user-photo.png">
                         <div class="media-body">
                             <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">${idea.views} views</span></span><span class="date">${since}</span></span></div>

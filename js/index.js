@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    // let url = "https://theunibook.herokuapp.com"
-    let url = "http://localhost:8080"
+    let url = "https://theunibook.herokuapp.com"
+    // let url = "http://localhost:8080"
 
 
     let loginButton = document.getElementById("btnLogin")

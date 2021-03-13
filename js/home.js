@@ -70,10 +70,14 @@ $(document).ready(function () {
         currentPage = page;
     }
 
-    function setUserDetails() {
+    async function setUserDetails() {
 
         let user = session.user
         let privilegesList = document.getElementById("privilegesList")
+
+        if (!user.enabled || user.hidden) {
+            document.getElementById("addIdeaDiv").innerHTML = `<p>You're currently suspended</p>`
+        }
 
         if (user.role == "MANAGER") {
             // let modifyCategoriesPage = document.createElement("a")
@@ -88,9 +92,14 @@ $(document).ready(function () {
 
             privilegesList.innerHTML += `
 
-            <li class="list-inline-item"><a href=""> <i class="fas fa-file-download fa-lg"></i></a>
+            <li class="list-inline-item"><a  href="${url}/ideas/downloadAllIdeas" > <i class="fas fa-file-download fa-lg"></i></a>
                             </li>
-                            <span class="bio mb-3"><b>Download data</b></span>
+                            <span class="bio mb-3"><b>Download All Ideas</b></span>
+                            <br><br>
+
+                            <li class="list-inline-item"><a  href="${url}/ideas/downloadAllDocuments" > <i class="fas fa-file-download fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Download All Documents</b></span>
                             <br><br>
 
 
@@ -101,11 +110,17 @@ $(document).ready(function () {
                             <br><br>
 
 
-                            <li class="list-inline-item"><a href="statistics.html"> <i
+                            <li class="list-inline-item"><a href="new_statistics.html"> <i
                                         class="fas fa-chart-bar fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>View Statistics</b></span>
-                            <br>
+                            <br><br>
+
+                             <li class="list-inline-item"><a href="manage-users.html"> <i
+                                        class="fas fa-users fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Manage Users</b></span>
+                            <br><br>
 
             `
 
@@ -128,6 +143,11 @@ $(document).ready(function () {
 
         }
 
+        console.log(user)
+
+        if (user.profileImageUrl != null) {
+            $("#userPhoto").attr("src", user.profileImageUrl);
+        }
 
         $("#fullname").html(`<h5 style="color: white">${user.firstname} ${user.lastname}</h5>`)
         if (user.role === null) {
@@ -146,6 +166,13 @@ $(document).ready(function () {
 
         document.getElementById("inactiveStaffCount").innerHTML = inactiveStaffCount
 
+    }
+
+
+    async function getRandomPhoto() {
+        const { results } = await fetch('https://randomuser.me/api/?gender=male').then(res => res.json())
+        let randomPhoto = results[0].picture.large
+        return randomPhoto
     }
 
     async function populateCategoryDropdown() {
@@ -235,7 +262,7 @@ $(document).ready(function () {
     }
 
 
-    function renderIdeasHTML(getIdeasResponse) {
+    async function renderIdeasHTML(getIdeasResponse) {
 
         console.log(getIdeasResponse)
         let ideasContainer = document.getElementById("ideasContainer")
@@ -264,6 +291,11 @@ $(document).ready(function () {
 
             let since = moment(idea.date).fromNow()
 
+
+            // const { results } = await fetch('https://randomuser.me/api/?gender=male').then(res => res.json())
+            let randomPhoto = await getRandomPhoto()
+            // console.log(results)
+
             if (idea.documentPath != null) {
 
                 htmlString += `
@@ -273,7 +305,7 @@ $(document).ready(function () {
              <div class="item">
                     <div class="media">
                         <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
-                            src="./other/assets/images/default-user-photo.png" alt="image">
+                            src="${idea.authorPhoto}" alt="" onerror="this.onerror=null; this.src='./other/assets/images/default-user-photo.png'">
                         <div class="media-body">
                             <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">${idea.views} views</span></span><span class="date">${since}</span></div>
@@ -306,8 +338,8 @@ $(document).ready(function () {
 
              <div class="item">
                     <div class="media">
-                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
-                            src="./other/assets/images/default-user-photo.png" alt="image">
+                        <img style="border-radius: 50%;" class="mr-3 img-fluid post-thumb d-none d-md-flex"
+                            src="${idea.authorPhoto}" alt="" onerror="this.onerror=null; this.src='./other/assets/images/default-user-photo.png'">
                         <div class="media-body">
                             <h3 class="title mb-1"><a href="">${idea.title}</a></h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">${idea.views} views</span></span><span class="date">${since}</span></span></div>

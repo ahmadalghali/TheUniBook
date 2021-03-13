@@ -40,6 +40,10 @@ $(document).ready(function () {
     async function submitIdea(e) {
         e.preventDefault()
 
+        if (!session.user.enabled) {
+            toastr.error("You're currently suspended, you cannot submit any ideas or comments")
+            return
+        }
 
 
         // var addIdeaRequest = {
@@ -90,8 +94,9 @@ $(document).ready(function () {
             location.href = "home.html"
 
         }
-        else {
-            console.log(addIdeaResponse);
+        else if (addIdeaResponse.message === "user account is disabled") {
+            toastr.error("You're currently suspended, you cannot submit any ideas or comments")
+            return
         }
 
     }

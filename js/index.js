@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
+    // let url = "http://localhost:8080"
+
 
     let loginForm = document.getElementById("loginForm")
     let btnSendEmail = document.getElementById("btnSendEmail")
@@ -42,6 +44,8 @@ $(document).ready(function () {
     }
 
     async function login() {
+
+
 
         var formDataArray = $("#loginForm").serializeArray();
         let formDataObject = objectifyForm(formDataArray)

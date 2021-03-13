@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    // let url = "http://localhost:8080"
-    let url = "https://theunibook.herokuapp.com"
+    let url = "http://localhost:8080"
+    // let url = "https://theunibook.herokuapp.com"
 
 
 
@@ -92,14 +92,19 @@ $(document).ready(function () {
 
             privilegesList.innerHTML += `
 
-            <li class="list-inline-item"><a href=""> <i class="fas fa-file-download fa-lg"></i></a>
+            <li class="list-inline-item"><a  href="${url}/ideas/downloadAllIdeas" > <i class="fas fa-file-download fa-lg"></i></a>
                             </li>
-                            <span class="bio mb-3"><b>Download data</b></span>
+                            <span class="bio mb-3"><b>Download All Ideas</b></span>
+                            <br><br>
+
+                            <li class="list-inline-item"><a  href="${url}/ideas/downloadAllDocuments" > <i class="fas fa-file-download fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Download All Documents</b></span>
                             <br><br>
 
 
             <li class="list-inline-item"><a href="modify-category.html"> <i
-                                        class="fas fa-pen-square fa-lg"></i></a>
+                                        class="fas fa-pen-square fa-lg"></i></a>s
                             </li>
                             <span class="bio mb-3"><b>Modify Categories</b></span>
                             <br><br>

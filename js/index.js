@@ -2,9 +2,6 @@ $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
 
-    let loginButton = document.getElementById("btnLogin")
-    let emailField = document.getElementById("emailField")
-    document.getElementById("passwordField")
     let loginForm = document.getElementById("loginForm")
     let btnSendEmail = document.getElementById("btnSendEmail")
 
@@ -23,41 +20,35 @@ $(document).ready(function () {
     }
 
 
-    async function sendEmail(){
-        let modalEmail = document.getElementById("modalEmailField").value
-        console.log(modalEmail)
-        if (modalEmail.trim() == "") {
-            toastr.warning("Please fill in the email field")
-                return;
-            }
+    async function sendEmail() {
+        let modalEmailField = document.getElementById("modalEmailField")
+        let email = modalEmailField.value
 
-        let changePasswordResponse = await fetch(`${url}/forgottenPassword?email=${modalEmail}`, { method: "POST" }).then(response => response.json())
-        if(changePasswordResponse.message == "email sent"){
+        if (email.trim() == "") {
+            modalEmailField.value = "";
+            return;
+        }
+
+        let changePasswordResponse = await fetch(`${url}/forgottenPassword?email=${email}`, { method: "POST" }).then(response => response.json())
+
+        if (changePasswordResponse.message == "email sent") {
+            $('#forgotPasswordModal').modal('hide');
+
             toastr.success("Email sent")
         }
-        else{
+        else {
             toastr.error("Incorrect email")
         }
     }
 
     async function login() {
-       
-
 
         var formDataArray = $("#loginForm").serializeArray();
         let formDataObject = objectifyForm(formDataArray)
         console.log(formDataObject)
 
-        // let credentials = {
-        //     email: `${email}`,
-        //     password: `${password}`
-        // }
 
-        // let errorMessage = document.createElement("p");
-        // errorMessage.style.color = "red";
-        // errorMessage.innerHTML = "";
-
-        let loginResponse = await post("/login", JSON.stringify(formDataObject) )
+        let loginResponse = await post("/login", JSON.stringify(formDataObject))
 
         console.log(loginResponse)
         if (loginResponse.message == "logged in") {
@@ -66,9 +57,7 @@ $(document).ready(function () {
             location.href = "home.html"
 
         } else {
-            console.log("bad credentials")
             toastr.error("Bad Credentials")
-            // showAlert("danger", "Bad credentials")
         }
 
     }

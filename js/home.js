@@ -104,7 +104,7 @@ $(document).ready(function () {
 
 
             <li class="list-inline-item"><a href="modify-category.html"> <i
-                                        class="fas fa-pen-square fa-lg"></i></a>s
+                                        class="fas fa-pen-square fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Modify Categories</b></span>
                             <br><br>

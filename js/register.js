@@ -1,8 +1,10 @@
 
 $(document).ready(function () {
 
-    
-    let url = "https://theunibook.herokuapp.com"
+
+    // let url = "https://theunibook.herokuapp.com"
+    let url = "http://localhost:8080"
+
 
 
     let passwordField = document.querySelector("#password_field")
@@ -19,13 +21,13 @@ $(document).ready(function () {
     registerForm.addEventListener("submit", register)
 
 
-    async function populateDepartmentDropdown(){
+    async function populateDepartmentDropdown() {
         departmentDropdown.empty();
         departmentDropdown.append('<option selected="selected" disabled>Choose Department</option>');
         departmentDropdown.prop('selectedIndex', 0);
 
 
-        fetch(`${url}/departments`).then(res => res.json()).then( departments => {
+        fetch(`${url}/departments`).then(res => res.json()).then(departments => {
             let option;
 
             for (let i = 0; i < departments.length; i++) {
@@ -33,7 +35,7 @@ $(document).ready(function () {
                 option.value = departments[i].id;
                 option.text = departments[i].name;
                 departmentDropdown.append(option);
-            }  
+            }
         })
 
 
@@ -58,24 +60,31 @@ $(document).ready(function () {
             toastr.error("Please choose a department")
             return;
         }
-        
+
         console.log("departmentDropdown.selectedIndex " + departmentDropdown.selectedIndex)
 
         let formData = new FormData(registerForm)
 
-        formData.append("departmentId", departmentDropdown[0].selectedIndex)
+        // formData.append("departmentId", departmentDropdown[0].selectedIndex)
+        let randomPhoto = await getRandomPhoto()
+        formData.append("profileImageUrl", randomPhoto)
 
-        for (let key of formData.keys()){
+        delete formData.confirmPassword
+
+        for (let key of formData.keys()) {
             console.log(key, formData.get(key))
         }
 
-        var formDataArray = $("#registerForm").serializeArray();
+        // var formDataArray = $("#registerForm").serializeArray();
 
-        let formDataObject = objectifyForm(formDataArray)
+        // let formDataObject = objectifyForm(formDataArray)
 
-        delete formDataObject.confirmPassword
 
-        let registerResponse = await post("/register", JSON.stringify(formDataObject))
+
+
+
+
+        let registerResponse = await fetch(`${url}/register`, { method: 'POST', body: formData }).then(res => res.json())
 
         console.log("registerResponse.message: " + registerResponse.message)
 
@@ -106,6 +115,13 @@ $(document).ready(function () {
         return returnArray;
     }
 
+
+    async function getRandomPhoto() {
+        const { results } = await fetch('https://randomuser.me/api/?gender=male').then(res => res.json())
+        let randomPhoto = await results[0].picture.large
+        return randomPhoto
+    }
+
     async function post(endpoint, data) {
 
         console.log("Post request sent")
@@ -119,7 +135,7 @@ $(document).ready(function () {
         return response;
     }
 
-    
+
 })
 
 

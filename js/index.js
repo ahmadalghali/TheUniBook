@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
-    let url = "https://theunibook.herokuapp.com"
+    // let url = "https://theunibook.herokuapp.com"
+    let url = "http://localhost:8080"
+
 
     let loginButton = document.getElementById("btnLogin")
     let emailField = document.getElementById("emailField")
@@ -23,25 +25,25 @@ $(document).ready(function () {
     }
 
 
-    async function sendEmail(){
+    async function sendEmail() {
         let modalEmail = document.getElementById("modalEmailField").value
         console.log(modalEmail)
         if (modalEmail.trim() == "") {
             toastr.warning("Please fill in the email field")
-                return;
-            }
+            return;
+        }
 
         let changePasswordResponse = await fetch(`${url}/forgottenPassword?email=${modalEmail}`, { method: "POST" }).then(response => response.json())
-        if(changePasswordResponse.message == "email sent"){
+        if (changePasswordResponse.message == "email sent") {
             toastr.success("Email sent")
         }
-        else{
+        else {
             toastr.error("Incorrect email")
         }
     }
 
     async function login() {
-       
+
 
 
         var formDataArray = $("#loginForm").serializeArray();
@@ -57,7 +59,7 @@ $(document).ready(function () {
         // errorMessage.style.color = "red";
         // errorMessage.innerHTML = "";
 
-        let loginResponse = await post("/login", JSON.stringify(formDataObject) )
+        let loginResponse = await post("/login", JSON.stringify(formDataObject))
 
         console.log(loginResponse)
         if (loginResponse.message == "logged in") {

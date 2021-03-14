@@ -34,7 +34,6 @@ $(document).ready(function () {
         }).then(result => {
             if (result.isConfirmed) {
                 sessionStorage.removeItem("session")
-                setLastLoginDate()
                 location.href = "/"
             }
         })
@@ -163,10 +162,6 @@ $(document).ready(function () {
             $("#last_login").html(`<label>Last online: ${user.lastLogin}<label>`)
 
         }
-    }
-
-    async function setLastLoginDate(){
-        await fetch(`${url}/setLastLoginDate?email=${session.user.email}`, { method: "POST" }).then(response => response.json())
     }
 
     async function getInactiveStaffCount() {

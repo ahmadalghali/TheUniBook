@@ -48,7 +48,6 @@ $(document).ready(function () {
     }
 
     function initHomePage() {
-        console.log
         setUserDetails()
         populateCategoryDropdown()
         displayIdeas(currentPage)
@@ -142,6 +141,20 @@ $(document).ready(function () {
 
 
         }
+
+        if (user.role == "ADMINISTRATOR") {
+
+            privilegesList.innerHTML += `
+            <li class="list-inline-item"><a href="anonymous-ideas.html"> <i class="fas fa-eye-slash fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Anonymous Ideas</b></span>
+                            <br>
+
+            `
+
+        }
+
+
 
         console.log(user)
 

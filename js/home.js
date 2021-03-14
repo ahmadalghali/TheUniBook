@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    // let url = "http://localhost:8080"
+    //let url = "http://localhost:8080"
     let url = "https://theunibook.herokuapp.com"
 
 
@@ -170,6 +170,13 @@ $(document).ready(function () {
         }
 
         $("#department").html(`<h6 style="color: white">${session.user.department.name}</h6>`)
+        if (user.lastLogin == null) {
+            $("#last_login").text("Welcome to the Unibook!");
+        }
+        else if (user.lastLogin != null) {
+            $("#last_login").html(`<label>Last online: ${user.lastLogin}<label>`)
+
+        }
     }
 
     async function getInactiveStaffCount() {

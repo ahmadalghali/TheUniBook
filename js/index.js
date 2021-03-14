@@ -4,9 +4,6 @@ $(document).ready(function () {
     // let url = "http://localhost:8080"
 
 
-    let loginButton = document.getElementById("btnLogin")
-    let emailField = document.getElementById("emailField")
-    document.getElementById("passwordField")
     let loginForm = document.getElementById("loginForm")
     let btnSendEmail = document.getElementById("btnSendEmail")
 
@@ -26,15 +23,19 @@ $(document).ready(function () {
 
 
     async function sendEmail() {
-        let modalEmail = document.getElementById("modalEmailField").value
-        console.log(modalEmail)
-        if (modalEmail.trim() == "") {
-            toastr.warning("Please fill in the email field")
+        let modalEmailField = document.getElementById("modalEmailField")
+        let email = modalEmailField.value
+
+        if (email.trim() == "") {
+            modalEmailField.value = "";
             return;
         }
 
-        let changePasswordResponse = await fetch(`${url}/forgottenPassword?email=${modalEmail}`, { method: "POST" }).then(response => response.json())
+        let changePasswordResponse = await fetch(`${url}/forgottenPassword?email=${email}`, { method: "POST" }).then(response => response.json())
+
         if (changePasswordResponse.message == "email sent") {
+            $('#forgotPasswordModal').modal('hide');
+
             toastr.success("Email sent")
         }
         else {
@@ -50,14 +51,6 @@ $(document).ready(function () {
         let formDataObject = objectifyForm(formDataArray)
         console.log(formDataObject)
 
-        // let credentials = {
-        //     email: `${email}`,
-        //     password: `${password}`
-        // }
-
-        // let errorMessage = document.createElement("p");
-        // errorMessage.style.color = "red";
-        // errorMessage.innerHTML = "";
 
         let loginResponse = await post("/login", JSON.stringify(formDataObject))
 
@@ -68,9 +61,7 @@ $(document).ready(function () {
             location.href = "home.html"
 
         } else {
-            console.log("bad credentials")
             toastr.error("Bad Credentials")
-            // showAlert("danger", "Bad credentials")
         }
 
     }

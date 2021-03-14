@@ -65,8 +65,7 @@
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
                         </span>
-                        <input id="password_field" name="password" class="input100" type="password"
-                            asp-for="User.Password" required>
+                        <input id="password_field" name="password" class="input100" type="password" required>
                         <span class="focus-input100" data-placeholder="Password"></span>
                     </div>
 
@@ -83,7 +82,7 @@
 
                     <div class="text-center p-t-115">
                         <a id="forgot_password" class="txt1" style="cursor: pointer;" data-toggle="modal"
-                            data-target="#exampleModal">
+                            data-target="#forgotPasswordModal">
                             Forgot your password?
                         </a>
                         <br>
@@ -111,7 +110,7 @@
 
     <!-- MODAL FORGOT PASSWORD POPUP -->
 
-    <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade " id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="vertical-alignment-helper">
             <div class="modal-dialog vertical-align-center" role="document">
@@ -122,7 +121,7 @@
                         </button>
 
 
-                        <form id="loginForm" class="login100-form validate-form">
+                        <form class="login100-form validate-form">
 
 
                             <br>

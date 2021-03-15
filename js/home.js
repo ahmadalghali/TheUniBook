@@ -4,6 +4,17 @@ $(document).ready(function () {
     let url = "https://theunibook.herokuapp.com"
 
 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
 
     let currentPage = 1;
     let pagesDiv = document.getElementById("pagesDiv")
@@ -158,7 +169,7 @@ $(document).ready(function () {
         if (user.lastLogin == null) {
             $("#last_login").text("Welcome to the Unibook!");
         }
-        else if(user.lastLogin != null){
+        else if (user.lastLogin != null) {
             $("#last_login").html(`<label>Last online: ${user.lastLogin}<label>`)
 
         }
@@ -275,6 +286,8 @@ $(document).ready(function () {
         let ideas = getIdeasResponse.ideas
         let userLikedIdeasList = getIdeasResponse.likedIdeasByUser
         let userDislikedIdeasList = getIdeasResponse.dislikedIdeasByUser
+        let reportedIdeasByUser = getIdeasResponse.reportedIdeasByUser
+
         let htmlString = ''
 
         if (ideas.length == 0) {
@@ -285,6 +298,7 @@ $(document).ready(function () {
 
             let thumbsUpColor = "grey"
             let thumbsDownColor = "grey"
+            let flagColor = "grey"
 
             if (userLikedIdeasList.includes(idea.id)) {
                 thumbsUpColor = "green"
@@ -292,6 +306,10 @@ $(document).ready(function () {
 
             if (userDislikedIdeasList.includes(idea.id)) {
                 thumbsDownColor = "red"
+            }
+
+            if (reportedIdeasByUser.includes(idea.id)) {
+                flagColor = "#ba1818"
             }
 
             let since = moment(idea.date).fromNow()
@@ -322,6 +340,9 @@ $(document).ready(function () {
 
                             &nbsp;&nbsp;<li class="list-inline-item"><a style="cursor: pointer;color: ${thumbsDownColor};" class="thumbs-down" data-ideaid="${idea.id}"> <i
                                         class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">${idea.dislikes}</span>
+
+                            &nbsp;&nbsp;<li class="list-inline-item"><a style="cursor: pointer; color: ${flagColor};" class="report-flag" data-ideaid="${idea.id}"> <i
+                                        class="fas fa-flag fa-lg"></i> </a> </li>
 
                             &nbsp;&nbsp;<a style="cursor: pointer;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &rarr;</a>
 
@@ -354,6 +375,9 @@ $(document).ready(function () {
 
                             &nbsp;&nbsp;<li class="list-inline-item"><a style="cursor: pointer; color: ${thumbsDownColor};" class="thumbs-down" data-ideaid="${idea.id}"> <i
                                         class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">${idea.dislikes}</span>
+
+                            &nbsp;&nbsp;<li class="list-inline-item"><a style="cursor: pointer; color: ${flagColor};" class="report-flag" data-ideaid="${idea.id}"> <i
+                                        class="fas fa-flag fa-lg"></i> </a> </li>
 
                             &nbsp;&nbsp;<a style="cursor: pointer;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &rarr;</a>
 
@@ -416,10 +440,36 @@ $(document).ready(function () {
         await fetch(`${url}/ideas/dislike?ideaId=${ideaId}&userId=${session.user.id}`, { method: "POST" }).then(response => response.json())
         displayIdeas(currentPage)
     }
+    async function reportIdea(ideaId, reason) {
+
+        let response = await fetch(`${url}/reportIdea?ideaId=${ideaId}&userId=${session.user.id}&reportId=${reason}`, { method: "POST" }).then(response => response.json())
+
+        if (response.message == "idea has been reported") {
+            Toast.fire({
+                icon: 'info',
+                title: 'Thank you for reporting the idea'
+            })
+        }
+        if (response.message == "Idea report has been updated") {
+            Toast.fire({
+                icon: 'info',
+                title: 'Idea report has been changed'
+            })
+        }
+        if (response.message == "Report has been removed") {
+            Toast.fire({
+                icon: 'info',
+                title: 'Report has been removed'
+            })
+        }
+
+        displayIdeas(currentPage)
+    }
 
     async function addEventListenersToVote() {
         let thumbsUpButtons = Array.from(document.querySelectorAll(".thumbs-up"));
         let thumbsDownButtons = Array.from(document.querySelectorAll(".thumbs-down"));
+        let flagButtons = Array.from(document.querySelectorAll(".report-flag"));
 
         thumbsUpButtons.forEach(thumbsUpButton => {
 
@@ -440,8 +490,42 @@ $(document).ready(function () {
 
         })
 
+        flagButtons.forEach(flagButton => {
+
+            flagButton.addEventListener("click", () => {
+                let ideaId = flagButton.dataset.ideaid;
+
+                displayReportPopup(ideaId)
+            })
+
+        })
+
+    }
+
+    async function displayReportPopup(ideaId) {
+        let options = {
+            '1': 'Spam',
+            '2': 'Harassment',
+            '3': 'Swearing',
+            '4': 'Explicit content',
+            '5': 'Remove report',
+        }
+
+        const { value: reason } = await Swal.fire({
+            title: 'Select a reason',
+            input: 'radio',
+            inputOptions: options,
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'You need to choose something!'
+                }
+            }
+        })
 
 
+        if (reason) {
+            reportIdea(ideaId, reason)
+        }
     }
 
     function initReadCommentLinks() {

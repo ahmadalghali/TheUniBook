@@ -49,7 +49,9 @@ $(document).ready(function () {
             }
         })
     })
+    document.getElementById("addIdeaView").addEventListener("click", addIdeaView)
 
+    document.getElementById("addPasswordChangeView").addEventListener("click", addPasswordChangeView)
 
     document.getElementById('category_dropdown').onchange = function () {
         displayIdeas(currentPage);
@@ -69,6 +71,25 @@ $(document).ready(function () {
         fetch(`${url}/encourageStaff?departmentId=${session.user.department.id}`, { method: "post" })
         console.log("emails sent")
         toastr.success("Email sent successfully")
+    }
+
+    async function addIdeaView(){
+        await fetch(`${url}/addPageView?pageId=4`, { method: "post" })
+    }
+    async function addPasswordChangeView(){
+        await fetch(`${url}/addPageView?pageId=6`, { method: "post" })
+    }
+    async function addCategoryView(){
+        await fetch(`${url}/addPageView?pageId=8`, { method: "post" })
+    }
+    async function addStatisticsView(){
+        await fetch(`${url}/addPageView?pageId=9`, { method: "post" })
+    }
+    async function addManageUsersView(){
+        await fetch(`${url}/addPageView?pageId=7`, { method: "post" })
+    }
+    async function addCommentsView(){
+        await fetch(`${url}/addPageView?pageId=5`, { method: "post" })
     }
 
     function setCurrentPage(page) {
@@ -113,26 +134,30 @@ $(document).ready(function () {
                             <br><br>
 
 
-            <li class="list-inline-item"><a href="modify-category.html"> <i
+            <li class="list-inline-item"><a href="modify-category.html" id="addCategoryView"> <i
                                         class="fas fa-pen-square fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Modify Categories</b></span>
                             <br><br>
 
 
-                            <li class="list-inline-item"><a href="new_statistics.html"> <i
+                            <li class="list-inline-item"><a href="new_statistics.html" id="addStatisticsView"> <i
                                         class="fas fa-chart-bar fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>View Statistics</b></span>
                             <br><br>
 
-                             <li class="list-inline-item"><a href="manage-users.html"> <i
+                             <li class="list-inline-item"><a href="manage-users.html" id="addManageUsersView"> <i
                                         class="fas fa-users fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Manage Users</b></span>
                             <br><br>
 
             `
+            document.getElementById("addCategoryView").addEventListener("click", addCategoryView)
+            document.getElementById("addStatisticsView").addEventListener("click", addStatisticsView)
+            document.getElementById("addManageUsersView").addEventListener("click", addManageUsersView)
+
 
         }
         if (user.role == "COORDINATOR") {
@@ -159,6 +184,11 @@ $(document).ready(function () {
             <li class="list-inline-item"><a href="anonymous-ideas.html"> <i class="fas fa-eye-slash fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Anonymous Ideas</b></span>
+                            <br><br>
+
+            <li class="list-inline-item"><a href="monitor-system.html"> <i class="fas fa-info-circle fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Additional information</b></span>
                             <br>
 
             `
@@ -551,7 +581,7 @@ $(document).ready(function () {
             readCommentsLink.addEventListener("click", () => {
 
                 sessionStorage.setItem("IDEA_ID_READ_COMMENTS", readCommentsLink.dataset.ideaid)
-                // location.href = "comments-2.html"
+                addCommentsView();
                 location.href = "comments.html"
 
 

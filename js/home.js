@@ -147,7 +147,7 @@ $(document).ready(function () {
                             <span class="bio mb-3"><b>View Statistics</b></span>
                             <br><br>
 
-                             <li class="list-inline-item"><a href="manage-users.html" id="addManageUsersView"> <i
+                             <li class="list-inline-item"><a href="manage-users-2.html" id="addManageUsersView"> <i
                                         class="fas fa-users fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Manage Users</b></span>

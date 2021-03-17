@@ -5,21 +5,10 @@ $(document).ready(function () {
 
 
     let viewsPerPage = document.getElementById("viewsPerPage").getContext('2d')
-
-    let mostActiveUsers = document.getElementById("mostActiveUsers").getContext('2d')
-
-
-    //let contributorsPerDepartmentChart = document.getElementById("contributorsPerDepartmentChart").getContext('2d')
-
-    // Chart.defaults.global.plugins.labels = {
-    //     fontColor: 'white',
-    //     fontSize: 24
-    // };
-    // global styling for cahrts
-    // Chart.defaults.global.defaultFontFamily = 'Lato'
-    // Chart.defaults.global.defaultFontSize = 18
-    // Chart.defaults.global.defaultFontColor = '#777'
-
+    let usersTableHeaders = document.getElementById("usersTableHeaders")
+    let usersTableBody = document.getElementById("usersTableBody")
+    let browserTableHeaders = document.getElementById("browserTableHeaders")
+    let browserTableBody = document.getElementById("browserTableBody")
 
     getSystemData()
 
@@ -28,20 +17,10 @@ $(document).ready(function () {
             .then(res => res.json())
             .then(statistics => viewsPerPageChart(statistics));
 
-        // .then(statistics => renderHTML(statistics));
+        populateUsersTable()
+        populateBrowsersTable()
 
-        await fetch(`${url}/mostActiveUsers`)
-            .then(res => res.json())
-            .then(statistics => mostActiveUsersChart(statistics));
     }
-
-
-    // function renderCharts(statistics) {
-
-    //     viewsPerPageChart(statistics);
-    //     mostActiveUsersChart(statistics);
-
-    // }
 
     function viewsPerPageChart(stats) {
 
@@ -105,67 +84,68 @@ $(document).ready(function () {
 
         })
     }
-    
-    function mostActiveUsersChart(stats) {
 
-        let userNames = []
-        let scoreCount = []
+    async function populateUsersTable() {
 
-        for (let name of stats.users) {
-            userNames.push(name.email)
-            scoreCount.push(name.score)
+        let htmlHeaders = `
+        <tr class="table100-head">
+            <th class="column1">Firstname</th>
+            <th class="column2">Lastname</th>
+            <th class="column3">Email</th>
+            <th class="column4">Department</th>
+            <th class="column5">Score</th>
+        </tr>
+       `
+
+        let htmlString = ''
+
+        let users = await fetch(`${url}/mostActiveUsers`).then(res => res.json())
+
+
+        for (let user of users) {
+
+            htmlString += `
+                <tr>
+                    <td class="column1">${user.firstname}</td>
+                    <td class="column2">${user.lastname}</td>
+                    <td class="column3">${user.email}</td>
+                    <td class="column4">${user.department.name}</td>
+                    <td class="column5">${user.score}</td>
+                </tr>                
+                `
         }
-        new Chart(mostActiveUsers, {
-            type: 'horizontalBar', // types of charts: bar, horizontalBar, pie, line, doughnut, radar, polarArea
-            data: {
-                labels: userNames,
-                datasets: [{
-                    label: 'Views',
-                    data: scoreCount,
-                    backgroundColor: [
-                        'green',
-                        'red',
-                        'pink',
-                        'yellow',
-                        'purple',
-                        'orange',
-                        'blue'
 
-                    ],
-                    hoverBorderWidth: 1,
-                    hoverBorderColor: 'black'
-                }]
-            },
-            options: {
-                title: {
-                    fontSize: 20,
-                    display: true,
-                    text: 'Most active users'
-                },
-                legend: {
-                    display: false
-                },
-                scales: {
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            precision: 0
-                        },
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            precision: 0
-                        },
-                        gridLines: {
-                            display: false
-                        }
-                    }]
+        usersTableHeaders.innerHTML = htmlHeaders
+        usersTableBody.innerHTML = htmlString
 
-                }
-            }
+    }
 
+    async function populateBrowsersTable() {
 
-        })
+        let htmlHeaders = `
+        <tr class="table100-head">
+            <th class="column1">Browser name</th>
+            <th class="column2">Times used by users</th>
+        </tr>
+       `
+
+        let htmlString = ''
+
+        let browsers = await fetch(`${url}/mostUsedBrowser`).then(res => res.json())
+
+        console.log(browsers)
+        for (let browser of browsers) {
+
+            htmlString += `
+                <tr>
+                    <td class="column1">${browser.name}</td>
+                    <td class="column2">${browser.times_used}</td>
+                </tr>                
+                `
+        }
+
+        browserTableHeaders.innerHTML = htmlHeaders
+        browserTableBody.innerHTML = htmlString
+
     }
 })

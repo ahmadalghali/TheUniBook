@@ -1,13 +1,15 @@
 $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
-    // let url = "http://localhost:8080"
+    //let url = "http://localhost:8080"
 
 
     let loginForm = document.getElementById("loginForm")
     let btnSendEmail = document.getElementById("btnSendEmail")
 
     btnSendEmail.addEventListener("click", sendEmail)
+
+
 
     loginForm.addEventListener("submit", (e) => {
         e.preventDefault()
@@ -21,6 +23,17 @@ $(document).ready(function () {
         sessionStorage.removeItem("successful registeration")
     }
 
+    function getBrowserName(){
+        var result = bowser.getParser(window.navigator.userAgent);
+        
+        let browserName = result.parsedResult.browser.name
+
+        return browserName
+    }
+
+    function addBrowser(){
+        fetch(`${url}/browser?browserName=${getBrowserName()}`, { method: "POST" })
+    }
 
     async function sendEmail() {
         let modalEmailField = document.getElementById("modalEmailField")
@@ -46,7 +59,6 @@ $(document).ready(function () {
     async function login() {
 
 
-
         var formDataArray = $("#loginForm").serializeArray();
         let formDataObject = objectifyForm(formDataArray)
         console.log(formDataObject)
@@ -56,7 +68,7 @@ $(document).ready(function () {
 
         console.log(loginResponse)
         if (loginResponse.message == "logged in") {
-
+            addBrowser();
             sessionStorage.setItem("session", JSON.stringify(loginResponse))
             location.href = "home.html"
 

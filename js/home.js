@@ -36,7 +36,7 @@ $(document).ready(function () {
     initHomePage()
 
     $("#btnLogout").click(() => {
-
+        testBrowser();
         Swal.fire({
             title: 'Logout',
             text: 'Are you sure?',
@@ -75,6 +75,10 @@ $(document).ready(function () {
 
     async function addIdeaView(){
         await fetch(`${url}/addPageView?pageId=4`, { method: "post" })
+    }
+    async function testBrowser(){
+        let response = await fetch(`${url}/checkBrowser`).then(res => res.json())
+        console.log(response)
     }
     async function addPasswordChangeView(){
         await fetch(`${url}/addPageView?pageId=6`, { method: "post" })

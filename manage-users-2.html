@@ -6,6 +6,19 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<script>
+
+		let session = JSON.parse(sessionStorage.getItem("session"))
+
+		if (session == null && session == undefined) {
+			location.href = "/"
+		}
+
+		if (session.user.role != "MANAGER") {
+			location.href = "home.html"
+		}
+	</script>
+
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="./Styles/manage-user/vendor/bootstrap/css/bootstrap.min.css">
 	<!--===============================================================================================-->
@@ -18,13 +31,18 @@
 	<!-- <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script> -->
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 
 <body>
 
+
 	<div class="limiter">
+
 		<div class="container-table100">
+
 			<div class="wrap-table100">
+
 				<div class="table100">
 					<table id="usersTable">
 						<thead id="usersTableHeaders">

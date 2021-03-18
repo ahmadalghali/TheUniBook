@@ -42,7 +42,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
                 aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>   
+            </button>
             <!--field where the idea will go-->
             <div id="navigation" class="collapse navbar-collapse flex-column">
                 <div class="profile-section pt-3 pt-lg-0">
@@ -68,7 +68,7 @@
 
 
                             <li class="list-inline-item"><a href="change_password.html">
-                                <i class="fas fa-user-cog fa-lg"></i></a>
+                                    <i class="fas fa-user-cog fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Change password</b></span>
                             <br><br>
@@ -123,15 +123,23 @@
             <div class="container text-center">
                 <h2 class="heading">Welcome to Unibook</h2>
 
-                <label for="dateofbirth">Closure date</label>
-                <input type="date" name="dateofbirth" id="dateofbirth"> <i class="far fa-check-circle fa-lg"></i>
+                <br>
+                <div id="closureDateDiv" hidden>
+                    <!-- <label for="closureDate">Closure date</label> -->
+                    <input type="date" name="closureDate" id="closureDatePicker" />
+                    &nbsp; <button id="closureDateButton" class="btn btn-primary">Set Date</button>
+                    <br>
+                    <br>
 
-             
+                </div>
+                <div>
+                    <h5 style="color:gray">Idea Submission Closure Date: <span id="currentClosureDate"></span>
+                        </h6>
+                </div>
+
+                <!-- <a id="closureDateButton"><i  class="far fa-check-circle fa-lg"></i></a>  -->
 
             </div>
-
-
-
 
             <a
                 href="https://theunibook.herokuapp.com/ideas/downloadFile?documentPath=./uploads/165bd8cb-3d61-40fa-a3d6-7fd9fc192836-Screenshot%202021-02-24%20at%2002.54.27.png"></a>
@@ -167,7 +175,7 @@
                     <option value="most_viewed">depatrment 3</option>
                 </select>
             </span>
-            
+
         </div>
         <section class="blog-list px-3 py-5 p-md-5">
             <div id="ideasContainer" class="container">

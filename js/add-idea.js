@@ -93,11 +93,14 @@ $(document).ready(function () {
             sessionStorage.setItem("IDEA_ADDED_MESSAGE", true)
             location.href = "home.html"
 
-        }
-        else if (addIdeaResponse.message === "user account is disabled") {
+        } else if (addIdeaResponse.message === "user account is disabled") {
             toastr.error("You're currently suspended, you cannot submit any ideas or comments")
             return
+        } else if (addIdeaResponse.message === "idea submission period closed") {
+            toastr.warning("Idea submission is currently closed")
+
         }
+
 
     }
 

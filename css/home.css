@@ -25,3 +25,10 @@
 /* .swal2-radio {
     display: grid !important;
 } */
+
+.fa-thumbs-up:hover,  .fa-thumbs-down:hover, 
+.fa-comment:hover, .fa-flag:hover{
+    color: rgb(65, 65, 65);
+}
+
+

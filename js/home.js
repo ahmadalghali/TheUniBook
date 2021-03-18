@@ -62,55 +62,59 @@ $(document).ready(function () {
     document.getElementById('filter_dropdown').onchange = function () {
         displayIdeas(currentPage);
     }
-    
-    function setClosureDate () {
+
+    function setClosureDate() {
 
         console.log("clicked")
 
-       let closureDate = document.getElementById('closureDatePicker').value
+        let closureDate = document.getElementById('closureDatePicker').value
 
-       if (closureDate == "" ) {
-           return;
-       }
-       Swal.fire({
-        title: 'Closure Date',
-        text: `Set Closure Date to '${closureDate}' ?`,
-        
-        
-        showConfirmButton: true,
-        confirmButtonText: 'Confirm',
-        showCancelButton: true,
-        customClass: {
-            confirmButton: 'order-2',
-            cancelButton: 'order-1 right-gap',
+        if (closureDate == "") {
+            return;
         }
-    }).then(async result => {
-        if (result.isConfirmed) {
-            
-           let response = await fetch(`${url}/ideas/setClosureDate?email=${session.user.email}&password=${session.user.password}&closureDate=${closureDate}`,{method: "POST"})
-           .then(res => res.text())
-            
-           if (response == "Successfully Saved") {
-            Toast.fire({
-                icon: 'success',
-                title: 'Successfully Set Closure Date'
-            })
-           } else if(response == "unauthorised access") {
-            Toast.fire({
-                icon: 'error',
-                title: 'You don\'t have access for this action'
-            })
-           } else if(response == "date is before closure date"){
-            Toast.fire({
-                icon: 'warning',
-                title: 'Invalid Date'
-            })
-           }
-            console.log(response)
-        }
-    })
+        Swal.fire({
+            title: 'Closure Date',
+            text: `Set Closure Date to '${closureDate}' ?`,
+
+
+            showConfirmButton: true,
+            confirmButtonText: 'Confirm',
+            showCancelButton: true,
+            customClass: {
+                confirmButton: 'order-2',
+                cancelButton: 'order-1 right-gap',
+            }
+        }).then(async result => {
+            if (result.isConfirmed) {
+
+                let response = await fetch(`${url}/ideas/setClosureDate?email=${session.user.email}&password=${session.user.password}&closureDate=${closureDate}`, { method: "POST" })
+                    .then(res => res.text())
+
+                if (response == "Successfully Saved") {
+                    setDateStuff().then(() => {
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Successfully Set Closure Date'
+                        })
+                    })
+
+
+                } else if (response == "unauthorised access") {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'You don\'t have access for this action'
+                    })
+                } else if (response == "date is before closure date") {
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'Invalid Date'
+                    })
+                }
+                console.log(response)
+            }
+        })
     }
-    
+
     function initHomePage() {
         setDateStuff()
         setUserDetails()
@@ -118,9 +122,22 @@ $(document).ready(function () {
         displayIdeas(currentPage)
     }
 
-        function setDateStuff(){
-            closureDatePicker.min = new Date().toISOString().split("T")[0];
-        }
+    async function setDateStuff() {
+        closureDatePicker.min = new Date().toISOString().split("T")[0];
+        let currentClosureDateField = document.getElementById("currentClosureDate")
+
+
+        let currentClosureDate = await getClosureDate()
+
+        let formattedDate = new Date(currentClosureDate)
+
+
+        currentClosureDateField.innerText = formattedDate.getDate() + "/"
+            + (formattedDate.getMonth() + 1) + "/"
+            + formattedDate.getFullYear()
+
+
+    }
 
     function emailInactiveStaff() {
         fetch(`${url}/encourageStaff?departmentId=${session.user.department.id}`, { method: "post" })
@@ -216,16 +233,18 @@ $(document).ready(function () {
 
         if (user.role == "ADMINISTRATOR") {
 
+            //    <li class="list-inline-item"><a href="set-closure-date.html"> <i class="fas fa-eye-slash fa-lg"></i></a>
+            //                             </li>
+            //                             <span class="bio mb-3"><b>Set Closure Date</b></span>
+            //                             <br><br></br>
+
             privilegesList.innerHTML += `
             <li class="list-inline-item"><a href="anonymous-ideas.html"> <i class="fas fa-eye-slash fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Anonymous Ideas</b></span>
                             <br><br>
 
-                            <li class="list-inline-item"><a href="set-closure-date.html"> <i class="fas fa-eye-slash fa-lg"></i></a>
-                            </li>
-                            <span class="bio mb-3"><b>Set Closure Date</b></span>
-                            <br><br>
+                         
 
             <li class="list-inline-item"><a href="monitor-system.html"> <i class="fas fa-info-circle fa-lg"></i></a>
                             </li>
@@ -267,6 +286,10 @@ $(document).ready(function () {
 
     }
 
+    async function getClosureDate() {
+        let closureDate = await fetch(`${url}//ideas/closureDate`).then(res => res.text())
+        return closureDate
+    }
 
     async function getRandomPhoto() {
         const { results } = await fetch('https://randomuser.me/api/?gender=male').then(res => res.json())
@@ -757,26 +780,26 @@ $(document).ready(function () {
             });
     }
 
-    async function addIdeaView(){
+    async function addIdeaView() {
         await fetch(`${url}/addPageView?pageId=4`, { method: "post" })
     }
-    async function testBrowser(){
+    async function testBrowser() {
         let response = await fetch(`${url}/checkBrowser`).then(res => res.json())
         console.log(response)
     }
-    async function addPasswordChangeView(){
+    async function addPasswordChangeView() {
         await fetch(`${url}/addPageView?pageId=6`, { method: "post" })
     }
-    async function addCategoryView(){
+    async function addCategoryView() {
         await fetch(`${url}/addPageView?pageId=8`, { method: "post" })
     }
-    async function addStatisticsView(){
+    async function addStatisticsView() {
         await fetch(`${url}/addPageView?pageId=9`, { method: "post" })
     }
-    async function addManageUsersView(){
+    async function addManageUsersView() {
         await fetch(`${url}/addPageView?pageId=7`, { method: "post" })
     }
-    async function addCommentsView(){
+    async function addCommentsView() {
         await fetch(`${url}/addPageView?pageId=5`, { method: "post" })
     }
 

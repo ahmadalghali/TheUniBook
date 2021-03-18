@@ -9,10 +9,28 @@ $(document).ready(function () {
     let usersTableBody = document.getElementById("usersTableBody")
     let browserTableHeaders = document.getElementById("browserTableHeaders")
     let browserTableBody = document.getElementById("browserTableBody")
+    let session = JSON.parse(sessionStorage.getItem("session"));
 
     getSystemData()
 
+    $("#btnLogout").click(() => {
+        testBrowser();
+        Swal.fire({
+            title: 'Logout',
+            text: 'Are you sure?',
+            showCancelButton: true,
+            confirmButtonText: 'Logout'
+        }).then(result => {
+            if (result.isConfirmed) {
+                sessionStorage.removeItem("session")
+                location.href = "/"
+            }
+        })
+    })
+
     async function getSystemData() {
+        setUserDetails()
+        
         await fetch(`${url}/mostViewedPages`)
             .then(res => res.json())
             .then(statistics => viewsPerPageChart(statistics));
@@ -20,6 +38,48 @@ $(document).ready(function () {
         populateUsersTable()
         populateBrowsersTable()
 
+    }
+
+    async function setUserDetails() {
+
+        let user = session.user
+        let privilegesList = document.getElementById("privilegesList")
+
+        if (!user.enabled || user.hidden) {
+            document.getElementById("addIdeaDiv").innerHTML = `<p>You're currently suspended</p>`
+        }
+
+        if (user.role == "ADMINISTRATOR") {
+
+            privilegesList.innerHTML += `
+            <li class="list-inline-item"><a href="anonymous-ideas.html"> <i class="fas fa-eye-slash fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Anonymous Ideas</b></span>
+                            <br><br>
+
+            `
+
+        }
+
+        if (user.profileImageUrl != null) {
+            $("#userPhoto").attr("src", user.profileImageUrl);
+        }
+
+        $("#fullname").html(`<h5 style="color: white">${user.firstname} ${user.lastname}</h5>`)
+        if (user.role === null) {
+            $("#role").html(`Staff`)
+        } else {
+            $("#role").html(`<h6 style="color: white">${user.role}</h6>`)
+        }
+
+        $("#department").html(`<h6 style="color: white">${session.user.department.name}</h6>`)
+        if (user.lastLogin == null) {
+            $("#last_login").text("Welcome to the Unibook!");
+        }
+        else if (user.lastLogin != null) {
+            $("#last_login").html(`<label>Last online: ${user.lastLogin}<label>`)
+
+        }
     }
 
     function viewsPerPageChart(stats) {

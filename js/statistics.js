@@ -3,13 +3,13 @@ $(document).ready(function () {
     // let url = "http://localhost:8080"
     let url = "https://theunibook.herokuapp.com"
 
-
     let numOfIdeasPerDepartmentChart = document.getElementById("numOfIdeasPerDepartmentChart").getContext('2d')
 
     let percentageOfIdeasPerDepartmentChart = document.getElementById("percentageOfIdeasPerDepartmentChart").getContext('2d')
 
-
     let contributorsPerDepartmentChart = document.getElementById("contributorsPerDepartmentChart").getContext('2d')
+
+    let session = JSON.parse(sessionStorage.getItem("session"));
 
     // Chart.defaults.global.plugins.labels = {
     //     fontColor: 'white',
@@ -21,6 +21,7 @@ $(document).ready(function () {
     // Chart.defaults.global.defaultFontColor = '#777'
 
 
+    setUserDetails()
     getStatistics()
 
     async function getStatistics() {
@@ -122,8 +123,6 @@ $(document).ready(function () {
 
         })
     }
-
-
 
     function drawPercentageIdeasPerDeptChart(stats) {
 
@@ -300,8 +299,6 @@ $(document).ready(function () {
         })
     }
 
-
-
     function renderHTML(statistics) {
         console.log(statistics)
 
@@ -358,4 +355,54 @@ $(document).ready(function () {
 
 
     }
+
+    async function setUserDetails() {
+
+        let user = session.user
+        let privilegesList = document.getElementById("privilegesList")
+
+        if (!user.enabled || user.hidden) {
+            document.getElementById("addIdeaDiv").innerHTML = `<p>You're currently suspended</p>`
+        }
+
+        if (user.role == "MANAGER") {
+
+            privilegesList.innerHTML += `
+
+            <li class="list-inline-item"><a href="modify-category.html" id="addCategoryView"> <i
+                                        class="fas fa-pen-square fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Modify Categories</b></span>
+                            <br><br>
+
+                             <li class="list-inline-item"><a href="manage-users-2.html" id="addManageUsersView"> <i
+                                        class="fas fa-users fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Manage Users</b></span>
+                            <br><br>
+
+            `
+        }
+
+        if (user.profileImageUrl != null) {
+            $("#userPhoto").attr("src", user.profileImageUrl);
+        }
+
+        $("#fullname").html(`<h5 style="color: white">${user.firstname} ${user.lastname}</h5>`)
+        if (user.role === null) {
+            $("#role").html(`Staff`)
+        } else {
+            $("#role").html(`<h6 style="color: white">${user.role}</h6>`)
+        }
+
+        $("#department").html(`<h6 style="color: white">${session.user.department.name}</h6>`)
+        if (user.lastLogin == null) {
+            $("#last_login").text("Welcome to the Unibook!");
+        }
+        else if (user.lastLogin != null) {
+            $("#last_login").html(`<label>Last online: ${user.lastLogin}<label>`)
+
+        }
+    }
+
 })

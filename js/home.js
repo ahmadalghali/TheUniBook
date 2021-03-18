@@ -30,8 +30,6 @@ $(document).ready(function () {
 
         sessionStorage.removeItem("IDEA_ADDED_MESSAGE")
     }
-    // validateUserSession()
-
 
     initHomePage()
 
@@ -49,6 +47,7 @@ $(document).ready(function () {
             }
         })
     })
+
     document.getElementById("addIdeaView").addEventListener("click", addIdeaView)
 
     document.getElementById("addPasswordChangeView").addEventListener("click", addPasswordChangeView)
@@ -71,29 +70,6 @@ $(document).ready(function () {
         fetch(`${url}/encourageStaff?departmentId=${session.user.department.id}`, { method: "post" })
         console.log("emails sent")
         toastr.success("Email sent successfully")
-    }
-
-    async function addIdeaView(){
-        await fetch(`${url}/addPageView?pageId=4`, { method: "post" })
-    }
-    async function testBrowser(){
-        let response = await fetch(`${url}/checkBrowser`).then(res => res.json())
-        console.log(response)
-    }
-    async function addPasswordChangeView(){
-        await fetch(`${url}/addPageView?pageId=6`, { method: "post" })
-    }
-    async function addCategoryView(){
-        await fetch(`${url}/addPageView?pageId=8`, { method: "post" })
-    }
-    async function addStatisticsView(){
-        await fetch(`${url}/addPageView?pageId=9`, { method: "post" })
-    }
-    async function addManageUsersView(){
-        await fetch(`${url}/addPageView?pageId=7`, { method: "post" })
-    }
-    async function addCommentsView(){
-        await fetch(`${url}/addPageView?pageId=5`, { method: "post" })
     }
 
     function setCurrentPage(page) {
@@ -198,10 +174,6 @@ $(document).ready(function () {
             `
 
         }
-
-
-
-        console.log(user)
 
         if (user.profileImageUrl != null) {
             $("#userPhoto").attr("src", user.profileImageUrl);
@@ -723,9 +695,27 @@ $(document).ready(function () {
             });
     }
 
-
-
-
-
+    async function addIdeaView(){
+        await fetch(`${url}/addPageView?pageId=4`, { method: "post" })
+    }
+    async function testBrowser(){
+        let response = await fetch(`${url}/checkBrowser`).then(res => res.json())
+        console.log(response)
+    }
+    async function addPasswordChangeView(){
+        await fetch(`${url}/addPageView?pageId=6`, { method: "post" })
+    }
+    async function addCategoryView(){
+        await fetch(`${url}/addPageView?pageId=8`, { method: "post" })
+    }
+    async function addStatisticsView(){
+        await fetch(`${url}/addPageView?pageId=9`, { method: "post" })
+    }
+    async function addManageUsersView(){
+        await fetch(`${url}/addPageView?pageId=7`, { method: "post" })
+    }
+    async function addCommentsView(){
+        await fetch(`${url}/addPageView?pageId=5`, { method: "post" })
+    }
 
 })

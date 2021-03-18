@@ -34,7 +34,7 @@ $(document).ready(function () {
     initHomePage()
 
     $("#btnLogout").click(() => {
-        testBrowser();
+        
         Swal.fire({
             title: 'Logout',
             text: 'Are you sure?',

@@ -52,7 +52,7 @@ $(document).ready(function () {
 
     async function deleteCategory(categoryId) {
         let user = session.user
-        console.log(user)
+
         let deleteCategoryResponse = await fetch(`${url}/categories?categoryId=${categoryId}&userId=${user.id}`, { method: "DELETE" }).then(response => response.json())
         if (deleteCategoryResponse.message == "category deleted successfully") {
             toastr.success("Category deleted successfully")
@@ -76,7 +76,7 @@ $(document).ready(function () {
 
         var category = await fetch(`${url}/categories?name=${categoryName}`, { method: "POST" }).then(response => response.json())
         categorytitlefield.value = ""
-        console.log(category)
+
         if (category != null) {
             toastr.success(`Category ${category.category} added`)
         } else {

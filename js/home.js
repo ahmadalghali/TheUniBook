@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    // let url = "http://localhost:8080"
+     //let url = "http://localhost:8080"
     let url = "https://theunibook.herokuapp.com"
 
 
@@ -21,6 +21,7 @@ $(document).ready(function () {
     let categoryDropdown = document.getElementById("category_dropdown");
     let filterDropdown = document.getElementById("filter_dropdown");
     let closureDateButton = document.getElementById('closureDateButton');
+
     let pageCount;
 
     let session = JSON.parse(sessionStorage.getItem("session"));
@@ -47,10 +48,6 @@ $(document).ready(function () {
             }
         })
     })
-
-    // document.getElementById("addIdeaView").addEventListener("click", addIdeaView)
-
-    // document.getElementById("addPasswordChangeView").addEventListener("click", addPasswordChangeView)
 
     // closureDateButton.addEventListener("click", setClosureDate)
     closureDateButton.addEventListener("click", setClosureDate)
@@ -269,6 +266,7 @@ $(document).ready(function () {
         }
 
         $("#department").html(`<h6 style="color: white">${session.user.department.name}</h6>`)
+
         if (user.lastLogin == null) {
             $("#last_login").text("Welcome to the Unibook!");
         }
@@ -276,6 +274,10 @@ $(document).ready(function () {
             $("#last_login").html(`<label>Last online: ${user.lastLogin}<label>`)
 
         }
+
+        document.getElementById("addIdeaView").addEventListener("click", addIdeaViews)
+
+        document.getElementById("addPasswordChangeView").addEventListener("click", addPasswordChangeView)
     }
 
     async function getInactiveStaffCount() {
@@ -320,7 +322,7 @@ $(document).ready(function () {
         let ideas;
         let getIdeasResponse;
 
-        getIdeasResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&loggedInUser=${session.user.id}&categoryId=${categoryId}&sortBy=${sortBy}`).then(response => response.json())
+        getIdeasResponse = await fetch(`${url}/ideas?page=${page}&categoryId=${categoryId}&sortBy=${sortBy}&email=${session.user.email}&password=${session.user.password}`).then(response => response.json())
 
         pageCount = getIdeasResponse.pageCount
         ideas = getIdeasResponse.ideas
@@ -622,6 +624,11 @@ $(document).ready(function () {
             title: 'Select a reason',
             input: 'radio',
             inputOptions: options,
+            // width: '400px',
+            showCancelButton: true,
+            showConfirmButton: true,
+            confirmButtonText: 'Report',
+            confirmButtonColor: '#b30e0e',
             inputValidator: (value) => {
                 if (!value) {
                     return 'You need to choose something!'
@@ -781,12 +788,8 @@ $(document).ready(function () {
             });
     }
 
-    async function addIdeaView() {
+    async function addIdeaViews() {       
         await fetch(`${url}/addPageView?pageId=4`, { method: "post" })
-    }
-    async function testBrowser() {
-        let response = await fetch(`${url}/checkBrowser`).then(res => res.json())
-        console.log(response)
     }
     async function addPasswordChangeView() {
         await fetch(`${url}/addPageView?pageId=6`, { method: "post" })

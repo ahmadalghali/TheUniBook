@@ -190,6 +190,11 @@ $(document).ready(function () {
                             <span class="bio mb-3"><b>Anonymous Ideas</b></span>
                             <br><br>
 
+                            <li class="list-inline-item"><a href="set-closure-date.html"> <i class="fas fa-eye-slash fa-lg"></i></a>
+                            </li>
+                            <span class="bio mb-3"><b>Set Closure Date</b></span>
+                            <br><br>
+
             <li class="list-inline-item"><a href="monitor-system.html"> <i class="fas fa-info-circle fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Additional information</b></span>

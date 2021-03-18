@@ -55,12 +55,11 @@
 
                     <!--last login label-->
                     <div id="last_login" class="bio mb-3" style="font-style: italic;"></div>
-
                     <div align="left">
                         <ul id="privilegesList" class="social-list list-inline py-3 mx-auto">
 
                             <div id="addIdeaDiv">
-                                <li class="list-inline-item"><a id="addIdeaView" href="add-idea.html"><i
+                                <li class="list-inline-item"><a href="add-idea.html"><i
                                             class="fas fa-lightbulb fa-lg"></i></a>
                                 </li>
                                 <span class="bio mb-3"><b>Add an Idea</b></span>
@@ -68,8 +67,8 @@
                             </div>
 
 
-                            <li class="list-inline-item"><a id="addPasswordChangeView" href="change_password.html"><i
-                                        class="fas fa-user-cog fa-lg"></i></a>
+                            <li class="list-inline-item"><a href="change_password.html">
+                                <i class="fas fa-user-cog fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Change password</b></span>
                             <br><br>
@@ -124,36 +123,10 @@
             <div class="container text-center">
                 <h2 class="heading">Welcome to Unibook</h2>
 
-                <br>
+                <label for="dateofbirth">Closure date</label>
+                <input type="date" name="dateofbirth" id="dateofbirth"> <i class="far fa-check-circle fa-lg"></i>
 
-                <span class="box">
-                    <select class="selection-2 " name="service" id="category_dropdown">
-
-                    </select>
-                </span>
-                <span class="focus-input100"></span>
-
-                <span class="box">
-                    <select class="selection-2 " name="service" id="filter_dropdown">
-                        <option value="latest" selected="selected">Latest</option>
-                        <option value="most_popular">Most popular</option>
-                        <option value="most_viewed">Most viewed</option>
-                    </select>
-                </span>
-                <span class="focus-input100"></span>
-                <br><br>
-                <!--//department dropdown (just for QA manager)-->
-                <div>
-                    <span class="box">
-                        <select class="selection-2 " name="service" id="filter_dropdown">
-                            <option value="latest" selected="selected">Department</option>
-                            <option value="most_popular">All depatrment</option>
-                            <option value="most_viewed">depatrment 1</option>
-                            <option value="most_viewed">depatrment 2</option>
-                            <option value="most_viewed">depatrment 3</option>
-                        </select>
-                    </span>
-                </div>
+             
 
             </div>
 
@@ -166,6 +139,36 @@
 
             <!--//container-->
         </section>
+        <div align="center">
+        <span class="box">
+            <select class="selection-2 " name="service" id="category_dropdown">
+
+            </select>
+        </span>
+        <span class="focus-input100"></span>
+
+        <span class="box">
+            <select class="selection-2 " name="service" id="filter_dropdown">
+                <option value="latest" selected="selected">Latest</option>
+                <option value="most_popular">Most popular</option>
+                <option value="most_viewed">Most viewed</option>
+            </select>
+        </span>
+        <span class="focus-input100"></span>
+        
+        <!--//department dropdown (just for QA manager)-->
+        
+            <span class="box">
+                <select class="selection-2 " name="service" id="filter_dropdown">
+                    <option value="latest" selected="selected">Department</option>
+                    <option value="most_popular">All depatrment</option>
+                    <option value="most_viewed">depatrment 1</option>
+                    <option value="most_viewed">depatrment 2</option>
+                    <option value="most_viewed">depatrment 3</option>
+                </select>
+            </span>
+            
+        </div>
         <section class="blog-list px-3 py-5 p-md-5">
             <div id="ideasContainer" class="container">
                 <!-- <div class="item mb-5">

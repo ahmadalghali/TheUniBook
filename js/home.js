@@ -124,7 +124,7 @@ $(document).ready(function () {
 
     async function setDateStuff() {
         closureDatePicker.min = new Date().toISOString().split("T")[0];
-        closureDatePicker.value = new Date().toISOString().split("T")[0];
+        closureDatePicker.value = new Date(await getClosureDate()).toISOString().split("T")[0];
         let currentClosureDateField = document.getElementById("currentClosureDate")
 
 

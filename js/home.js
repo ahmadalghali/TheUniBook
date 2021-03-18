@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    //let url = "http://localhost:8080"
-    let url = "https://theunibook.herokuapp.com"
+    let url = "http://localhost:8080"
+    // let url = "https://theunibook.herokuapp.com"
 
 
     const Toast = Swal.mixin({
@@ -20,7 +20,7 @@ $(document).ready(function () {
     let pagesDiv = document.getElementById("pagesDiv")
     let categoryDropdown = document.getElementById("category_dropdown");
     let filterDropdown = document.getElementById("filter_dropdown");
-
+    let closureDateButton = document.getElementById('closureDateButton');
     let pageCount;
 
     let session = JSON.parse(sessionStorage.getItem("session"));
@@ -48,9 +48,13 @@ $(document).ready(function () {
         })
     })
 
-    document.getElementById("addIdeaView").addEventListener("click", addIdeaView)
+    // document.getElementById("addIdeaView").addEventListener("click", addIdeaView)
 
-    document.getElementById("addPasswordChangeView").addEventListener("click", addPasswordChangeView)
+    // document.getElementById("addPasswordChangeView").addEventListener("click", addPasswordChangeView)
+
+    // closureDateButton.addEventListener("click", setClosureDate)
+    closureDateButton.addEventListener("click", setClosureDate)
+
 
     document.getElementById('category_dropdown').onchange = function () {
         displayIdeas(currentPage);
@@ -58,13 +62,65 @@ $(document).ready(function () {
     document.getElementById('filter_dropdown').onchange = function () {
         displayIdeas(currentPage);
     }
+    
+    function setClosureDate () {
 
+        console.log("clicked")
+
+       let closureDate = document.getElementById('closureDatePicker').value
+
+       if (closureDate == "" ) {
+           return;
+       }
+       Swal.fire({
+        title: 'Closure Date',
+        text: `Set Closure Date to '${closureDate}' ?`,
+        
+        
+        showConfirmButton: true,
+        confirmButtonText: 'Confirm',
+        showCancelButton: true,
+        customClass: {
+            confirmButton: 'order-2',
+            cancelButton: 'order-1 right-gap',
+        }
+    }).then(async result => {
+        if (result.isConfirmed) {
+            
+           let response = await fetch(`${url}/ideas/setClosureDate?email=${session.user.email}&password=${session.user.password}&closureDate=${closureDate}`,{method: "POST"})
+           .then(res => res.text())
+            
+           if (response == "Successfully Saved") {
+            Toast.fire({
+                icon: 'success',
+                title: 'Successfully Set Closure Date'
+            })
+           } else if(response == "unauthorised access") {
+            Toast.fire({
+                icon: 'error',
+                title: 'You don\'t have access for this action'
+            })
+           } else if(response == "date is before closure date"){
+            Toast.fire({
+                icon: 'warning',
+                title: 'Invalid Date'
+            })
+           }
+            console.log(response)
+        }
+    })
+    }
+    
     function initHomePage() {
+        setDateStuff()
         setUserDetails()
         populateCategoryDropdown()
         displayIdeas(currentPage)
     }
 
+        function setDateStuff(){
+            closureDatePicker.min = new Date().toISOString().split("T")[0];
+        }
 
     function emailInactiveStaff() {
         fetch(`${url}/encourageStaff?departmentId=${session.user.department.id}`, { method: "post" })
@@ -178,6 +234,7 @@ $(document).ready(function () {
 
             `
 
+            document.getElementById("closureDateDiv").hidden = false
         }
 
         if (user.profileImageUrl != null) {
@@ -571,7 +628,7 @@ $(document).ready(function () {
         })
     }
 
-    const showPrevArrow = () => {
+    function showPrevArrow() {
 
         let prevArrow = document.createElement('a')
         prevArrow.className = "pagination-prev"
@@ -594,7 +651,7 @@ $(document).ready(function () {
         })
     }
 
-    const showNextArrow = () => {
+    function showNextArrow() {
         let nextArrow = document.createElement('a')
         nextArrow.className = "pagination-next"
 

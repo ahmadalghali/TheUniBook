@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    // let url = "http://localhost:8080"
-    let url = "https://theunibook.herokuapp.com"
+    let url = "http://localhost:8080"
+    // let url = "https://theunibook.herokuapp.com"
 
 
     const Toast = Swal.mixin({
@@ -34,7 +34,7 @@ $(document).ready(function () {
     initHomePage()
 
     $("#btnLogout").click(() => {
-        
+
         Swal.fire({
             title: 'Logout',
             text: 'Are you sure?',
@@ -59,6 +59,7 @@ $(document).ready(function () {
     document.getElementById('category_dropdown').onchange = function () {
         displayIdeas(currentPage);
     }
+
     document.getElementById('filter_dropdown').onchange = function () {
         displayIdeas(currentPage);
     }
@@ -329,7 +330,6 @@ $(document).ready(function () {
 
     }
 
-
     function displayPageFooter() {
 
         pagesDiv.innerHTML = ''
@@ -383,7 +383,6 @@ $(document).ready(function () {
         applyPaginationStyling()
 
     }
-
 
     async function renderIdeasHTML(getIdeasResponse) {
 
@@ -451,7 +450,7 @@ $(document).ready(function () {
                             &nbsp;&nbsp;<li class="list-inline-item"><a style="cursor: pointer; color: ${flagColor};" class="report-flag" data-ideaid="${idea.id}"> <i
                                         class="fas fa-flag fa-lg"></i> </a> </li>
 
-                            &nbsp;&nbsp;<a style="cursor: pointer;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &rarr;</a>
+                            &nbsp;&nbsp;<a style="cursor: pointer; color: grey;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &nbsp; <i class="fas fa-comment" ></i> ${idea.commentCount}</a>
 
                         </div>
                         <!--//media-body-->
@@ -486,7 +485,7 @@ $(document).ready(function () {
                             &nbsp;&nbsp;<li class="list-inline-item"><a style="cursor: pointer; color: ${flagColor};" class="report-flag" data-ideaid="${idea.id}"> <i
                                         class="fas fa-flag fa-lg"></i> </a> </li>
 
-                            &nbsp;&nbsp;<a style="cursor: pointer;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &rarr;</a>
+                            &nbsp;&nbsp;<a style="cursor: pointer; color: grey;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &nbsp; <i class="fas fa-comment" ></i> ${idea.commentCount}</a>
 
                         </div>
                         <!--//media-body-->
@@ -513,8 +512,6 @@ $(document).ready(function () {
 
 
     }
-
-
 
     async function displayIdeas(page) {
         setCurrentPage(page)
@@ -695,7 +692,6 @@ $(document).ready(function () {
             displayIdeas(currentPage + 1)
         })
     }
-
 
     async function post(endpoint, data) {
 

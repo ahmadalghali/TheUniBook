@@ -70,6 +70,8 @@ $(document).ready(function () {
         if (loginResponse.message == "logged in") {
             addBrowser();
             sessionStorage.setItem("session", JSON.stringify(loginResponse))
+            
+            document.getElementById("email_field").value = "";
             location.href = "home.html"
 
         } else {

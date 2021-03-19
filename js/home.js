@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-     //let url = "http://localhost:8080"
+    // let url = "http://localhost:8080"
     let url = "https://theunibook.herokuapp.com"
 
 
@@ -21,6 +21,7 @@ $(document).ready(function () {
     let categoryDropdown = document.getElementById("category_dropdown");
     let filterDropdown = document.getElementById("filter_dropdown");
     let closureDateButton = document.getElementById('closureDateButton');
+    let departmentDropdown = document.getElementById('departmentDropdown')
 
     let pageCount;
 
@@ -49,6 +50,15 @@ $(document).ready(function () {
         })
     })
 
+
+    function startLoading() {
+        document.querySelector("#mainDiv").classList.add("spinner-home");
+    }
+
+    function stopLoading() {
+        document.querySelector("#mainDiv").classList.remove("spinner-home");
+    }
+
     // closureDateButton.addEventListener("click", setClosureDate)
     closureDateButton.addEventListener("click", setClosureDate)
 
@@ -61,6 +71,9 @@ $(document).ready(function () {
         displayIdeas(currentPage);
     }
 
+    departmentDropdown.onchange = function () {
+        displayIdeas(currentPage);
+    }
     function setClosureDate() {
 
         console.log("clicked")
@@ -117,7 +130,8 @@ $(document).ready(function () {
         setDateStuff()
         setUserDetails()
         populateCategoryDropdown()
-        displayIdeas(currentPage)
+        populateDepartmentDropdown().then(() => displayIdeas(currentPage))
+        // displayIdeas(currentPage)
     }
 
     async function setDateStuff() {
@@ -163,15 +177,7 @@ $(document).ready(function () {
         }
 
         if (user.role == "MANAGER") {
-            // let modifyCategoriesPage = document.createElement("a")
-            // modifyCategoriesPage.href = `modify-category.html`
-            // modifyCategoriesPage.text = "Modify Categories"
-            // modifyCategoriesPage.style = "color: white;"
 
-
-            // privilegesList.append(modifyCategoriesPage) 
-
-            // privilegesList.innerHTML += `<a href="modify-category.html" style="color: white;"><b>Modify Categories</b></a>`
 
             privilegesList.innerHTML += `
 
@@ -209,6 +215,8 @@ $(document).ready(function () {
             document.getElementById("addCategoryView").addEventListener("click", addCategoryView)
             document.getElementById("addStatisticsView").addEventListener("click", addStatisticsView)
             document.getElementById("addManageUsersView").addEventListener("click", addManageUsersView)
+
+            // populateDepartmentDropdown()
 
 
         }
@@ -266,7 +274,9 @@ $(document).ready(function () {
             $("#role").html(`<h6 style="color: white">${user.role}</h6>`)
         }
 
-        $("#department").html(`<h6 style="color: white">${session.user.department.name}</h6>`)
+        if (user.role != "MANAGER") {
+            $("#department").html(`<h6 style="color: white">${session.user.department.name}</h6>`)
+        }
 
         if (user.lastLogin == null) {
             $("#last_login").text("Welcome to the Unibook!");
@@ -279,6 +289,32 @@ $(document).ready(function () {
         document.getElementById("addIdeaView").addEventListener("click", addIdeaViews)
 
         document.getElementById("addPasswordChangeView").addEventListener("click", addPasswordChangeView)
+    }
+
+    async function populateDepartmentDropdown() {
+        if (session.user.role == "MANAGER") {
+            document.getElementById("departmentDropdownFilterDiv").hidden = false;
+
+            $("#departmentDropdown").empty();
+
+
+            await fetch(`${url}/departments`).then(response => response.json()).then(departments => {
+                let option;
+
+                for (let department of departments) {
+
+                    option = document.createElement('option');
+                    option.value = department.id;
+                    option.text = department.name;
+
+
+                    $("#departmentDropdown").append(option);
+                }
+            })
+
+        }
+
+        // displayIdeas(currentPage)
     }
 
     async function getInactiveStaffCount() {
@@ -332,6 +368,22 @@ $(document).ready(function () {
 
     }
 
+    async function getIdeasByDepartment(page, categoryId, sortBy, departmentId) {
+        let ideas;
+        let getIdeasResponse;
+
+        getIdeasResponse = await fetch(`${url}/ideas?departmentId=${departmentId}&page=${page}&categoryId=${categoryId}&sortBy=${sortBy}&email=${session.user.email}&password=${session.user.password}`).then(response => response.json())
+
+        console.log(getIdeasResponse)
+        pageCount = getIdeasResponse.pageCount
+        ideas = getIdeasResponse.ideas
+
+        return getIdeasResponse
+
+    }
+
+
+
     function displayPageFooter() {
 
         pagesDiv.innerHTML = ''
@@ -350,6 +402,7 @@ $(document).ready(function () {
 
 
         // pagesDiv.append(overlayDiv)
+
 
         for (let i = 0; i < pageCount; i++) {
 
@@ -388,7 +441,6 @@ $(document).ready(function () {
 
     async function renderIdeasHTML(getIdeasResponse) {
 
-        console.log(getIdeasResponse)
         let ideasContainer = document.getElementById("ideasContainer")
 
         let ideas = getIdeasResponse.ideas
@@ -511,31 +563,29 @@ $(document).ready(function () {
         addEventListenersToVote()
         displayPageFooter()
 
+        stopLoading();
 
 
     }
 
     async function displayIdeas(page) {
+        startLoading();
         setCurrentPage(page)
 
         let ideas;
 
         let selectedCategory = categoryDropdown.options[categoryDropdown.selectedIndex].value;
         let selectedFilter = filterDropdown.options[filterDropdown.selectedIndex].value;
+        let selectedDepartment = departmentDropdown.value;
 
-        // if (selectedCategory != 0) {
-        // } 
-        ideas = await getIdeas(currentPage, selectedCategory, selectedFilter)
-
-        // if(selectedFilter == ){
-        //     ideas = await getIdeas(currentPage, selectedFilter)
-        // }
-        // else {
-        //     ideas = await getIdeas(currentPage)
-        // }
-        // console.log(ideas)
-
+        console.log("selectedDepartment " + selectedDepartment)
+        if (session.user.role == "MANAGER") {
+            ideas = await getIdeasByDepartment(currentPage, selectedCategory, selectedFilter, selectedDepartment)
+        } else {
+            ideas = await getIdeas(currentPage, selectedCategory, selectedFilter)
+        }
         renderIdeasHTML(ideas)
+        // stopLoading();
     }
 
     async function Like(ideaId) {
@@ -784,7 +834,7 @@ $(document).ready(function () {
             });
     }
 
-    async function addIdeaViews() {       
+    async function addIdeaViews() {
         await fetch(`${url}/addPageView?pageId=4`, { method: "post" })
     }
     async function addPasswordChangeView() {

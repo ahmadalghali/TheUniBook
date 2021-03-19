@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    let url = "http://localhost:8080"
-    // let url = "https://theunibook.herokuapp.com"
+    // let url = "http://localhost:8080"
+    let url = "https://theunibook.herokuapp.com"
 
 
     const Toast = Swal.mixin({

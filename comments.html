@@ -71,6 +71,7 @@
                             </div>
                         </div>
                         <br>
+                        
                 </section>
 
                 <!--new comments textarea-->
@@ -80,21 +81,34 @@
                     <div class="row2">
                     <textarea id="commentsTextArea" name="description" required placeholder="Start typing..."
                         class="input100" style="font-family: Arial;"></textarea>
-                        <li class="position"><a style="color: rgba(0, 153, 255, 0.835); cursor: pointer;" id="btnPostComment">
-                            <i class="fas fa-paper-plane fa-2x"></i></a>
-                        </li>
+                        
                     <span class="focus-input100"></span>
                 </div>
+                
                 </div>
                 <!--icon to add new comments-->
-                
-                
+                <div >
+                    <input type="checkbox" name="agree" id="anonymously"  value="yes" required />
+                    <span for="agree">Post anonymously?</span>   
+                                        
+                </div>
+                <div>
+               
+                <li style="display:block" class="position"><a style="color: rgba(0, 153, 255, 0.835); cursor: pointer;" id="btnPostComment">
+                    <i style="display:block" class="fas fa-paper-plane fa-2x"></i>SEND</a>
+                </li>
+            
+
                 <br>
                 <h4>Comments - <span id="commentCount"></span></h4>
                 <br>
                 <!--//comment history-->
 
                 <!-- class="wrap-input100 validate-input" -->
+
+
+                
+
 
                 <div id="commentsContainer">
                     <!-- <div class="item mb-5">

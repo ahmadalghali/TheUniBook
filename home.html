@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
+    <link rel="stylesheet" href="css/spinner.css">
+
     <script>
 
         let session = JSON.parse(sessionStorage.getItem("session"))
@@ -42,7 +44,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
                 aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>   
+            </button>
             <!--field where the idea will go-->
             <div id="navigation" class="collapse navbar-collapse flex-column">
                 <div class="profile-section pt-3 pt-lg-0">
@@ -59,7 +61,7 @@
                         <ul id="privilegesList" class="social-list list-inline py-3 mx-auto">
 
                             <div id="addIdeaDiv">
-                                <li class="list-inline-item"><a href="add-idea.html"><i
+                                <li class="list-inline-item"><a id="addIdeaView" href="add-idea.html"><i
                                             class="fas fa-lightbulb fa-lg"></i></a>
                                 </li>
                                 <span class="bio mb-3"><b>Add an Idea</b></span>
@@ -67,8 +69,8 @@
                             </div>
 
 
-                            <li class="list-inline-item"><a href="change_password.html">
-                                <i class="fas fa-user-cog fa-lg"></i></a>
+                            <li class="list-inline-item"><a id="addPasswordChangeView" href="change_password.html">
+                                    <i class="fas fa-user-cog fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Change password</b></span>
                             <br><br>
@@ -118,19 +120,27 @@
     </header>
 
 
-    <div class="main-wrapper">
+    <div id="mainDiv" class="main-wrapper">
         <section class="cta-section theme-bg-light py-5">
             <div class="container text-center">
                 <h2 class="heading">Welcome to Unibook</h2>
 
+                <br>
                 <div id="closureDateDiv" hidden>
-                    <label for="closureDate">Closure date</label>
-                    <input type="date" name="closureDate" id="closureDatePicker"/> 
+                    <!-- <label for="closureDate">Closure date</label> -->
+                    <input type="date" name="closureDate" id="closureDatePicker" />
                     &nbsp; <button id="closureDateButton" class="btn btn-primary">Set Date</button>
+                    <br>
+                    <br>
+
                 </div>
-               
+                <div>
+                    <h5 style="color:gray">Idea Submission Closure Date: <span id="currentClosureDate"></span>
+                        </h6>
+                </div>
+
                 <!-- <a id="closureDateButton"><i  class="far fa-check-circle fa-lg"></i></a>  -->
-             
+
             </div>
 
             <a
@@ -140,34 +150,34 @@
             <!--//container-->
         </section>
         <div align="center">
-        <span class="box">
-            <select class="selection-2 " name="service" id="category_dropdown">
+            <span class="box">
+                <select class="selection-2 " name="service" id="category_dropdown">
 
-            </select>
-        </span>
-        <span class="focus-input100"></span>
+                </select>
+            </span>
+            <span class="focus-input100"></span>
 
-        <span class="box">
-            <select class="selection-2 " name="service" id="filter_dropdown">
-                <option value="latest" selected="selected">Latest</option>
-                <option value="most_popular">Most popular</option>
-                <option value="most_viewed">Most viewed</option>
-            </select>
-        </span>
-        <span class="focus-input100"></span>
-        
-        <!--//department dropdown (just for QA manager)-->
-        
             <span class="box">
                 <select class="selection-2 " name="service" id="filter_dropdown">
-                    <option value="latest" selected="selected">Department</option>
+                    <option value="latest" selected="selected">Latest</option>
+                    <option value="most_popular">Most popular</option>
+                    <option value="most_viewed">Most viewed</option>
+                </select>
+            </span>
+            <span class="focus-input100"></span>
+
+            <!--//department dropdown (just for QA manager)-->
+
+            <span id="departmentDropdownFilterDiv" class="box" hidden>
+                <select class="selection-2 " name="service" id="departmentDropdown">
+                    <!-- <option value="latest" selected="selected">Department</option>
                     <option value="most_popular">All depatrment</option>
                     <option value="most_viewed">depatrment 1</option>
                     <option value="most_viewed">depatrment 2</option>
-                    <option value="most_viewed">depatrment 3</option>
+                    <option value="most_viewed">depatrment 3</option> -->
                 </select>
             </span>
-            
+
         </div>
         <section class="blog-list px-3 py-5 p-md-5">
             <div id="ideasContainer" class="container">

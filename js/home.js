@@ -21,6 +21,8 @@ $(document).ready(function () {
     let categoryDropdown = document.getElementById("category_dropdown");
     let filterDropdown = document.getElementById("filter_dropdown");
     let closureDateButton = document.getElementById('closureDateButton');
+    let departmentDropdown = document.getElementById('departmentDropdown')
+
     let pageCount;
 
     let session = JSON.parse(sessionStorage.getItem("session"));
@@ -34,7 +36,7 @@ $(document).ready(function () {
     initHomePage()
 
     $("#btnLogout").click(() => {
-        testBrowser();
+
         Swal.fire({
             title: 'Logout',
             text: 'Are you sure?',
@@ -48,9 +50,14 @@ $(document).ready(function () {
         })
     })
 
-    // document.getElementById("addIdeaView").addEventListener("click", addIdeaView)
 
-    // document.getElementById("addPasswordChangeView").addEventListener("click", addPasswordChangeView)
+    function startLoading() {
+        document.querySelector("#mainDiv").classList.add("spinner-home");
+    }
+
+    function stopLoading() {
+        document.querySelector("#mainDiv").classList.remove("spinner-home");
+    }
 
     // closureDateButton.addEventListener("click", setClosureDate)
     closureDateButton.addEventListener("click", setClosureDate)
@@ -59,68 +66,91 @@ $(document).ready(function () {
     document.getElementById('category_dropdown').onchange = function () {
         displayIdeas(currentPage);
     }
+
     document.getElementById('filter_dropdown').onchange = function () {
         displayIdeas(currentPage);
     }
-    
-    function setClosureDate () {
+
+    departmentDropdown.onchange = function () {
+        displayIdeas(currentPage);
+    }
+    function setClosureDate() {
 
         console.log("clicked")
 
-       let closureDate = document.getElementById('closureDatePicker').value
+        let closureDate = document.getElementById('closureDatePicker').value
 
-       if (closureDate == "" ) {
-           return;
-       }
-       Swal.fire({
-        title: 'Closure Date',
-        text: `Set Closure Date to '${closureDate}' ?`,
-        
-        
-        showConfirmButton: true,
-        confirmButtonText: 'Confirm',
-        showCancelButton: true,
-        customClass: {
-            confirmButton: 'order-2',
-            cancelButton: 'order-1 right-gap',
+        if (closureDate == "") {
+            return;
         }
-    }).then(async result => {
-        if (result.isConfirmed) {
-            
-           let response = await fetch(`${url}/ideas/setClosureDate?email=${session.user.email}&password=${session.user.password}&closureDate=${closureDate}`,{method: "POST"})
-           .then(res => res.text())
-            
-           if (response == "Successfully Saved") {
-            Toast.fire({
-                icon: 'success',
-                title: 'Successfully Set Closure Date'
-            })
-           } else if(response == "unauthorised access") {
-            Toast.fire({
-                icon: 'error',
-                title: 'You don\'t have access for this action'
-            })
-           } else if(response == "date is before closure date"){
-            Toast.fire({
-                icon: 'warning',
-                title: 'Invalid Date'
-            })
-           }
-            console.log(response)
-        }
-    })
+        Swal.fire({
+            title: 'Closure Date',
+            text: `Set Closure Date to '${closureDate}' ?`,
+
+
+            showConfirmButton: true,
+            confirmButtonText: 'Confirm',
+            showCancelButton: true,
+            customClass: {
+                confirmButton: 'order-2',
+                cancelButton: 'order-1 right-gap',
+            }
+        }).then(async result => {
+            if (result.isConfirmed) {
+
+                let response = await fetch(`${url}/ideas/setClosureDate?email=${session.user.email}&password=${session.user.password}&closureDate=${closureDate}`, { method: "POST" })
+                    .then(res => res.text())
+
+                if (response == "Successfully Saved") {
+                    setDateStuff().then(() => {
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Successfully Set Closure Date'
+                        })
+                    })
+
+
+                } else if (response == "unauthorised access") {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'You don\'t have access for this action'
+                    })
+                } else if (response == "date is before closure date") {
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'Invalid Date'
+                    })
+                }
+                console.log(response)
+            }
+        })
     }
-    
+
     function initHomePage() {
         setDateStuff()
         setUserDetails()
         populateCategoryDropdown()
-        displayIdeas(currentPage)
+        populateDepartmentDropdown().then(() => displayIdeas(currentPage))
+        // displayIdeas(currentPage)
     }
 
-        function setDateStuff(){
-            closureDatePicker.min = new Date().toISOString().split("T")[0];
-        }
+    async function setDateStuff() {
+        closureDatePicker.min = new Date().toISOString().split("T")[0];
+        closureDatePicker.value = new Date(await getClosureDate()).toISOString().split("T")[0];
+        let currentClosureDateField = document.getElementById("currentClosureDate")
+
+
+        let currentClosureDate = await getClosureDate()
+
+        let formattedDate = new Date(currentClosureDate)
+
+
+        currentClosureDateField.innerText = formattedDate.getDate() + "/"
+            + (formattedDate.getMonth() + 1) + "/"
+            + formattedDate.getFullYear()
+
+
+    }
 
     function emailInactiveStaff() {
         fetch(`${url}/encourageStaff?departmentId=${session.user.department.id}`, { method: "post" })
@@ -147,15 +177,7 @@ $(document).ready(function () {
         }
 
         if (user.role == "MANAGER") {
-            // let modifyCategoriesPage = document.createElement("a")
-            // modifyCategoriesPage.href = `modify-category.html`
-            // modifyCategoriesPage.text = "Modify Categories"
-            // modifyCategoriesPage.style = "color: white;"
 
-
-            // privilegesList.append(modifyCategoriesPage) 
-
-            // privilegesList.innerHTML += `<a href="modify-category.html" style="color: white;"><b>Modify Categories</b></a>`
 
             privilegesList.innerHTML += `
 
@@ -194,6 +216,8 @@ $(document).ready(function () {
             document.getElementById("addStatisticsView").addEventListener("click", addStatisticsView)
             document.getElementById("addManageUsersView").addEventListener("click", addManageUsersView)
 
+            // populateDepartmentDropdown()
+
 
         }
         if (user.role == "COORDINATOR") {
@@ -216,16 +240,18 @@ $(document).ready(function () {
 
         if (user.role == "ADMINISTRATOR") {
 
+            //    <li class="list-inline-item"><a href="set-closure-date.html"> <i class="fas fa-eye-slash fa-lg"></i></a>
+            //                             </li>
+            //                             <span class="bio mb-3"><b>Set Closure Date</b></span>
+            //                             <br><br></br>
+
             privilegesList.innerHTML += `
             <li class="list-inline-item"><a href="anonymous-ideas.html"> <i class="fas fa-eye-slash fa-lg"></i></a>
                             </li>
                             <span class="bio mb-3"><b>Anonymous Ideas</b></span>
                             <br><br>
 
-                            <li class="list-inline-item"><a href="set-closure-date.html"> <i class="fas fa-eye-slash fa-lg"></i></a>
-                            </li>
-                            <span class="bio mb-3"><b>Set Closure Date</b></span>
-                            <br><br>
+                         
 
             <li class="list-inline-item"><a href="monitor-system.html"> <i class="fas fa-info-circle fa-lg"></i></a>
                             </li>
@@ -248,7 +274,10 @@ $(document).ready(function () {
             $("#role").html(`<h6 style="color: white">${user.role}</h6>`)
         }
 
-        $("#department").html(`<h6 style="color: white">${session.user.department.name}</h6>`)
+        if (user.role != "MANAGER") {
+            $("#department").html(`<h6 style="color: white">${session.user.department.name}</h6>`)
+        }
+
         if (user.lastLogin == null) {
             $("#last_login").text("Welcome to the Unibook!");
         }
@@ -256,6 +285,36 @@ $(document).ready(function () {
             $("#last_login").html(`<label>Last online: ${user.lastLogin}<label>`)
 
         }
+
+        document.getElementById("addIdeaView").addEventListener("click", addIdeaViews)
+
+        document.getElementById("addPasswordChangeView").addEventListener("click", addPasswordChangeView)
+    }
+
+    async function populateDepartmentDropdown() {
+        if (session.user.role == "MANAGER") {
+            document.getElementById("departmentDropdownFilterDiv").hidden = false;
+
+            $("#departmentDropdown").empty();
+
+
+            await fetch(`${url}/departments`).then(response => response.json()).then(departments => {
+                let option;
+
+                for (let department of departments) {
+
+                    option = document.createElement('option');
+                    option.value = department.id;
+                    option.text = department.name;
+
+
+                    $("#departmentDropdown").append(option);
+                }
+            })
+
+        }
+
+        // displayIdeas(currentPage)
     }
 
     async function getInactiveStaffCount() {
@@ -267,6 +326,10 @@ $(document).ready(function () {
 
     }
 
+    async function getClosureDate() {
+        let closureDate = await fetch(`${url}//ideas/closureDate`).then(res => res.text())
+        return closureDate
+    }
 
     async function getRandomPhoto() {
         const { results } = await fetch('https://randomuser.me/api/?gender=male').then(res => res.json())
@@ -296,7 +359,7 @@ $(document).ready(function () {
         let ideas;
         let getIdeasResponse;
 
-        getIdeasResponse = await fetch(`${url}/ideas?departmentId=${session.user.department.id}&page=${page}&loggedInUser=${session.user.id}&categoryId=${categoryId}&sortBy=${sortBy}`).then(response => response.json())
+        getIdeasResponse = await fetch(`${url}/ideas?page=${page}&categoryId=${categoryId}&sortBy=${sortBy}&email=${session.user.email}&password=${session.user.password}`).then(response => response.json())
 
         pageCount = getIdeasResponse.pageCount
         ideas = getIdeasResponse.ideas
@@ -304,6 +367,21 @@ $(document).ready(function () {
         return getIdeasResponse
 
     }
+
+    async function getIdeasByDepartment(page, categoryId, sortBy, departmentId) {
+        let ideas;
+        let getIdeasResponse;
+
+        getIdeasResponse = await fetch(`${url}/ideas?departmentId=${departmentId}&page=${page}&categoryId=${categoryId}&sortBy=${sortBy}&email=${session.user.email}&password=${session.user.password}`).then(response => response.json())
+
+        console.log(getIdeasResponse)
+        pageCount = getIdeasResponse.pageCount
+        ideas = getIdeasResponse.ideas
+
+        return getIdeasResponse
+
+    }
+
 
 
     function displayPageFooter() {
@@ -324,6 +402,7 @@ $(document).ready(function () {
 
 
         // pagesDiv.append(overlayDiv)
+
 
         for (let i = 0; i < pageCount; i++) {
 
@@ -360,10 +439,8 @@ $(document).ready(function () {
 
     }
 
-
     async function renderIdeasHTML(getIdeasResponse) {
 
-        console.log(getIdeasResponse)
         let ideasContainer = document.getElementById("ideasContainer")
 
         let ideas = getIdeasResponse.ideas
@@ -427,7 +504,7 @@ $(document).ready(function () {
                             &nbsp;&nbsp;<li class="list-inline-item"><a style="cursor: pointer; color: ${flagColor};" class="report-flag" data-ideaid="${idea.id}"> <i
                                         class="fas fa-flag fa-lg"></i> </a> </li>
 
-                            &nbsp;&nbsp;<a style="cursor: pointer;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &rarr;</a>
+                            &nbsp;&nbsp;<a style="cursor: pointer; color: grey;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &nbsp; <i class="fas fa-comment" ></i> ${idea.commentCount}</a>
 
                         </div>
                         <!--//media-body-->
@@ -462,7 +539,7 @@ $(document).ready(function () {
                             &nbsp;&nbsp;<li class="list-inline-item"><a style="cursor: pointer; color: ${flagColor};" class="report-flag" data-ideaid="${idea.id}"> <i
                                         class="fas fa-flag fa-lg"></i> </a> </li>
 
-                            &nbsp;&nbsp;<a style="cursor: pointer;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &rarr;</a>
+                            &nbsp;&nbsp;<a style="cursor: pointer; color: grey;" class="more-link idea-read-comments-link" data-ideaid="${idea.id}">Read comments &nbsp; <i class="fas fa-comment" ></i> ${idea.commentCount}</a>
 
                         </div>
                         <!--//media-body-->
@@ -486,33 +563,29 @@ $(document).ready(function () {
         addEventListenersToVote()
         displayPageFooter()
 
+        stopLoading();
 
 
     }
 
-
-
     async function displayIdeas(page) {
+        startLoading();
         setCurrentPage(page)
 
         let ideas;
 
         let selectedCategory = categoryDropdown.options[categoryDropdown.selectedIndex].value;
         let selectedFilter = filterDropdown.options[filterDropdown.selectedIndex].value;
+        let selectedDepartment = departmentDropdown.value;
 
-        // if (selectedCategory != 0) {
-        // } 
-        ideas = await getIdeas(currentPage, selectedCategory, selectedFilter)
-
-        // if(selectedFilter == ){
-        //     ideas = await getIdeas(currentPage, selectedFilter)
-        // }
-        // else {
-        //     ideas = await getIdeas(currentPage)
-        // }
-        // console.log(ideas)
-
+        console.log("selectedDepartment " + selectedDepartment)
+        if (session.user.role == "MANAGER") {
+            ideas = await getIdeasByDepartment(currentPage, selectedCategory, selectedFilter, selectedDepartment)
+        } else {
+            ideas = await getIdeas(currentPage, selectedCategory, selectedFilter)
+        }
         renderIdeasHTML(ideas)
+        // stopLoading();
     }
 
     async function Like(ideaId) {
@@ -598,6 +671,11 @@ $(document).ready(function () {
             title: 'Select a reason',
             input: 'radio',
             inputOptions: options,
+            // width: '400px',
+            showCancelButton: true,
+            showConfirmButton: true,
+            confirmButtonText: 'Report',
+            confirmButtonColor: '#b30e0e',
             inputValidator: (value) => {
                 if (!value) {
                     return 'You need to choose something!'
@@ -671,7 +749,6 @@ $(document).ready(function () {
             displayIdeas(currentPage + 1)
         })
     }
-
 
     async function post(endpoint, data) {
 
@@ -757,26 +834,22 @@ $(document).ready(function () {
             });
     }
 
-    async function addIdeaView(){
+    async function addIdeaViews() {
         await fetch(`${url}/addPageView?pageId=4`, { method: "post" })
     }
-    async function testBrowser(){
-        let response = await fetch(`${url}/checkBrowser`).then(res => res.json())
-        console.log(response)
-    }
-    async function addPasswordChangeView(){
+    async function addPasswordChangeView() {
         await fetch(`${url}/addPageView?pageId=6`, { method: "post" })
     }
-    async function addCategoryView(){
+    async function addCategoryView() {
         await fetch(`${url}/addPageView?pageId=8`, { method: "post" })
     }
-    async function addStatisticsView(){
+    async function addStatisticsView() {
         await fetch(`${url}/addPageView?pageId=9`, { method: "post" })
     }
-    async function addManageUsersView(){
+    async function addManageUsersView() {
         await fetch(`${url}/addPageView?pageId=7`, { method: "post" })
     }
-    async function addCommentsView(){
+    async function addCommentsView() {
         await fetch(`${url}/addPageView?pageId=5`, { method: "post" })
     }
 

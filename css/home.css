@@ -22,9 +22,10 @@
 
 
 /* REPORT POPUP */
-/* .swal2-radio {
+.swal2-radio {
     display: grid !important;
-} */
+    text-align:left
+}
 
 .fa-thumbs-up:hover,  .fa-thumbs-down:hover, 
 .fa-comment:hover, .fa-flag:hover{

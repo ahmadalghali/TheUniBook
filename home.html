@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
+    <link rel="stylesheet" href="css/spinner.css">
+
     <script>
 
         let session = JSON.parse(sessionStorage.getItem("session"))
@@ -118,7 +120,7 @@
     </header>
 
 
-    <div class="main-wrapper">
+    <div id="mainDiv" class="main-wrapper">
         <section class="cta-section theme-bg-light py-5">
             <div class="container text-center">
                 <h2 class="heading">Welcome to Unibook</h2>
@@ -148,31 +150,31 @@
             <!--//container-->
         </section>
         <div align="center">
-        <span class="box">
-            <select class="selection-2 " name="service" id="category_dropdown">
+            <span class="box">
+                <select class="selection-2 " name="service" id="category_dropdown">
 
-            </select>
-        </span>
-        <span class="focus-input100"></span>
+                </select>
+            </span>
+            <span class="focus-input100"></span>
 
-        <span class="box">
-            <select class="selection-2 " name="service" id="filter_dropdown">
-                <option value="latest" selected="selected">Latest</option>
-                <option value="most_popular">Most popular</option>
-                <option value="most_viewed">Most viewed</option>
-            </select>
-        </span>
-        <span class="focus-input100"></span>
-        
-        <!--//department dropdown (just for QA manager)-->
-        
-            <span class="box" hidden>
+            <span class="box">
                 <select class="selection-2 " name="service" id="filter_dropdown">
-                    <option value="latest" selected="selected">Department</option>
+                    <option value="latest" selected="selected">Latest</option>
+                    <option value="most_popular">Most popular</option>
+                    <option value="most_viewed">Most viewed</option>
+                </select>
+            </span>
+            <span class="focus-input100"></span>
+
+            <!--//department dropdown (just for QA manager)-->
+
+            <span id="departmentDropdownFilterDiv" class="box" hidden>
+                <select class="selection-2 " name="service" id="departmentDropdown">
+                    <!-- <option value="latest" selected="selected">Department</option>
                     <option value="most_popular">All depatrment</option>
                     <option value="most_viewed">depatrment 1</option>
                     <option value="most_viewed">depatrment 2</option>
-                    <option value="most_viewed">depatrment 3</option>
+                    <option value="most_viewed">depatrment 3</option> -->
                 </select>
             </span>
 

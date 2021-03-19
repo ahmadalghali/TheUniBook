@@ -30,7 +30,7 @@ $(document).ready(function () {
 
     async function getSystemData() {
         setUserDetails()
-        
+
         await fetch(`${url}/mostViewedPages`)
             .then(res => res.json())
             .then(statistics => viewsPerPageChart(statistics));
@@ -193,7 +193,6 @@ $(document).ready(function () {
 
         let browsers = await fetch(`${url}/mostUsedBrowser`).then(res => res.json())
 
-        console.log(browsers)
         for (let browser of browsers) {
 
             htmlString += `

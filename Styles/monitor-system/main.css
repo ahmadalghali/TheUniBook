@@ -252,7 +252,7 @@ tbody tr:hover {
     left: 30px;
     top: 0;
   }
-  /* table tbody tr td:nth-child(1):before {
+  table tbody tr td:nth-child(1):before {
     content: "First Name";
   }
   table tbody tr td:nth-child(2):before {
@@ -278,7 +278,7 @@ tbody tr:hover {
   }
   table tbody tr td:nth-child(9):before {
     content: "Actions";
-  } */
+  }
 
   .column4,
   .column5,

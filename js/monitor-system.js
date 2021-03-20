@@ -184,8 +184,8 @@ $(document).ready(function () {
 
         let htmlHeaders = `
         <tr class="table100-head">
-            <th class="column1">Browser name</th>
-            <th class="column2">Times used by users</th>
+            <th class="column6">Browser name</th>
+            <th class="column7">Times used by users</th>
         </tr>
        `
 

@@ -34,9 +34,19 @@ async function getUsers(departmentId = null) {
     return users;
 }
 
+function startLoading() {
+    document.querySelector("#mainDiv").classList.add("spinner-1");
+}
+
+function stopLoading() {
+    document.querySelector("#mainDiv").classList.remove("spinner-1");
+}
+
+
 
 async function populateUsersTable() {
 
+    startLoading()
     let htmlHeaders = `
     <tr class="table100-head">
 	    <th class="column1">ID</th>
@@ -115,6 +125,8 @@ async function populateUsersTable() {
 
 
     })
+
+    stopLoading();
 
 }
 

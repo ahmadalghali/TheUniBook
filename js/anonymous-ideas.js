@@ -21,7 +21,18 @@ $(document).ready(function () {
 
 
 
+    function startLoading() {
+        document.querySelector("#mainDiv").classList.add("spinner-1");
+    }
+
+    function stopLoading() {
+        document.querySelector("#mainDiv").classList.remove("spinner-1");
+    }
+
+
     async function displayIdeas() {
+
+        startLoading()
         let response = await getIdeas()
 
         if (response.authorized) {
@@ -32,6 +43,8 @@ $(document).ready(function () {
                 title: 'You are unauthorized for this access'
             })
         }
+
+        stopLoading()
     }
 
 

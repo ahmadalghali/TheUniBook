@@ -8,6 +8,8 @@ $(document).ready(function () {
     let ideaAuthor = document.getElementById("ideaAuthor")
     let ideaDescription = document.getElementById("ideaDescription")
 
+    let isAnonymous = document.getElementById("anonymousCheckBox");
+
     let commentsTextArea = document.getElementById("commentsTextArea")
 
     let btnPostComment = document.getElementById("btnPostComment")
@@ -58,7 +60,8 @@ $(document).ready(function () {
         let comment = {
             description: commentMessage,
             ideaId: ideaId,
-            authorId: session.user.id
+            authorId: session.user.id,
+            anonymous: isAnonymous.checked
         }
 
         let postCommentResponse = await post(`/comments`, JSON.stringify(comment))
@@ -103,7 +106,8 @@ $(document).ready(function () {
         }
 
         for (let comment of comments) {
-
+            
+            
             htmlString += `
                 <div class="item comment">
                     <div class="media">

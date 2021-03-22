@@ -23,15 +23,15 @@ $(document).ready(function () {
         sessionStorage.removeItem("successful registeration")
     }
 
-    function getBrowserName(){
+    function getBrowserName() {
         var result = bowser.getParser(window.navigator.userAgent);
-        
+
         let browserName = result.parsedResult.browser.name
 
         return browserName
     }
 
-    function addBrowser(){
+    function addBrowser() {
         fetch(`${url}/browser?browserName=${getBrowserName()}`, { method: "POST" })
     }
 
@@ -49,10 +49,13 @@ $(document).ready(function () {
         if (changePasswordResponse.message == "email sent") {
             $('#forgotPasswordModal').modal('hide');
 
+            console.log(changePasswordResponse)
             toastr.success("Email sent")
+            modalEmailField.value = "";
         }
         else {
             toastr.error("Incorrect email")
+            modalEmailField.value = "";
         }
     }
 
@@ -70,7 +73,7 @@ $(document).ready(function () {
         if (loginResponse.message == "logged in") {
             addBrowser();
             sessionStorage.setItem("session", JSON.stringify(loginResponse))
-            
+
             document.getElementById("email_field").value = "";
             location.href = "home.html"
 

@@ -26,10 +26,6 @@ $(document).ready(function () {
     let addIdeaForm = document.getElementById("addIdeaForm")
 
 
-
-
-
-
     populateCategoryDropdown();
 
 
@@ -44,7 +40,6 @@ $(document).ready(function () {
             toastr.error("You're currently suspended, you cannot submit any ideas or comments")
             return
         }
-
 
         // var addIdeaRequest = {
         //     userId: session.user.id,
@@ -61,11 +56,14 @@ $(document).ready(function () {
         formData.append("categoryId", categoryDropdown.value)
         console.log(isAnonymous.checked)
         formData.append("anonymous", isAnonymous.checked)
+        
 
         if (file.value != "") {
             formData.append("document", file.files[0])
-            console.log(file.files[0])
+        // console.log(file.files[0])
         }
+        // console.log(file.value)
+
 
 
         // Display the key/value pairs

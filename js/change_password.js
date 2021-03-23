@@ -28,9 +28,11 @@ $(document).ready(function () {
         else {
 
             toastr.success("Password changed successfully")
+            session.user.password.value = newPassword.value
             oldPassword.value = ""
             newPassword.value = ""
             confirmPassword.value = ""
+            
         }
     }
 

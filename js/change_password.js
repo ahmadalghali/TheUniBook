@@ -28,7 +28,10 @@ $(document).ready(function () {
         else {
 
             toastr.success("Password changed successfully")
-            session.user.password.value = newPassword.value
+            
+            session.user.password = changePasswordResponse.newPassword
+            sessionStorage.removeItem('session')
+            sessionStorage.setItem('session',JSON.stringify(session))
             oldPassword.value = ""
             newPassword.value = ""
             confirmPassword.value = ""

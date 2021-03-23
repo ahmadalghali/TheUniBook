@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    // let url = "http://localhost:8080"
+    //let url = "http://localhost:8080"
     let url = "https://theunibook.herokuapp.com"
 
 
@@ -226,7 +226,7 @@ $(document).ready(function () {
 
             <li class="list-inline-item"><a  title="Send an email to all staff with little to no engagement"  id="btnEmailStaff"> <i  style="color: #4e93e0; cursor: pointer;" class="fas fa-envelope fa-lg"></i></a>
                             </li>
-                            <span class="bio mb-3"><b>Email inactive staff: <span id="inactiveStaffCount">61</span> &nbsp;</b><i style="color: white;" class="fas fa-user fa-lg"></i></span>
+                            <span class="bio mb-3"><b>Email inactive staff: <span id="inactiveStaffCount"></span> &nbsp;</b><i style="color: white;" class="fas fa-user fa-lg"></i></span>
                             <br>
 
             `
@@ -487,8 +487,8 @@ $(document).ready(function () {
 
              <div class="item">
                     <div class="media">
-                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
-                            src="${idea.authorPhoto}" alt="" onerror="this.onerror=null; this.src='./other/assets/images/default-user-photo.png'">
+                    <img style="border-radius: 50%;" class="mr-3 img-fluid post-thumb d-none d-md-flex"
+                    src="${idea.authorPhoto}" alt="" onerror="this.onerror=null; this.src='./other/assets/images/default-user-photo.png'">
                         <div class="media-body">
                             <h3 class="title mb-1">${idea.title}</h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">${idea.views} views</span></span><span class="date">${since}</span></div>

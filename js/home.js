@@ -489,7 +489,7 @@ $(document).ready(function () {
                     <div class="media">
                     <img style="border-radius: 50%;" class="mr-3 img-fluid post-thumb d-none d-md-flex"
                     src="${idea.authorPhoto}" alt="" onerror="this.onerror=null; this.src='./other/assets/images/default-user-photo.png'">
-                        <div class="media-body">
+                 <div class="media-body">
                             <h3 class="title mb-1">${idea.title}</h3>
                             <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">${idea.views} views</span></span><span class="date">${since}</span></div>
                             <div class="intro" align="justify">${idea.description}</div><br>

@@ -9,6 +9,7 @@ $(document).ready(function () {
 
     btnSendEmail.addEventListener("click", sendEmail)
 
+    displayDataCollectionPopup();
 
 
     loginForm.addEventListener("submit", (e) => {
@@ -21,6 +22,22 @@ $(document).ready(function () {
         toastr.success("Registered successfully")
 
         sessionStorage.removeItem("successful registeration")
+    }
+
+    function displayDataCollectionPopup() {
+        Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            // title: "Data Collection",
+            text: `By using our service you agree to our Data Collection Policy`,
+            showConfirmButton: true,
+            confirmButtonColor: '#ffa600',
+            confirmButtonText: 'I Accept',
+            background: "#e0e0e0",
+
+
+
+        })
     }
 
     function getBrowserName() {

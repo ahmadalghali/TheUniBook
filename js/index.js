@@ -32,7 +32,7 @@ $(document).ready(function () {
             text: `By using our service you agree to our Data Collection Policy`,
             showConfirmButton: true,
             confirmButtonColor: '#ffa600',
-            confirmButtonText: 'I Accept',
+            confirmButtonText: 'ok',
             background: "#e0e0e0",
 
 

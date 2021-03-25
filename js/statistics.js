@@ -71,13 +71,46 @@ $(document).ready(function () {
                     label: 'Ideas',
                     data: numOfIdeas,
                     backgroundColor: [
-                        'green',
-                        'red',
-                        'pink',
-                        'yellow',
-                        'purple',
-                        'orange',
-                        'blue'
+                        // 'green',
+                        // 'red',
+                        // 'pink',
+                        // 'yellow',
+                        // 'purple',
+                        // 'orange',
+                        // 'blue'
+                        //shades of green
+                        // '#03571a',
+                        // '#0c852d',
+                        // '#1db546',
+                        // '#37e666',      
+                        // '#0ee84a',
+                        // '#7afa9d',
+                        // '#a3f7ba',
+                        //shades of green
+
+
+                        //shades of blue
+                        '#0e476e',
+                        '#156fad',
+                        '#1e8dd9',
+                        '#2ba9ff',
+                        '#69c2ff',
+                        '#9cd7ff',
+                        '#c7e8ff',
+                        //shades of blue
+
+
+                        //diff colors
+                        // '#c45252',
+                        // '#b481d4',
+                        // '#919ded',
+                        // '#aef2e1',
+                        // '#f0f59d',
+                        // '#f5c795',
+                        // '#95f595',
+                        //diff colors
+
+
 
                     ],
                     hoverBorderWidth: 1,
@@ -155,13 +188,21 @@ $(document).ready(function () {
                 datasets: [{
                     data: percentages,
                     backgroundColor: [
-                        'green',
-                        'red',
-                        'pink',
-                        'yellow',
-                        'purple',
-                        'orange',
-                        'blue'
+                        // 'green',
+                        // 'red',
+                        // 'pink',
+                        // 'yellow',
+                        // 'purple',
+                        // 'orange',
+                        // 'blue'
+
+                        '#c45252',
+                        '#b481d4',
+                        '#919ded',
+                        '#aef2e1',
+                        '#f0f59d',
+                        '#f5c795',
+                        '#95f595',
 
                     ],
                     hoverBorderWidth: 1,
@@ -236,13 +277,23 @@ $(document).ready(function () {
                     label: 'Contributors',
                     data: numOfContributors,
                     backgroundColor: [
-                        'green',
-                        'red',
-                        'pink',
-                        'yellow',
-                        'purple',
-                        'orange',
-                        'blue'
+                        // 'green',
+                        // 'red',
+                        // 'pink',
+                        // 'yellow',
+                        // 'purple',
+                        // 'orange',
+                        // 'blue'
+
+                        //shades of green
+                        '#03571a',
+                        '#0c852d',
+                        '#1db546',
+                        '#37e666',
+                        '#0ee84a',
+                        '#7afa9d',
+                        '#a3f7ba',
+                        //shades of green
 
                     ],
                     hoverBorderWidth: 1,

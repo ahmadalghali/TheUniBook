@@ -99,13 +99,21 @@ $(document).ready(function () {
                     label: 'Views',
                     data: viewCount,
                     backgroundColor: [
-                        'green',
-                        'red',
-                        'pink',
-                        'yellow',
-                        'purple',
-                        'orange',
-                        'blue'
+                        // 'green',
+                        // 'red',
+                        // 'pink',
+                        // 'yellow',
+                        // 'purple',
+                        // 'orange',
+                        // 'blue'
+                        //shades of blue
+                        '#0e476e',
+                        '#156fad',
+                        '#1e8dd9',
+                        '#69c2ff',
+                        '#9cd7ff',
+                        '#c7e8ff',
+                        //shades of blue
 
                     ],
                     hoverBorderWidth: 1,

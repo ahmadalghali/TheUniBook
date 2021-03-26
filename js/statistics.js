@@ -25,9 +25,12 @@ $(document).ready(function () {
     getStatistics()
 
     async function getStatistics() {
-        await fetch(`${url}/ideas/statistics`)
+        await fetch(`${url}/ideas/statistics?email=${session.user.email}&password=${session.user.password}`)
             .then(res => res.json())
-            .then(statistics => renderCharts(statistics));
+            .then(res => {
+                console.log(res)
+            })
+        // .then(statistics => renderCharts(statistics));
 
         // .then(statistics => renderHTML(statistics));
 

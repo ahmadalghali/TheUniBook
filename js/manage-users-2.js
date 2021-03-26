@@ -1,53 +1,56 @@
-// $(document).ready(function () {
+$(document).ready(function () {
 
-let usersTableHeaders = document.getElementById("usersTableHeaders")
-let usersTableBody = document.getElementById("usersTableBody")
-
-let url = "https://theunibook.herokuapp.com"
-// let url = "http://localhost:8080"
+    let usersTableHeaders = document.getElementById("usersTableHeaders")
+    let usersTableBody = document.getElementById("usersTableBody")
 
 
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    var session = JSON.parse(sessionStorage.getItem("session"));
+
+
+    let url = "https://theunibook.herokuapp.com"
+    // let url = "http://localhost:8080"
+
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    populateUsersTable()
+
+
+
+    async function getUsers(departmentId = null) {
+        let users;
+
+        if (departmentId == null) {
+            users = await fetch(`${url}/users`).then(res => res.json())
+        } else {
+            users = await fetch(`${url}/users/department/${departmentId}`).then(res => res.json())
+        }
+        return users;
     }
-})
 
-populateUsersTable()
-
-
-
-async function getUsers(departmentId = null) {
-    let users;
-
-    if (departmentId == null) {
-        users = await fetch(`${url}/users`).then(res => res.json())
-    } else {
-        users = await fetch(`${url}/users/department/${departmentId}`).then(res => res.json())
+    function startLoading() {
+        document.querySelector("#mainDiv").classList.add("spinner-1");
     }
-    return users;
-}
 
-function startLoading() {
-    document.querySelector("#mainDiv").classList.add("spinner-1");
-}
-
-function stopLoading() {
-    document.querySelector("#mainDiv").classList.remove("spinner-1");
-}
+    function stopLoading() {
+        document.querySelector("#mainDiv").classList.remove("spinner-1");
+    }
 
 
 
-async function populateUsersTable() {
-
-    startLoading()
-    let htmlHeaders = `
+    async function populateUsersTable() {
+        startLoading()
+        let htmlHeaders = `
     <tr class="table100-head">
 	    <th class="column1">ID</th>
 	    <th class="column2">Firstname</th>
@@ -62,27 +65,27 @@ async function populateUsersTable() {
    `
 
 
-    let users = await getUsers()
+        let users = await getUsers()
 
-    let htmlString = ''
+        let htmlString = ''
 
-    for (let user of users) {
+        for (let user of users) {
 
-        let accountStatus = user.enabled ? "-" : "Suspended"
+            let accountStatus = user.enabled ? "-" : "Suspended"
 
 
-        let activity = user.hidden ? "Hidden" : "-"
+            let activity = user.hidden ? "Hidden" : "-"
 
-        let btnName = 'Deactivate';
-        let btnColor = 'danger';
+            let btnName = 'Deactivate';
+            let btnColor = 'danger';
 
-        if (!user.enabled || user.hidden) {
-            btnName = 'Activate'
-            btnColor = 'info'
+            if (!user.enabled || user.hidden) {
+                btnName = 'Activate'
+                btnColor = 'info'
 
-        }
+            }
 
-        htmlString += `
+            htmlString += `
             <tr>
 								<td class="column1">${user.id}</td>
 								<td class="column2">${user.firstname}</td>
@@ -99,145 +102,146 @@ async function populateUsersTable() {
             `
 
 
+        }
+
+
+        usersTableHeaders.innerHTML = htmlHeaders
+        usersTableBody.innerHTML = htmlString
+
+        let deactivateBtns = Array.from(document.querySelectorAll(".deactivateBtn"));
+
+        deactivateBtns.forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                let user = JSON.parse(button.dataset.user);
+                let fullname = user.firstname + ' ' + user.lastname
+
+                if (user.enabled) {
+                    showDisablePopup(fullname, user.id);
+                } else if (user.hidden) {
+                    showUnblockAndUnHidePopup(fullname, user.id);
+                } else if (!user.enabled && !user.hidden) {
+                    showEnablePopup(fullname, user.id)
+                }
+            })
+
+
+        })
+
+        stopLoading();
+
     }
 
 
-    usersTableHeaders.innerHTML = htmlHeaders
-    usersTableBody.innerHTML = htmlString
 
-    let deactivateBtns = Array.from(document.querySelectorAll(".deactivateBtn"));
+    function showDisablePopup(fullname, userId) {
+        Swal.fire({
+            title: fullname,
+            text: 'Are you sure you want to disable this account?',
+            showDenyButton: true,
 
-    deactivateBtns.forEach(button => {
+            showCancelButton: false,
+            denyButtonText: `Disable + Hide Activity`,
+            confirmButtonText: `Disable`,
+            showConfirmButton: true,
+            confirmButtonColor: 'grey',
+            customClass: {
+                confirmButton: 'order-2',
+                denyButton: 'order-1 right-gap',
+            }
+        }).then((result) => {
+            if (result.isDenied) {
+                disableAccountAndHideActivity(userId)
+            } else if (result.isConfirmed) {
+                disableAccount(userId)
+            }
 
-        button.addEventListener("click", () => {
+        })
+    }
 
-            let user = JSON.parse(button.dataset.user);
-            let fullname = user.firstname + ' ' + user.lastname
-
-            if (user.enabled) {
-                showDisablePopup(fullname, user.id);
-            } else if (user.hidden) {
-                showUnblockAndUnHidePopup(fullname, user.id);
-            } else if (!user.enabled && !user.hidden) {
-                showEnablePopup(fullname, user.id)
+    function showEnablePopup(fullname, userId) {
+        Swal.fire({
+            title: fullname,
+            text: 'Unblock account?',
+            showCancelButton: true,
+            confirmButtonText: `Unblock`,
+            showConfirmButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                enableUserAccount(userId)
             }
         })
-
-
-    })
-
-    stopLoading();
-
-}
-
-
-
-function showDisablePopup(fullname, userId) {
-    Swal.fire({
-        title: fullname,
-        text: 'Are you sure you want to disable this account?',
-        showDenyButton: true,
-
-        showCancelButton: false,
-        denyButtonText: `Disable + Hide Activity`,
-        confirmButtonText: `Disable`,
-        showConfirmButton: true,
-        confirmButtonColor: 'grey',
-        customClass: {
-            confirmButton: 'order-2',
-            denyButton: 'order-1 right-gap',
-        }
-    }).then((result) => {
-        if (result.isDenied) {
-            disableAccountAndHideActivity(userId)
-        } else if (result.isConfirmed) {
-            disableAccount(userId)
-        }
-
-    })
-}
-
-function showEnablePopup(fullname, userId) {
-    Swal.fire({
-        title: fullname,
-        text: 'Unblock account?',
-        showCancelButton: true,
-        confirmButtonText: `Unblock`,
-        showConfirmButton: true,
-    }).then((result) => {
-        if (result.isConfirmed) {
-            enableUserAccount(userId)
-        }
-    })
-}
-
-function showUnblockAndUnHidePopup(fullname, userId) {
-    Swal.fire({
-        title: fullname,
-        text: 'Unblock account and unhide user activity?',
-        showCancelButton: true,
-        confirmButtonText: `Unblock`,
-        showConfirmButton: true,
-    }).then((result) => {
-        if (result.isConfirmed) {
-            enableAccountAndUnHideActivity(userId)
-        }
-    })
-}
-
-async function enableUserAccount(userId) {
-    let response = await fetch(`${url}/users/${userId}/enable`, { method: 'PUT' }).then(response => response.json())
-    if (response.message == "user account enabled") {
-        await populateUsersTable().then(() => {
-
-            Toast.fire({
-                icon: 'success',
-                title: 'Suspension has been removed'
-            })
-        })
-
     }
-}
 
-async function disableAccountAndHideActivity(userId) {
-    let response = await fetch(`${url}/users/${userId}/disableAndHideActivity`, { method: 'PUT' }).then(response => response.json())
-    if (response.message == "user account disabled and hidden") {
-        // grid.forceRender()
-        await populateUsersTable().then(() => {
-            Toast.fire({
-                icon: 'warning',
-                title: 'User account suspended, Activity is now hidden'
-            })
-        })
-
-    }
-}
-
-async function enableAccountAndUnHideActivity(userId) {
-    let response = await fetch(`${url}/users/${userId}/enableAndUnHideActivity`, { method: 'PUT' }).then(response => response.json())
-    if (response.message == "user activity unhidden") {
-        await populateUsersTable().then(() => {
-
-            Toast.fire({
-                icon: 'success',
-                title: 'Suspension has been removed'
-            })
-
+    function showUnblockAndUnHidePopup(fullname, userId) {
+        Swal.fire({
+            title: fullname,
+            text: 'Unblock account and unhide user activity?',
+            showCancelButton: true,
+            confirmButtonText: `Unblock`,
+            showConfirmButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                enableAccountAndUnHideActivity(userId)
+            }
         })
     }
-}
 
-async function disableAccount(userId) {
-    let response = await fetch(`${url}/users/${userId}/disable`, { method: 'PUT' }).then(response => response.json())
-    if (response.message == "user account disabled") {
-        await populateUsersTable().then(() => {
+    async function enableUserAccount(userId) {
+        let response = await fetch(`${url}/users/${userId}/enable?email=${session.user.email}&password=${session.user.password}`, { method: 'PUT' }).then(response => response.json())
+        if (response.message == "user account enabled") {
+            await populateUsersTable().then(() => {
 
-            Toast.fire({
-                icon: 'warning',
-                title: 'User account has been suspended'
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Suspension has been removed'
+                })
             })
 
-        })
+        }
     }
-}
 
+    async function disableAccountAndHideActivity(userId) {
+        let response = await fetch(`${url}/users/${userId}/disableAndHideActivity?email=${session.user.email}&password=${session.user.password}`, { method: 'PUT' }).then(response => response.json())
+        if (response.message == "user account disabled and hidden") {
+            // grid.forceRender()
+            await populateUsersTable().then(() => {
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'User account suspended, Activity is now hidden'
+                })
+            })
+
+        }
+    }
+
+    async function enableAccountAndUnHideActivity(userId) {
+        let response = await fetch(`${url}/users/${userId}/enableAndUnHideActivity?email=${session.user.email}&password=${session.user.password}`, { method: 'PUT' }).then(response => response.json())
+        if (response.message == "user activity unhidden") {
+            await populateUsersTable().then(() => {
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Suspension has been removed'
+                })
+
+            })
+        }
+    }
+
+    async function disableAccount(userId) {
+        let response = await fetch(`${url}/users/${userId}/disable?email=${session.user.email}&password=${session.user.password}`, { method: 'PUT' }).then(response => response.json())
+        if (response.message == "user account disabled") {
+            await populateUsersTable().then(() => {
+
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'User account has been suspended'
+                })
+
+            })
+        }
+    }
+
+})

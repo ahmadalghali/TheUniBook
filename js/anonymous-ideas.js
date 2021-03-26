@@ -89,7 +89,7 @@ $(document).ready(function () {
 
              <div class="item">
                     <div class="media">
-                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
+                       <img style="border-radius: 50%;" class="mr-3 img-fluid post-thumb d-none d-md-flex"
                             src="${idea.authorPhoto}" alt="" onerror="this.onerror=null; this.src='./other/assets/images/default-user-photo.png'">
                         <div class="media-body">
                             <h3 class="title mb-1"><a >${idea.title}</a></h3>

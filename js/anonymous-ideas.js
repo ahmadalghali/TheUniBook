@@ -81,42 +81,42 @@ $(document).ready(function () {
 
 
 
-            if (idea.documentPath != null) {
+            // if (idea.documentPath != null) {
 
-                htmlString += `
-            
-                 <br>
+            //     htmlString += `
 
-             <div class="item">
-                    <div class="media">
-                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex"
-                            src="${idea.authorPhoto}" alt="" onerror="this.onerror=null; this.src='./other/assets/images/default-user-photo.png'">
-                        <div class="media-body">
-                            <h3 class="title mb-1"><a >${idea.title}</a></h3>
-                            <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">${idea.views} views</span></span><span class="date">${since}</span></div>
-                            <div class="intro" align="justify">${idea.description}</div><br>
-                            <li class="list-inline-item"><a href="${url}/ideas/downloadFile?documentPath=${idea.documentPath}" > <i class="fas fa-file-download fa-lg"></i> </a>
-                            </li>
-                            <li class="list-inline-item"><a style="cursor: pointer; color: ${thumbsUpColor};" class="thumbs-up" data-ideaid="${idea.id}"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
-                            <span class="bio mb-3">${idea.likes}</span>
+            //      <br>
 
-                            &nbsp;&nbsp;<li class="list-inline-item"><a style="cursor: pointer;color: ${thumbsDownColor};" class="thumbs-down" data-ideaid="${idea.id}"> <i
-                                        class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">${idea.dislikes}</span>
+            //  <div class="item">
+            //         <div class="media">
+            //            <img style="border-radius: 50%;" class="mr-3 img-fluid post-thumb d-none d-md-flex"
+            //                 src="${idea.authorPhoto}" alt="" onerror="this.onerror=null; this.src='./other/assets/images/default-user-photo.png'">
+            //             <div class="media-body">
+            //                 <h3 class="title mb-1"><a >${idea.title}</a></h3>
+            //                 <div class="meta mb-1"><span class="date">Published by</span><span class="comment">${idea.authorName}</span><span class="date">${idea.views} views</span></span><span class="date">${since}</span></div>
+            //                 <div class="intro" align="justify">${idea.description}</div><br>
+            //                 <li class="list-inline-item"><a href="${url}/ideas/downloadFile?documentPath=${idea.documentPath}" > <i class="fas fa-file-download fa-lg"></i> </a>
+            //                 </li>
+            //                 <li class="list-inline-item"><a style="cursor: pointer; color: ${thumbsUpColor};" class="thumbs-up" data-ideaid="${idea.id}"> <i class="fas fa-thumbs-up fa-lg"></i> </a> </li>
+            //                 <span class="bio mb-3">${idea.likes}</span>
+
+            //                 &nbsp;&nbsp;<li class="list-inline-item"><a style="cursor: pointer;color: ${thumbsDownColor};" class="thumbs-down" data-ideaid="${idea.id}"> <i
+            //                             class="fas fa-thumbs-down fa-lg"></i> </a> </li><span class="bio mb-3">${idea.dislikes}</span>
 
 
-                        </div>
-                        <!--//media-body-->
+            //             </div>
+            //             <!--//media-body-->
 
-                    </div>
-                    <!--//media-->
-                </div>
-                
-            <br><hr>
-            
-            `
-            } else {
+            //         </div>
+            //         <!--//media-->
+            //     </div>
 
-                htmlString += `
+            // <br><hr>
+
+            // `
+            // } else {
+
+            htmlString += `
             
                  <br>
 
@@ -158,7 +158,7 @@ $(document).ready(function () {
             <hr>
             
             `
-            }
+            // }
 
 
         }

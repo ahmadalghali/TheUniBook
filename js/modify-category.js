@@ -2,6 +2,8 @@
 $(document).ready(function () {
 
     let url = "https://theunibook.herokuapp.com"
+    // let url = "http://localhost:8080"
+
 
     var addcatbutton = document.getElementById("add_category_button");
 
@@ -53,7 +55,7 @@ $(document).ready(function () {
     async function deleteCategory(categoryId) {
         let user = session.user
 
-        let deleteCategoryResponse = await fetch(`${url}/categories?categoryId=${categoryId}&userId=${user.id}`, { method: "DELETE" }).then(response => response.json())
+        let deleteCategoryResponse = await fetch(`${url}/categories?categoryId=${categoryId}&email=${session.user.email}&password=${session.user.password}`, { method: "DELETE" }).then(response => response.json())
         if (deleteCategoryResponse.message == "category deleted successfully") {
             toastr.success("Category deleted successfully")
         } else if (deleteCategoryResponse.message == "category cannot be deleted, ideas exist for this category") {
@@ -74,7 +76,8 @@ $(document).ready(function () {
 
     async function addCategory(categoryName) {
 
-        var category = await fetch(`${url}/categories?name=${categoryName}`, { method: "POST" }).then(response => response.json())
+        var category = await fetch(`${url}/categories?name=${categoryName}&email=${session.user.email}&password=${session.user.password}`, { method: "POST" }).then(response => response.json())
+
         categorytitlefield.value = ""
 
         if (category != null) {

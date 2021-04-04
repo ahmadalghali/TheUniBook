@@ -31,7 +31,7 @@ $(document).ready(function () {
     async function getSystemData() {
         setUserDetails()
 
-        await fetch(`${url}/mostViewedPages`)
+        await fetch(`${url}/mostViewedPages?email=${session.user.email}&password=${session.user.password}`)
             .then(res => res.json())
             .then(statistics => viewsPerPageChart(statistics));
 
@@ -99,13 +99,21 @@ $(document).ready(function () {
                     label: 'Views',
                     data: viewCount,
                     backgroundColor: [
-                        'green',
-                        'red',
-                        'pink',
-                        'yellow',
-                        'purple',
-                        'orange',
-                        'blue'
+                        // 'green',
+                        // 'red',
+                        // 'pink',
+                        // 'yellow',
+                        // 'purple',
+                        // 'orange',
+                        // 'blue'
+                        //shades of blue
+                        '#0e476e',
+                        '#156fad',
+                        '#1e8dd9',
+                        '#69c2ff',
+                        '#9cd7ff',
+                        '#c7e8ff',
+                        //shades of blue
 
                     ],
                     hoverBorderWidth: 1,
@@ -159,7 +167,7 @@ $(document).ready(function () {
 
         let htmlString = ''
 
-        let users = await fetch(`${url}/mostActiveUsers`).then(res => res.json())
+        let users = await fetch(`${url}/mostActiveUsers?email=${session.user.email}&password=${session.user.password}`).then(res => res.json())
 
 
         for (let user of users) {
@@ -191,7 +199,7 @@ $(document).ready(function () {
 
         let htmlString = ''
 
-        let browsers = await fetch(`${url}/mostUsedBrowser`).then(res => res.json())
+        let browsers = await fetch(`${url}/mostUsedBrowser?email=${session.user.email}&password=${session.user.password}`).then(res => res.json())
 
         for (let browser of browsers) {
 
